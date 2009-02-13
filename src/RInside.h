@@ -1,4 +1,8 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; -*-
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; tab-width: 8 -*-
+//
+// RInside.cpp: Easier R embedding into C++
+//
+// Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
 
 #include <string>
 #include <vector>
@@ -25,7 +29,8 @@ private:
     void autoloads(void);
 
 public:
-    int parseEval(const std::string line, SEXP &ans);
+    int parseEval(const std::string & line, SEXP &ans);
+    int parseEvalQ(const std::string & line);
 
     void assign(const std::vector< std::vector< double > > & mat, const std::string & nam);
     void assign(const std::string & txt, const std::string & nam);

@@ -1,3 +1,9 @@
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; tab-width: 8 -*-
+//
+// RInside.cpp: Easier R embedding into C++
+//
+// Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
+
 
 #include "RInside.h"
 #include <sys/time.h>		// gettimeofday
@@ -182,7 +188,7 @@ void RInside::autoloads() {
     UNPROTECT(ptct);
 }
 
-int RInside::parseEval(const std::string line, SEXP & ans) {
+int RInside::parseEval(const std::string & line, SEXP & ans) {
     //membuf_t mb = pmb_m;
     ParseStatus status;
     SEXP cmdSexp, cmdexpr = R_NilValue;
@@ -231,6 +237,12 @@ int RInside::parseEval(const std::string line, SEXP & ans) {
     }
     UNPROTECT(2);
     return 0;
+}
+
+int RInside::parseEvalQ(const std::string & line) {
+    SEXP ans;
+    int rc = parseEval(line, ans);
+    return rc;
 }
 
 void RInside::assign(const std::vector< std::vector< double > > & mat, const std::string & nam) {
