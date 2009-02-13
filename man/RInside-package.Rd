@@ -1,5 +1,5 @@
 \name{RInside-package}
-\alias{RIndide-package}
+\alias{RInside-package}
 \alias{RInside}
 \docType{package}
 \title{Embedding R in C++ applications}
