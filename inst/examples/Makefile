@@ -15,5 +15,10 @@ LDLIBS			+= -L/usr/local/lib/R/site-library/Rcpp/lib -lRcpp -Wl,-rpath,/usr/loca
 LDLIBS			+= -L/usr/local/lib/R/site-library/RInside/lib -lRInside -Wl,-rpath,/usr/local/lib/R/site-library/RInside/lib
 CC			= g++
 
+all :			rinside_sample0 rinside_sample1
+
+rinside_sample0 :	rinside_sample0.cpp
+			$(CC) -o $@ $< $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
+
 rinside_sample1 :	rinside_sample1.cpp
 			$(CC) -o $@ $< $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
