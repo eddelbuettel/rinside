@@ -1,0 +1,12 @@
+2009-02-12  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/: Added new assign() method for strings, added 'quiet' Eval
+ 	  without return; made more function interfaces use references
+
+	* man/: Added less-than-minimal RInside-package.Rd
+
+	* inst/rinside-sample0: Added simple Hello World example
+
+2009-02-10  Dirk Eddelbuettel  <edd@debian.org>
+
+	* Initial upload of version '0.0.1' to R-Forge SVN
