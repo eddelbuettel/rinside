@@ -1,2 +1,4 @@
 
-rm -vf src/*.o src/*.so inst/lib/*.h
+rm -vf src/*.o src/*.so inst/lib/*.h \
+		inst/lib/lib*.so inst/lib/lib*.a \
+		inst/examples/rinside_sample?
