@@ -27,7 +27,8 @@ private:
 public:
     int parseEval(const std::string line, SEXP &ans);
 
-    void assign(const std::vector< std::vector< double > > mat, const std::string nam);
+    void assign(const std::vector< std::vector< double > > & mat, const std::string & nam);
+    void assign(const std::string & txt, const std::string & nam);
 
     RInside(const int argc, const char* const argv[]);
     ~RInside();

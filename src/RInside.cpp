@@ -233,9 +233,7 @@ int RInside::parseEval(const std::string line, SEXP & ans) {
     return 0;
 }
 
-void RInside::assign(const std::vector< std::vector< double > > mat, const std::string nam) {
-    //simple STL matrix to SEXP converter, borrowed from RcppTemplate
-    //void stlMatrixToRealMatrixSEXP(vector<vector<double> > mat,SEXP &value) {
+void RInside::assign(const std::vector< std::vector< double > > & mat, const std::string & nam) {
     int nx = mat.size();
     int ny = mat[0].size();
     SEXP sexpmat = PROTECT(allocMatrix(REALSXP, nx, ny));
@@ -245,5 +243,12 @@ void RInside::assign(const std::vector< std::vector< double > > mat, const std::
 	}
     }
     setVar(install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
+    UNPROTECT(1);
+}
+
+void RInside::assign(const std::string & txt, const std::string & nam) {
+    SEXP value = PROTECT(allocVector(STRSXP, 1));
+    SET_STRING_ELT(value, 0, mkChar(txt.c_str()));
+    setVar(install((char*) nam.c_str()), value, R_GlobalEnv);  // now set it
     UNPROTECT(1);
 }
