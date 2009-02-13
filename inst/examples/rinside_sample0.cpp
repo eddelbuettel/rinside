@@ -13,8 +13,7 @@ int main(int argc, char *argv[]) {
     R.assign( txt, "txt"); 		// assign string var to R variable 'txt'
 
     std::string evalstr = "cat(txt)";
-    SEXP ans;
-    R.parseEval(evalstr, ans); 		// eval the init string -- Z is now in ans
+    R.parseEvalQ(evalstr); 		// eval the init string, ignoring any returns
 
     exit(0);
 }
