@@ -1,2 +1,2 @@
 
-rm -vf src/*.o src/*.so
+rm -vf src/*.o src/*.so inst/lib/*.h
