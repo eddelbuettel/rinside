@@ -1,5 +1,8 @@
-
 ## Simple Makefile
+##
+## RInside.cpp: Easier R embedding into C++
+##
+## Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
 ##
 ## TODO: 
 ##  proper configure for non-Debian file locations, 

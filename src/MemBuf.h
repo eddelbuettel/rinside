@@ -1,3 +1,8 @@
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; tab-width: 8 -*-
+//
+// RInside.cpp: Easier R embedding into C++
+//
+// Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
 
 class MemBuf {			// simple C++-ification of littler's membuf
 private:
