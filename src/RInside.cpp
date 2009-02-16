@@ -245,6 +245,7 @@ int RInside::parseEvalQ(const std::string & line) {
     return rc;
 }
 
+// assign for vector< vector< double > >
 void RInside::assign(const std::vector< std::vector< double > > & mat, const std::string & nam) {
     int nx = mat.size();
     int ny = mat[0].size();
@@ -255,6 +256,54 @@ void RInside::assign(const std::vector< std::vector< double > > & mat, const std
 	}
     }
     setVar(install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
+    UNPROTECT(1);
+}
+
+// assign for vector< vector< int > >
+void RInside::assign(const std::vector< std::vector< int > > & mat, const std::string & nam) {
+    int nx = mat.size();
+    int ny = mat[0].size();
+    SEXP sexpmat = PROTECT(allocMatrix(INTSXP, nx, ny));
+    for(int i = 0; i < nx; i++) {
+	for(int j = 0; j < ny; j++) {
+	    INTEGER(sexpmat)[i + nx*j] = mat[i][j];
+	}
+    }
+    setVar(install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
+    UNPROTECT(1);
+}
+
+// assign for vector< double > 
+void RInside::assign(const std::vector< double > & vec, const std::string & nam) {
+    int nx = vec.size();
+    SEXP sexpvec = PROTECT(allocVector(REALSXP, nx));
+    for(int i = 0; i < nx; i++) {
+	REAL(sexpvec)[i] = vec[i];
+    }
+    setVar(install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
+    UNPROTECT(1);
+}
+
+// assign for vector< string > 
+void RInside::assign(const std::vector< string > & vec, const std::string & nam) {
+    int len = (int)vec.size();
+    SEXP sexpvec = PROTECT(allocVector(STRSXP, len));
+    for (int i = 0; i < len; i++) {
+        SET_STRING_ELT(sexpvec, i, mkChar(vec[i].c_str()));
+    }
+    setVar(install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
+    UNPROTECT(1);
+}
+
+
+// assign for vector< int > 
+void RInside::assign(const std::vector< int > & vec, const std::string & nam) {
+    int nx = vec.size();
+    SEXP sexpvec = PROTECT(allocVector(INTSXP, nx));
+    for(int i = 0; i < nx; i++) {
+	INTEGER(sexpvec)[i] = vec[i];
+    }
+    setVar(install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
     UNPROTECT(1);
 }
 
