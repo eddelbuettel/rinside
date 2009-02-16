@@ -285,7 +285,7 @@ void RInside::assign(const std::vector< double > & vec, const std::string & nam)
 }
 
 // assign for vector< string > 
-void RInside::assign(const std::vector< string > & vec, const std::string & nam) {
+void RInside::assign(const std::vector< std::string > & vec, const std::string & nam) {
     int len = (int)vec.size();
     SEXP sexpvec = PROTECT(allocVector(STRSXP, len));
     for (int i = 0; i < len; i++) {

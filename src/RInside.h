@@ -34,7 +34,7 @@ public:
 
     void assign(const std::vector< std::vector< double > > & mat, const std::string & nam);
     void assign(const std::vector< std::vector< int > > & mat, const std::string & nam);
-    void assign(const std::vector< string > & vec, const std::string & nam) {
+    void assign(const std::vector< std::string > & vec, const std::string & nam);
     void assign(const std::vector< double > & vec, const std::string & nam);
     void assign(const std::vector< int > & vec, const std::string & nam);
     void assign(const std::string & txt, const std::string & nam);
