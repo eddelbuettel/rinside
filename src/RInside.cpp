@@ -189,16 +189,13 @@ void RInside::autoloads() {
 }
 
 int RInside::parseEval(const std::string & line, SEXP & ans) {
-    //membuf_t mb = pmb_m;
     ParseStatus status;
     SEXP cmdSexp, cmdexpr = R_NilValue;
     int i, errorOccurred;
 
-    //mb = pmb_m = add_to_membuf(&pmb_m, (char*)line.c_str());
     mb_m.add((char*)line.c_str());
     
     PROTECT(cmdSexp = allocVector(STRSXP, 1));
-    //SET_STRING_ELT(cmdSexp, 0, mkChar((char*)mb->buf));
     SET_STRING_ELT(cmdSexp, 0, mkChar((char*)mb_m.getBufPtr()));
 
     cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
@@ -213,7 +210,6 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
 		PrintValue(ans);
 	    }
 	}
-	//mb = pmb_m = rewind_membuf(&pmb_m);
 	mb_m.rewind();
 	break;
     case PARSE_INCOMPLETE:
