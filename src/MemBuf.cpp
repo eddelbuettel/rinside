@@ -33,7 +33,6 @@ MemBuf::MemBuf(int sizebytes) {
     p_m->count = 0;
     p_m->buf = (unsigned char *)p_m+sizeof(struct membuf_st);
     
-    //return lb;
     if (verbose) std::cout << "MemBuf::ctor END" << std::endl;
 }
 
