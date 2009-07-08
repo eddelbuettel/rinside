@@ -56,8 +56,9 @@ void MemBuf::add(char *buf){
     membuf_t mb = p_m;
     int buflen = strlen(buf);
 
-    while ((buflen + (mb->count)) >= mb->size){
+    while ((buflen + (mb->count)) >= mb->size) {
 	resize();
+	mb = p_m;
     }
 
     memcpy(mb->buf + mb->count, buf, buflen);
