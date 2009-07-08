@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
     R.parseEval(evalstr, ans); 			// eval the init string -- Z is now in ans
 
     RcppVector<double> vec(ans);		// now vec contains Z via ans
-    vector<double> v = vec.stlVector();		// convert RcppVector to STL vector
+    std::vector<double> v = vec.stlVector();	// convert RcppVector to STL vector
     // We could also do the assignment in one line:
     //    vector<double> v = RcppVector<double>(ans).stlVector();
 
