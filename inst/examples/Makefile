@@ -19,23 +19,7 @@ sources 		:= $(wildcard *.cpp)
 programs 		:= $(sources:.cpp=)
 
 all:			$(programs)
-#all :			rinside_sample0 rinside_sample1
-
-check:
-			@echo Sources are $(sources)
-			@echo Programs are $(programs)
 
 clean:
 			rm -vf $(programs)
 
-#rinside_sample0 :	rinside_sample0.cpp
-#			$(CC) -o $@ $< $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
-
-#rinside_sample1 :	rinside_sample1.cpp
-#			$(CC) -o $@ $< $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
-
-#rinside_test0 :		rinside_test0.cpp
-#			$(CC) -o $@ $< $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
-
-#rinside_test1 :		rinside_test1.cpp
-#			$(CC) -o $@ $< $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
