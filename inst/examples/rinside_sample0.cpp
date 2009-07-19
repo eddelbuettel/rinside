@@ -1,6 +1,8 @@
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; -*-
 //
 // Simple example showing an overly complicated way to do the standard 'hello, world' example
+//
+// Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
 
 #include "RInside.h"			// for the embedded R via RInside
 #include "Rcpp.h"			// for the R / Cpp interface used for transfer

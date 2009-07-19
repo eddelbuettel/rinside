@@ -1,6 +1,8 @@
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; -*-
 //
 // Simple example with data in C++ that is passed to R, processed and a result is extracted
+//
+// Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
 
 #include "RInside.h"		// for the embedded R via RInside
 
