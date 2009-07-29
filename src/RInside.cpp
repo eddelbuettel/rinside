@@ -25,10 +25,12 @@ RInside::RInside(const int argc, const char* const argv[]) {
     // generated as littler.h via from svn/littler/littler.R
     #include "RInsideEnvVars.h"
 
-    for (int i = 0; R_VARS[i] != NULL; i+= 2){
-	if (setenv(R_VARS[i],R_VARS[i+1],1) != 0){
-	    perror("ERROR: couldn't set/replace an R environment variable");
-	    exit(1);
+    for (int i = 0; R_VARS[i] != NULL; i+= 2) {
+	if (getenv(R_VARS[i]) == NULL) { // if env variable is not yet set
+	    if (setenv(R_VARS[i],R_VARS[i+1],1) != 0){
+		perror("ERROR: couldn't set/replace an R environment variable");
+		exit(1);
+	    }
 	}
     }
 
