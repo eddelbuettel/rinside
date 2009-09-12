@@ -1,9 +1,10 @@
 2009-09-12  Dirk Eddelbuettel  <edd@debian.org>
 
-	* DESCRIPTION:
-	   - Increase Version: to 0.0.3 leading to 0.1.0 release
-           - Add 'OS_type: unix' to stop builds on Windows
-	   - Add 'URL' pointer
+	* DESCRIPTION: Increase Version: to 0.1.0, initial CRAN release
+
+	* DESCRIPTION: Add 'OS_type: unix' to stop builds on Windows
+
+	* DESCRIPTION: Add 'URL' pointer
 
 2009-09-11  Dirk Eddelbuettel  <edd@debian.org>
 
