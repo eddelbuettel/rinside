@@ -6,6 +6,12 @@
 
 	* DESCRIPTION: Add 'URL' pointer
 
+	* doxyfile: Added Doxygen configuration file
+	* inst/doc/: Added Doxygen generated html, latex, man files
+
+	* inst/examples/Makefile: Also link against BLAS and LAPACK libs
+	* inst/examples/rinside_sample3.cpp: New example using lm() and coef()
+
 2009-09-11  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/Makefile: Enhanced to now automatically regenerate the two
@@ -20,7 +26,7 @@
 	* NAMESPACE: Added (empty) file so we can call 'path helpers'
 
 	* inst/examples/Makefile: Rewritten to no longer used fixed path
-	  setting but rather query R, Rcpp and RInside
+	  settings but rather query R, Rcpp and RInside
 
 2009-07-28  Dirk Eddelbuettel  <edd@debian.org>
 
