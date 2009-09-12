@@ -2,17 +2,26 @@
 ## Simple Makefile
 ##
 ## TODO: 
-##  proper configure for non-Debian file locations, 
+##  proper configure for non-Debian file locations,   [ Done ]
 ##  allow RHOME to be set for non-default R etc
 
+## include headers and libraries for R 
+RCPPFLAGS :=		$(shell R CMD config --cppflags)
+RLDFLAGS :=		$(shell R CMD config --ldflags)
+
+## include headers and libraries for Rcpp interface classes
+RCPPINCL :=		$(shell Rscript -e 'Rcpp:::CxxFlags()')
+RCPPLIBS :=		$(shell Rscript -e 'Rcpp:::LdFlags()')
+
+## include headers and libraries for RInside embedding classes
+RINSIDEINCL :=		$(shell Rscript -e 'RInside:::CxxFlags()')
+RINSIDELIBS :=		$(shell Rscript -e 'RInside:::LdFlags()')
+
+
 CPPFLAGS		= -Wall -O3 
-CXXFLAGS		= -I. -I/usr/share/R/include 
-CXXFLAGS		+= -I/usr/lib/R/site-library/Rcpp/lib
-CXXFLAGS		+= -I/usr/local/lib/R/site-library/RInside/lib
+CXXFLAGS		= $(RCPPFLAGS) $(RCPPINCL) $(RINSIDEINCL)
 LDFLAGS			= -s
-LDLIBS			= -L/usr/lib/R/lib -lR
-LDLIBS			+= -L/usr/lib/R/site-library/Rcpp/lib -lRcpp -Wl,-rpath,/usr/lib/R/site-library/Rcpp/lib
-LDLIBS			+= -L/usr/local/lib/R/site-library/RInside/lib -lRInside -Wl,-rpath,/usr/local/lib/R/site-library/RInside/lib
+LDLIBS			= $(RLDFLAGS) $(RCPPLIBS) $(RINSIDELIBS)
 CC			= g++
 
 sources 		:= $(wildcard *.cpp)
