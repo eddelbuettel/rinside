@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" href="$classMemBuf.html#a98a5b5de27fb73dd3433773b825faf21" title="MemBuf::add" alt="" coords="201,5,300,35"/>
+<area shape="rect" href="$classMemBuf.html#a910edfa13107da037c7ccfc80adc0243" title="MemBuf::getBufPtr" alt="" coords="184,59,317,88"/>
+<area shape="rect" href="$classMemBuf.html#acecce3962e522cdcabba571ffd51f940" title="MemBuf::rewind" alt="" coords="193,112,308,141"/>
+<area shape="rect" href="$classMemBuf.html#a4cb3b44d88059c382184ca7d1aa1f235" title="MemBuf::resize" alt="" coords="367,5,479,35"/>
+</map>

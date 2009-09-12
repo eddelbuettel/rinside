@@ -1,0 +1,226 @@
+\hypertarget{classRInside}{
+\section{RInside Class Reference}
+\label{classRInside}\index{RInside@{RInside}}
+}
+
+
+{\ttfamily \#include $<$RInside.h$>$}Collaboration diagram for RInside:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=152pt]{classRInside__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classRInside_a4cf10e78fb73bfda699f921c28e6b985}{parseEval} (const std::string \&line, SEXP \&ans)
+\item 
+int \hyperlink{classRInside_a9f18dc5011e1e32a52360b3d88f9bab7}{parseEvalQ} (const std::string \&line)
+\item 
+void \hyperlink{classRInside_aedd5db3eb2bcc97a93914088d599c8b4}{assign} (const std::vector$<$ std::vector$<$ double $>$ $>$ \&mat, const std::string \&nam)
+\item 
+void \hyperlink{classRInside_abae6700c75661cfb635859ac3d3c50d1}{assign} (const std::vector$<$ std::vector$<$ int $>$ $>$ \&mat, const std::string \&nam)
+\item 
+void \hyperlink{classRInside_a7c5cb94cc703541037e6acf243dc2b1b}{assign} (const std::vector$<$ std::string $>$ \&vec, const std::string \&nam)
+\item 
+void \hyperlink{classRInside_a9086ea21bd4a47d9411c6451c1ae50f5}{assign} (const std::vector$<$ double $>$ \&vec, const std::string \&nam)
+\item 
+void \hyperlink{classRInside_ab13e05865dec061ba1def1d922d2a58c}{assign} (const std::vector$<$ int $>$ \&vec, const std::string \&nam)
+\item 
+void \hyperlink{classRInside_a7073300c48c03478361b881e2d307ad6}{assign} (const std::string \&txt, const std::string \&nam)
+\item 
+\hyperlink{classRInside_aeecbfd63737539d1731b2f38852b3751}{RInside} (const int argc, const char $\ast$const argv\mbox{[}$\,$\mbox{]})
+\item 
+\hyperlink{classRInside_a277fc333d12163eaea9b903711586146}{$\sim$RInside} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classRInside_ae045f7e3d8b0881e2af8cdfb5c5fc118}{init\_\-tempdir} (void)
+\item 
+void \hyperlink{classRInside_af9920dd157552b7a5dce8573574ce78d}{init\_\-rand} (void)
+\item 
+void \hyperlink{classRInside_a41c250f2ef249a02a0d32e761628d943}{autoloads} (void)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classMemBuf}{MemBuf} \hyperlink{classRInside_ad078e52002a242f7f5c94211ca3dd8be}{mb\_\-m}
+\item 
+bool \hyperlink{classRInside_a186dad3e463fedc586f3d02784a814b2}{verbose\_\-m}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 21 of file RInside.h.
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classRInside_aeecbfd63737539d1731b2f38852b3751}{
+\index{RInside@{RInside}!RInside@{RInside}}
+\index{RInside@{RInside}!RInside@{RInside}}
+\subsubsection[{RInside}]{\setlength{\rightskip}{0pt plus 5cm}RInside::RInside (const int {\em argc}, \/  const char $\ast$const  {\em argv}\mbox{[}$\,$\mbox{]})}}
+\label{classRInside_aeecbfd63737539d1731b2f38852b3751}
+
+
+Definition at line 20 of file RInside.cpp.
+
+References autoloads(), init\_\-rand(), init\_\-tempdir(), programName, verbose, and verbose\_\-m.
+
+Here is the call graph for this function:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=137pt]{classRInside_aeecbfd63737539d1731b2f38852b3751_cgraph}
+\end{center}
+\end{figure}
+\hypertarget{classRInside_a277fc333d12163eaea9b903711586146}{
+\index{RInside@{RInside}!$\sim$RInside@{$\sim$RInside}}
+\index{$\sim$RInside@{$\sim$RInside}!RInside@{RInside}}
+\subsubsection[{$\sim$RInside}]{\setlength{\rightskip}{0pt plus 5cm}RInside::$\sim$RInside ()}}
+\label{classRInside_a277fc333d12163eaea9b903711586146}
+
+
+Definition at line 14 of file RInside.cpp.
+
+References verbose.
+
+\subsection{Member Function Documentation}
+\hypertarget{classRInside_a7073300c48c03478361b881e2d307ad6}{
+\index{RInside@{RInside}!assign@{assign}}
+\index{assign@{assign}!RInside@{RInside}}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}void RInside::assign (const std::string \& {\em txt}, \/  const std::string \& {\em nam})}}
+\label{classRInside_a7073300c48c03478361b881e2d307ad6}
+
+
+Definition at line 308 of file RInside.cpp.\hypertarget{classRInside_ab13e05865dec061ba1def1d922d2a58c}{
+\index{RInside@{RInside}!assign@{assign}}
+\index{assign@{assign}!RInside@{RInside}}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}void RInside::assign (const std::vector$<$ int $>$ \& {\em vec}, \/  const std::string \& {\em nam})}}
+\label{classRInside_ab13e05865dec061ba1def1d922d2a58c}
+
+
+Definition at line 298 of file RInside.cpp.\hypertarget{classRInside_a9086ea21bd4a47d9411c6451c1ae50f5}{
+\index{RInside@{RInside}!assign@{assign}}
+\index{assign@{assign}!RInside@{RInside}}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}void RInside::assign (const std::vector$<$ double $>$ \& {\em vec}, \/  const std::string \& {\em nam})}}
+\label{classRInside_a9086ea21bd4a47d9411c6451c1ae50f5}
+
+
+Definition at line 275 of file RInside.cpp.\hypertarget{classRInside_a7c5cb94cc703541037e6acf243dc2b1b}{
+\index{RInside@{RInside}!assign@{assign}}
+\index{assign@{assign}!RInside@{RInside}}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}void RInside::assign (const std::vector$<$ std::string $>$ \& {\em vec}, \/  const std::string \& {\em nam})}}
+\label{classRInside_a7c5cb94cc703541037e6acf243dc2b1b}
+
+
+Definition at line 286 of file RInside.cpp.\hypertarget{classRInside_abae6700c75661cfb635859ac3d3c50d1}{
+\index{RInside@{RInside}!assign@{assign}}
+\index{assign@{assign}!RInside@{RInside}}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}void RInside::assign (const std::vector$<$ std::vector$<$ int $>$ $>$ \& {\em mat}, \/  const std::string \& {\em nam})}}
+\label{classRInside_abae6700c75661cfb635859ac3d3c50d1}
+
+
+Definition at line 261 of file RInside.cpp.\hypertarget{classRInside_aedd5db3eb2bcc97a93914088d599c8b4}{
+\index{RInside@{RInside}!assign@{assign}}
+\index{assign@{assign}!RInside@{RInside}}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}void RInside::assign (const std::vector$<$ std::vector$<$ double $>$ $>$ \& {\em mat}, \/  const std::string \& {\em nam})}}
+\label{classRInside_aedd5db3eb2bcc97a93914088d599c8b4}
+
+
+Definition at line 247 of file RInside.cpp.\hypertarget{classRInside_a41c250f2ef249a02a0d32e761628d943}{
+\index{RInside@{RInside}!autoloads@{autoloads}}
+\index{autoloads@{autoloads}!RInside@{RInside}}
+\subsubsection[{autoloads}]{\setlength{\rightskip}{0pt plus 5cm}void RInside::autoloads (void)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classRInside_a41c250f2ef249a02a0d32e761628d943}
+
+
+Definition at line 102 of file RInside.cpp.
+
+References programName.
+
+Referenced by RInside().\hypertarget{classRInside_af9920dd157552b7a5dce8573574ce78d}{
+\index{RInside@{RInside}!init\_\-rand@{init\_\-rand}}
+\index{init\_\-rand@{init\_\-rand}!RInside@{RInside}}
+\subsubsection[{init\_\-rand}]{\setlength{\rightskip}{0pt plus 5cm}void RInside::init\_\-rand (void)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classRInside_af9920dd157552b7a5dce8573574ce78d}
+
+
+Definition at line 93 of file RInside.cpp.
+
+Referenced by RInside().\hypertarget{classRInside_ae045f7e3d8b0881e2af8cdfb5c5fc118}{
+\index{RInside@{RInside}!init\_\-tempdir@{init\_\-tempdir}}
+\index{init\_\-tempdir@{init\_\-tempdir}!RInside@{RInside}}
+\subsubsection[{init\_\-tempdir}]{\setlength{\rightskip}{0pt plus 5cm}void RInside::init\_\-tempdir (void)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classRInside_ae045f7e3d8b0881e2af8cdfb5c5fc118}
+
+
+Definition at line 74 of file RInside.cpp.
+
+Referenced by RInside().\hypertarget{classRInside_a4cf10e78fb73bfda699f921c28e6b985}{
+\index{RInside@{RInside}!parseEval@{parseEval}}
+\index{parseEval@{parseEval}!RInside@{RInside}}
+\subsubsection[{parseEval}]{\setlength{\rightskip}{0pt plus 5cm}int RInside::parseEval (const std::string \& {\em line}, \/  SEXP \& {\em ans})}}
+\label{classRInside_a4cf10e78fb73bfda699f921c28e6b985}
+
+
+Definition at line 193 of file RInside.cpp.
+
+References MemBuf::add(), MemBuf::getBufPtr(), mb\_\-m, programName, MemBuf::rewind(), and verbose\_\-m.
+
+Referenced by parseEvalQ().
+
+Here is the call graph for this function:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{classRInside_a4cf10e78fb73bfda699f921c28e6b985_cgraph}
+\end{center}
+\end{figure}
+\hypertarget{classRInside_a9f18dc5011e1e32a52360b3d88f9bab7}{
+\index{RInside@{RInside}!parseEvalQ@{parseEvalQ}}
+\index{parseEvalQ@{parseEvalQ}!RInside@{RInside}}
+\subsubsection[{parseEvalQ}]{\setlength{\rightskip}{0pt plus 5cm}int RInside::parseEvalQ (const std::string \& {\em line})}}
+\label{classRInside_a9f18dc5011e1e32a52360b3d88f9bab7}
+
+
+Definition at line 240 of file RInside.cpp.
+
+References parseEval().
+
+Here is the call graph for this function:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=271pt]{classRInside_a9f18dc5011e1e32a52360b3d88f9bab7_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classRInside_ad078e52002a242f7f5c94211ca3dd8be}{
+\index{RInside@{RInside}!mb\_\-m@{mb\_\-m}}
+\index{mb\_\-m@{mb\_\-m}!RInside@{RInside}}
+\subsubsection[{mb\_\-m}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MemBuf} {\bf RInside::mb\_\-m}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classRInside_ad078e52002a242f7f5c94211ca3dd8be}
+
+
+Definition at line 23 of file RInside.h.
+
+Referenced by parseEval().\hypertarget{classRInside_a186dad3e463fedc586f3d02784a814b2}{
+\index{RInside@{RInside}!verbose\_\-m@{verbose\_\-m}}
+\index{verbose\_\-m@{verbose\_\-m}!RInside@{RInside}}
+\subsubsection[{verbose\_\-m}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf RInside::verbose\_\-m}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classRInside_a186dad3e463fedc586f3d02784a814b2}
+
+
+Definition at line 25 of file RInside.h.
+
+Referenced by parseEval(), and RInside().
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/\hyperlink{RInside_8h}{RInside.h}\item 
+src/\hyperlink{RInside_8cpp}{RInside.cpp}\end{DoxyCompactItemize}

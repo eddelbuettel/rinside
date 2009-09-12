@@ -1,0 +1,112 @@
+.TH "MemBuf" 3 "12 Sep 2009" "RInside" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MemBuf \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <MemBuf.h>\fP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBmembuf_st\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMemBuf\fP (int sizebytes=1024)"
+.br
+.ti -1c
+.RI "\fB~MemBuf\fP ()"
+.br
+.ti -1c
+.RI "void \fBresize\fP ()"
+.br
+.ti -1c
+.RI "void \fBrewind\fP ()"
+.br
+.ti -1c
+.RI "void \fBadd\fP (char *buf)"
+.br
+.ti -1c
+.RI "unsigned char * \fBgetBufPtr\fP ()"
+.br
+.in -1c
+.SS "Private Types"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBMemBuf::membuf_st\fP * \fBmembuf_t\fP"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBmembuf_t\fP \fBp_m\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 7 of file MemBuf.h.
+.SH "Member Typedef Documentation"
+.PP 
+.SS "typedef struct \fBMemBuf::membuf_st\fP * \fBMemBuf::membuf_t\fP\fC [private]\fP"
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "MemBuf::MemBuf (int sizebytes = \fC1024\fP)"
+.PP
+Definition at line 22 of file MemBuf.cpp.
+.PP
+References MemBuf::membuf_st::buf, MemBuf::membuf_st::count, p_m, programName, MemBuf::membuf_st::size, and verbose.
+.SS "MemBuf::~MemBuf ()"
+.PP
+Definition at line 16 of file MemBuf.cpp.
+.PP
+References p_m, and verbose.
+.SH "Member Function Documentation"
+.PP 
+.SS "void MemBuf::add (char * buf)"
+.PP
+Definition at line 54 of file MemBuf.cpp.
+.PP
+References MemBuf::membuf_st::buf, MemBuf::membuf_st::count, p_m, resize(), and MemBuf::membuf_st::size.
+.PP
+Referenced by RInside::parseEval().
+.SS "unsigned char* MemBuf::getBufPtr ()\fC [inline]\fP"
+.PP
+Definition at line 21 of file MemBuf.h.
+.PP
+References MemBuf::membuf_st::buf, and p_m.
+.PP
+Referenced by RInside::parseEval().
+.SS "void MemBuf::resize ()"
+.PP
+Definition at line 39 of file MemBuf.cpp.
+.PP
+References MemBuf::membuf_st::buf, p_m, programName, and MemBuf::membuf_st::size.
+.PP
+Referenced by add().
+.SS "void MemBuf::rewind ()"
+.PP
+Definition at line 50 of file MemBuf.cpp.
+.PP
+References MemBuf::membuf_st::count, and p_m.
+.PP
+Referenced by RInside::parseEval().
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBmembuf_t\fP \fBMemBuf::p_m\fP\fC [private]\fP"
+.PP
+Definition at line 14 of file MemBuf.h.
+.PP
+Referenced by add(), getBufPtr(), MemBuf(), resize(), rewind(), and ~MemBuf().
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for RInside from the source code.

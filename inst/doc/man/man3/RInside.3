@@ -1,0 +1,147 @@
+.TH "RInside" 3 "12 Sep 2009" "RInside" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+RInside \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <RInside.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBparseEval\fP (const std::string &line, SEXP &ans)"
+.br
+.ti -1c
+.RI "int \fBparseEvalQ\fP (const std::string &line)"
+.br
+.ti -1c
+.RI "void \fBassign\fP (const std::vector< std::vector< double > > &mat, const std::string &nam)"
+.br
+.ti -1c
+.RI "void \fBassign\fP (const std::vector< std::vector< int > > &mat, const std::string &nam)"
+.br
+.ti -1c
+.RI "void \fBassign\fP (const std::vector< std::string > &vec, const std::string &nam)"
+.br
+.ti -1c
+.RI "void \fBassign\fP (const std::vector< double > &vec, const std::string &nam)"
+.br
+.ti -1c
+.RI "void \fBassign\fP (const std::vector< int > &vec, const std::string &nam)"
+.br
+.ti -1c
+.RI "void \fBassign\fP (const std::string &txt, const std::string &nam)"
+.br
+.ti -1c
+.RI "\fBRInside\fP (const int argc, const char *const argv[])"
+.br
+.ti -1c
+.RI "\fB~RInside\fP ()"
+.br
+.in -1c
+.SS "Private Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit_tempdir\fP (void)"
+.br
+.ti -1c
+.RI "void \fBinit_rand\fP (void)"
+.br
+.ti -1c
+.RI "void \fBautoloads\fP (void)"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBMemBuf\fP \fBmb_m\fP"
+.br
+.ti -1c
+.RI "bool \fBverbose_m\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 21 of file RInside.h.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "RInside::RInside (const int argc, const char *const  argv[])"
+.PP
+Definition at line 20 of file RInside.cpp.
+.PP
+References autoloads(), init_rand(), init_tempdir(), programName, verbose, and verbose_m.
+.SS "RInside::~RInside ()"
+.PP
+Definition at line 14 of file RInside.cpp.
+.PP
+References verbose.
+.SH "Member Function Documentation"
+.PP 
+.SS "void RInside::assign (const std::string & txt, const std::string & nam)"
+.PP
+Definition at line 308 of file RInside.cpp.
+.SS "void RInside::assign (const std::vector< int > & vec, const std::string & nam)"
+.PP
+Definition at line 298 of file RInside.cpp.
+.SS "void RInside::assign (const std::vector< double > & vec, const std::string & nam)"
+.PP
+Definition at line 275 of file RInside.cpp.
+.SS "void RInside::assign (const std::vector< std::string > & vec, const std::string & nam)"
+.PP
+Definition at line 286 of file RInside.cpp.
+.SS "void RInside::assign (const std::vector< std::vector< int > > & mat, const std::string & nam)"
+.PP
+Definition at line 261 of file RInside.cpp.
+.SS "void RInside::assign (const std::vector< std::vector< double > > & mat, const std::string & nam)"
+.PP
+Definition at line 247 of file RInside.cpp.
+.SS "void RInside::autoloads (void)\fC [private]\fP"
+.PP
+Definition at line 102 of file RInside.cpp.
+.PP
+References programName.
+.PP
+Referenced by RInside().
+.SS "void RInside::init_rand (void)\fC [private]\fP"
+.PP
+Definition at line 93 of file RInside.cpp.
+.PP
+Referenced by RInside().
+.SS "void RInside::init_tempdir (void)\fC [private]\fP"
+.PP
+Definition at line 74 of file RInside.cpp.
+.PP
+Referenced by RInside().
+.SS "int RInside::parseEval (const std::string & line, SEXP & ans)"
+.PP
+Definition at line 193 of file RInside.cpp.
+.PP
+References MemBuf::add(), MemBuf::getBufPtr(), mb_m, programName, MemBuf::rewind(), and verbose_m.
+.PP
+Referenced by parseEvalQ().
+.SS "int RInside::parseEvalQ (const std::string & line)"
+.PP
+Definition at line 240 of file RInside.cpp.
+.PP
+References parseEval().
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBMemBuf\fP \fBRInside::mb_m\fP\fC [private]\fP"
+.PP
+Definition at line 23 of file RInside.h.
+.PP
+Referenced by parseEval().
+.SS "bool \fBRInside::verbose_m\fP\fC [private]\fP"
+.PP
+Definition at line 25 of file RInside.h.
+.PP
+Referenced by parseEval(), and RInside().
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for RInside from the source code.
