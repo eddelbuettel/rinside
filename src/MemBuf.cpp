@@ -24,7 +24,7 @@ MemBuf::MemBuf(int sizebytes) {
     p_m = (membuf_st*) malloc(sizebytes+sizeof(struct membuf_st));
 
     if (p_m == NULL) {
-	fprintf(stderr,"%s: init_membuf() failed! Exiting!!!\n\n", programName);
+	std::cerr << programName << ": MemBuf ctor failed! Exiting!!!\n\n" << std::endl;
 	exit(1);
 	//return NULL; /* unreached */
     }
@@ -40,7 +40,7 @@ void MemBuf::resize() {		// Use power of 2 resizing
     membuf_t lb = p_m;
     lb = p_m = (membuf_st*) realloc(lb, lb->size*2+sizeof(struct membuf_st));
     if (lb == NULL) {
-	fprintf(stderr,"%s: init_membuf() failed! Exiting!!!\n\n", programName);
+	std::cerr << programName << ": MemBuff::resize() failed! Exiting!!!\n\n" << std::endl;
 	exit(1);
     }
     lb->size =  lb->size * 2;
