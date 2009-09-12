@@ -8,6 +8,8 @@
 ## include headers and libraries for R 
 RCPPFLAGS :=		$(shell R CMD config --cppflags)
 RLDFLAGS :=		$(shell R CMD config --ldflags)
+RBLAS := 		$(shell R CMD config BLAS_LIBS)
+RLAPACK := 		$(shell R CMD config LAPACK_LIBS)
 
 ## include headers and libraries for Rcpp interface classes
 RCPPINCL :=		$(shell Rscript -e 'Rcpp:::CxxFlags()')
@@ -21,7 +23,7 @@ RINSIDELIBS :=		$(shell Rscript -e 'RInside:::LdFlags()')
 CPPFLAGS		= -Wall -O3 
 CXXFLAGS		= $(RCPPFLAGS) $(RCPPINCL) $(RINSIDEINCL)
 LDFLAGS			= -s
-LDLIBS			= $(RLDFLAGS) $(RCPPLIBS) $(RINSIDELIBS)
+LDLIBS			= $(RLDFLAGS) $(RBLAS) $(RLAPACK) $(RCPPLIBS) $(RINSIDELIBS)
 CC			= g++
 
 sources 		:= $(wildcard *.cpp)
