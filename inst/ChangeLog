@@ -1,7 +1,14 @@
+2009-09-12  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION:
+	   - Increase Version: to 0.0.3 leading to 0.1.0 release
+           - Add 'OS_type: unix' to stop builds on Windows
+	   - Add 'URL' pointer
+
 2009-09-11  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/Makefile: Enhanced to now automatically regenerate the two
-	  R-derived header files, and to query R for directories which
+	  R-derived header files, and to also query R for directories which
 	  should make the build more portable across different systems
 
 	* src/MemBuf/cpp: Switch error message from fprintf to std::cerr
