@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     SEXP ans;
 
     std::string txt = "suppressMessages(library(fPortfolio))";
-    R.parseEvalQ(txt); 			// load library, no return valueassign matrix M to SEXP variable ans
+    R.parseEvalQ(txt); 			// load library, no return value
 
     txt = "M <- as.matrix(SWX.RET); print(head(M)); M";
     R.parseEval(txt, ans); 		// assign matrix M to SEXP variable ans
