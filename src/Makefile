@@ -17,7 +17,8 @@
 SOURCES	:=		$(wildcard *.cpp)
 OBJECTS	:= 		$(SOURCES:.cpp=.o)
 
-HEADERS	:=		$(wildcard *.h)
+
+HEADERS	:=		RInsideEnvVars.h RInsideAutoloads.h
 
 USERLIB	=		libRInside$(DYLIB_EXT) 
 USERLIBST =		libRInside.a
@@ -38,7 +39,6 @@ CC =			g++
 
 all: 			$(SHLIB) userLibrary 
 
-
 .PHONY:			RInsideEnvVars.h
 RInsideEnvVars.h :	tools/RInsideEnvVars.r
 			R --slave < tools/RInsideEnvVars.r > RInsideEnvVars.h
@@ -54,17 +54,17 @@ userLibrary: 		$(USERLIB) $(USERLIBST)
 			cp $(USERLIBST) $(USERDIR)$(R_ARCH)
 			rm $(USERLIB) $(USERLIBST)
 
-$(USERLIB): 		$(OBJECTS) $(HEADERS)
+$(USERLIB): 		$(HEADERS) $(OBJECTS) 
 			$(SHLIB_CXXLD) -o $(USERLIB) $(OBJECTS) $(SHLIB_CXXLDFLAGS) $(ALL_LIBS)
 			@if test -e "/usr/bin/install_name_tool"; then \
 				/usr/bin/install_name_tool -id $(R_PACKAGE_DIR)/lib$(R_ARCH)/$(USERLIB) $(USERLIB); fi
 
-$(USERLIBST): 		$(OBJECTS) $(HEADERS)
+$(USERLIBST): 		$(HEADERS) $(OBJECTS) 
 			$(AR) qc $(USERLIBST) $(OBJECTS)
 			@if test -n "$(RANLIB)"; then $(RANLIB) $(USERLIBST); fi
 
 .PHONY: 		all clean userLibrary 
 
 clean:
-			rm -f $(OBJECTS) $(SHLIB) $(USERLIB) $(USERLIBST)
+			rm -f $(OBJECTS) $(SHLIB) $(USERLIB) $(USERLIBST) $(HEADERS)
 
