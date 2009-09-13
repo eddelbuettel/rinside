@@ -12,6 +12,8 @@
 	* inst/examples/Makefile: Also link against BLAS and LAPACK libs
 	* inst/examples/rinside_sample3.cpp: New example using lm() and coef()
 
+	* inst/examples/rinside_sample2.cpp: Added a try/catch block
+
 2009-09-11  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/Makefile: Enhanced to now automatically regenerate the two
