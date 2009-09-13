@@ -201,13 +201,17 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
     SET_STRING_ELT(cmdSexp, 0, mkChar((char*)mb_m.getBufPtr()));
 
     cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
+
     switch (status){
     case PARSE_OK:
 	/* Loop is needed here as EXPSEXP might be of length > 1 */
 	for(i = 0; i < length(cmdexpr); i++){
 	    ans = R_tryEval(VECTOR_ELT(cmdexpr, i),NULL,&errorOccurred);
-	    if (errorOccurred) return 1;
-      
+	    if (errorOccurred) {
+		fprintf(stderr, "%s: Error in evaluating R code (%d)\n", programName, status);
+		UNPROTECT(2);
+		return 1;
+	    }
 	    if (verbose_m) {
 		PrintValue(ans);
 	    }
@@ -219,10 +223,12 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
 	break;
     case PARSE_NULL:
 	fprintf(stderr, "%s: ParseStatus is null (%d)\n", programName, status);
+	UNPROTECT(2);
 	return 1;
 	break;
     case PARSE_ERROR:
 	fprintf(stderr,"Parse Error: \"%s\"\n", line.c_str());
+	UNPROTECT(2);
 	return 1;
 	break;
     case PARSE_EOF:
@@ -230,6 +236,7 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
 	break;
     default:
 	fprintf(stderr, "%s: ParseStatus is not documented %d\n", programName, status);
+	UNPROTECT(2);
 	return 1;
 	break;
     }
