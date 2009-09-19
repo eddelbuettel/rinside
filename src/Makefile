@@ -41,11 +41,11 @@ all: 			$(SHLIB) userLibrary
 
 .PHONY:			RInsideEnvVars.h
 RInsideEnvVars.h :	tools/RInsideEnvVars.r
-			R --slave < tools/RInsideEnvVars.r > RInsideEnvVars.h
+			$(R_HOME)/bin/R --slave < tools/RInsideEnvVars.r > RInsideEnvVars.h
 
 .PHONY:			RInsideAutoloads.h
 RInsideAutoloads.h :	tools/RInsideAutoloads.r
-			R --slave < tools/RInsideAutoloads.r > RInsideAutoloads.h
+			$(R_HOME)/bin/R --slave < tools/RInsideAutoloads.r > RInsideAutoloads.h
 
 userLibrary: 		$(USERLIB) $(USERLIBST)
 			-@if test ! -e $(USERDIR)$(R_ARCH); then mkdir -p $(USERDIR)$(R_ARCH); fi
