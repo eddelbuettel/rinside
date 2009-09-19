@@ -1,4 +1,4 @@
-2009-09-12  Dirk Eddelbuettel  <edd@debian.org>
+2009-09-18  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Increase Version: to 0.1.0, initial CRAN release
 
@@ -13,6 +13,8 @@
 	* inst/examples/rinside_sample3.cpp: New example using lm() and coef()
 
 	* inst/examples/rinside_sample2.cpp: Added a try/catch block
+
+	* src/Makefile: use $(R_HOME)/bin/R as per Kurt's reminder
 
 2009-09-11  Dirk Eddelbuettel  <edd@debian.org>
 
