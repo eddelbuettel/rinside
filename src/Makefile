@@ -24,8 +24,8 @@ USERLIB	=		libRInside$(DYLIB_EXT)
 USERLIBST =		libRInside.a
 USERDIR =		../inst/lib
 
-RCPPFLAGS :=		$(shell R CMD config --cppflags)
-RLDFLAGS :=		$(shell R CMD config --ldflags)
+RCPPFLAGS :=		$(shell $(R_HOME)/bin/R CMD config --cppflags)
+RLDFLAGS :=		$(shell $(R_HOME)/bin/R CMD config --ldflags)
 
 RCPPINCL :=		$(shell Rscript -e 'Rcpp:::CxxFlags()')
 
