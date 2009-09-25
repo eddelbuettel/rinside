@@ -1,0 +1,7 @@
+
+Miguel Lechón		for finding (and fixing!) a memory-management bug
+Daniel F Schwarz	for a patch to not override pre-set environment variables
+Michael Kane		for testing on RHEL
+Jan de Leeuw		for testing on OS X
+Jeffrey Horner		for finding and fixing an OS X build bug
+Simon Urbanek		for OS X (and general) build tips
