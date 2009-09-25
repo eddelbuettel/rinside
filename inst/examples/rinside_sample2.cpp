@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 	RInside R(argc, argv);		// create an embedded R instance 
 	SEXP ans;
 
-	std::string txt = "suppressMessages(library(fPortfolioFoo))";
+	std::string txt = "suppressMessages(library(fPortfolio))";
 	if (R.parseEvalQ(txt)) 		// load library, no return value
 	    throw std::runtime_error("R cannot evaluate '" + txt + "'");
 
