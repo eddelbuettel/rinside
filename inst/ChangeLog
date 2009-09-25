@@ -1,3 +1,19 @@
+2009-09-25  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Increase Version: to 0.1.1
+	
+	* inst/THANKS: Added new file to say Thank You! to contributors
+
+	* inst/examples/Makefile: set R_HOME variable to output of 'R RHOME',
+	  use R_HOME to call R as R_HOME/bin/R, use R instead of Rscript,
+	  query R about CXX and CPPFLAGS, general editing and overhaul
+
+	* inst/examples/*.cpp: More consistent formatting using Emacs 'M-x untabify'
+
+	* src/Makefile: Add $R_ARCH to install path for header files (thanks to
+	  Jeff), call R with --vanilla switch (thanks to Jan), use R instead
+	  of Rscript, general editing and overhaul
+
 2009-09-19  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Increase Version: to 0.1.0, initial CRAN release
