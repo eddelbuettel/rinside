@@ -1,7 +1,11 @@
+2009-09-29  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/rinside_sample4.cpp: New example based on new r-devel post
+
 2009-09-25  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Increase Version: to 0.1.1
-	
+
 	* inst/THANKS: Added new file to say Thank You! to contributors
 
 	* inst/examples/Makefile: set R_HOME variable to output of 'R RHOME',
