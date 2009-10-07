@@ -1,4 +1,5 @@
-
+## -*- mode: make; tab-width: 8; -*-
+##
 ## Simple Makefile
 ##
 ## TODO: 
