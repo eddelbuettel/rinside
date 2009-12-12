@@ -1,3 +1,9 @@
+2009-12-12  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.cpp: Destructor does a few additional things as per the
+	  R_Cleanup example in section 8.1.2 on 'Setting R callbacks'
+	* src/RIinside.h: Added simple logTxt() to log if defined and not otherwise.
+
 2009-09-29  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/rinside_sample4.cpp: New example based on new r-devel post

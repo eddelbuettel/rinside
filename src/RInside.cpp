@@ -12,13 +12,18 @@ bool verbose = false;
 const char *programName = "RInside";
 
 RInside::~RInside() {		// now empty as MemBuf is internal
-    if (verbose) std::cout << "RInside::dtor BEGIN" << std::endl;
+    logTxt("RInside::dtor BEGIN", verbose);
+    R_dot_Last();
+    R_RunExitFinalizers();
+    R_CleanTempDir();
+    Rf_KillAllDevices;
+    fpu_setup(FALSE);
     Rf_endEmbeddedR(0);
-    if (verbose) std::cout << "RInside::dtor END" << std::endl;
+    logTxt("RInside::dtor END", verbose);
 }
 
 RInside::RInside(const int argc, const char* const argv[]) {
-    if (verbose) std::cout << "RInside::ctor BEGIN" << std::endl;
+    logTxt("RInside::ctor BEGIN", verbose);
 
     verbose_m = false; 		// Default is false
 
@@ -49,7 +54,7 @@ RInside::RInside(const int argc, const char* const argv[]) {
 
     R_ReplDLLinit(); 		// this is to populate the repl console buffers 
 
-    //ptr_R_CleanUp = littler_CleanUp;
+    //ptr_R_CleanUp = littler_CleanUp; --- we do that in the destructor
 
     autoloads();    		// Force all default package to be dynamically required */
 
@@ -68,7 +73,7 @@ RInside::RInside(const int argc, const char* const argv[]) {
     }
   
     init_rand();    			// for tempfile() to work correctly */
-    if (verbose) std::cout << "RInside::ctor END" << std::endl;
+    logTxt("RInside::ctor END", verbose);
 }
 
 void RInside::init_tempdir(void) {

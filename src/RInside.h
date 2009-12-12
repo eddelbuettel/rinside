@@ -43,3 +43,12 @@ public:
     ~RInside();
 };
 
+// simple logging help
+inline void logTxtFunction(const char* file, const char* line, const char* expression, const bool verbose) {
+    if (verbose) {
+	cout << file << ":" << line << " expression: " << x << endl;
+    }
+}
+
+//#define logTxt(x, b) logTxtFunction(__FILE__, __LINE__, x, b);
+#define logTxt(x, b) 
