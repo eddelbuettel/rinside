@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	  "vec <- getCovRiskBudgets(ewPortfolio@portfolio)";
         if (R.parseEval(txt, ans))      // assign covRiskBudget weights to ans
             throw std::runtime_error("R cannot evaluate '" + txt + "'");
-	RcppVector<double> V(ans);      // convert SEXP variable to an RcppMatrix
+	RcppVector<double> V(ans);      // convert SEXP variable to an RcppVector
   
 	R.parseEval("names(vec)", ans);	// assign columns names to ans
 	RcppStringVector names(ans);   
