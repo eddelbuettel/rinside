@@ -1,0 +1,38 @@
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4;  tab-width: 8; -*-
+//
+// Another simple example inspired by an r-devel mail by Martin Becker
+//
+// Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
+
+#include "RInside.h"                    // for the embedded R via RInside
+#include "Rcpp.h"                       // for the R / Cpp interface used for transfer
+
+int main(int argc, char *argv[]) {
+
+    try {
+        RInside R(argc, argv);          // create an embedded R instance 
+        SEXP ans;
+
+        std::string txt = "myenv <- new.env(hash=TRUE, size=NA)";
+        if (R.parseEvalQ(txt))          // eval string quietly, no result
+            throw std::runtime_error("R cannot evaluate '" + txt + "'");
+
+        txt = "as.integer(is.environment(myenv))";
+        if (R.parseEval(txt, ans))      // eval string, result in ans
+            throw std::runtime_error("R cannot evaluate '" + txt + "'");
+	
+	RcppVector<int> V(ans);   	// convert SEXP variable to an RcppVector
+  
+	std::cout << "We "
+		  << (V(0) ? "do" : "do not")
+		  << " have an environment." << std::endl;
+        
+    } catch(std::exception& ex) {
+        std::cerr << "Exception caught: " << ex.what() << std::endl;
+    } catch(...) {
+        std::cerr << "Unknown exception caught" << std::endl;
+    }
+
+    exit(0);
+}
+
