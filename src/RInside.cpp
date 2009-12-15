@@ -11,13 +11,21 @@
 bool verbose = false;
 const char *programName = "RInside";
 
+#ifdef WIN32
+// on Windows, we need to provide setenv which is in the file setenv.c here
+#include "setenv.c"
+extern int optind;
+#endif
+
 RInside::~RInside() {		// now empty as MemBuf is internal
     logTxt("RInside::dtor BEGIN", verbose);
     R_dot_Last();
     R_RunExitFinalizers();
     R_CleanTempDir();
-    Rf_KillAllDevices;
+    Rf_KillAllDevices();
+    #ifndef WIN32
     fpu_setup(FALSE);
+    #endif
     Rf_endEmbeddedR(0);
     logTxt("RInside::dtor END", verbose);
 }
@@ -39,7 +47,9 @@ RInside::RInside(const int argc, const char* const argv[]) {
 	}
     }
 
+    #ifndef WIN32
     R_SignalHandlers = 0;    		// Don't let R set up its own signal handlers
+    #endif
 
     #ifdef CSTACK_DEFNS
     R_CStackLimit = (uintptr_t)-1;	// Don't do any stack checking, see R Exts, '8.1.5 Threading issues' 

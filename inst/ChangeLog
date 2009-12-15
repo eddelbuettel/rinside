@@ -1,8 +1,21 @@
+2009-12-15  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Remove 'OS_type: unix' as we now build and run on Windoze
+	* src/Makefile.win: src/RInside.h, src/RInside.cpp: Added support for
+	  building on Windows using the standard MinGW toolchain
+	* src/setenv.c: Windows implementation of setenv() kindly provided by
+	  Richard Holbrey during earlier attempts to build on Windows
+        * inst/examples/Makefile.win: Similarly Makefile for Windows examples
+
 2009-12-12  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp: Destructor does a few additional things as per the
 	  R_Cleanup example in section 8.1.2 on 'Setting R callbacks'
 	* src/RIinside.h: Added simple logTxt() to log if defined and not otherwise.
+
+2009-10-01  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/rinside_sample5.cpp: Another examples based on r-devel post
 
 2009-09-29  Dirk Eddelbuettel  <edd@debian.org>
 

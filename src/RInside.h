@@ -12,8 +12,10 @@
 #include <Rembedded.h>
 #include <Rversion.h>
 #include <Rdefines.h>
+#ifndef WIN32
 #define R_INTERFACE_PTRS
 #include <Rinterface.h>
+#endif
 #include <R_ext/Parse.h>
 
 #include "MemBuf.h"
@@ -46,7 +48,7 @@ public:
 // simple logging help
 inline void logTxtFunction(const char* file, const char* line, const char* expression, const bool verbose) {
     if (verbose) {
-	cout << file << ":" << line << " expression: " << x << endl;
+	std::cout << file << ":" << line << " expression: " << expression << std::endl;
     }
 }
 
