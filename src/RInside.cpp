@@ -23,9 +23,9 @@ RInside::~RInside() {		// now empty as MemBuf is internal
     R_RunExitFinalizers();
     R_CleanTempDir();
     Rf_KillAllDevices();
-    #ifndef WIN32
-    fpu_setup(FALSE);
-    #endif
+    //#ifndef WIN32
+    //fpu_setup(FALSE);
+    //#endif
     Rf_endEmbeddedR(0);
     logTxt("RInside::dtor END", verbose);
 }
