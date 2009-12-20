@@ -17,16 +17,20 @@ extern "C" int setenv(const char *env_var, const char *env_val, int dummy) {
     //make non-const copies
     a = (char *) malloc((strlen(env_var) + 1) * sizeof(char));
     b = (char *) malloc((strlen(env_val) + 1) * sizeof(char));
-    strcpy(a,env_var);
-    strcpy(b,env_val);
+    if (!a || !b) {
+	R_Suicide("allocation failure in reading Renviron");
+    }
+    strcpy(a, env_var);
+    strcpy(b, env_val);
 
     buf = (char *) malloc((strlen(a) + strlen(b) + 2) * sizeof(char));
-    //FIXME  if(!buf) R_Suicide("allocation failure in reading Renviron");
+    if (!buf) {
+	R_Suicide("allocation failure in reading Renviron");
+    }
     strcpy(buf, a); strcat(buf, "=");
     value = buf+strlen(buf);
 
     /* now process the value */
-
     for(p = b, q = value; *p; p++) {
 	/* remove quotes around sections, preserve \ inside quotes */
 	if(!inquote && (*p == '"' || *p == '\'')) {
@@ -51,7 +55,8 @@ extern "C" int setenv(const char *env_var, const char *env_val, int dummy) {
 	*q++ = *p;
     }
     *q = '\0';
-    //if(putenv(buf)) warningcall(R_NilValue, _("problem in setting variable '%s' in Renviron"), a);
+    //if (putenv(buf)) 
+	//warningcall(R_NilValue, _("problem in setting variable '%s' in Renviron"), a);
     return putenv(buf);
 
     /* no free here: storage remains in use */
