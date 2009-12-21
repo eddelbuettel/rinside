@@ -18,14 +18,16 @@ extern "C" int setenv(const char *env_var, const char *env_val, int dummy) {
     a = (char *) malloc((strlen(env_var) + 1) * sizeof(char));
     b = (char *) malloc((strlen(env_val) + 1) * sizeof(char));
     if (!a || !b) {
-	R_Suicide("allocation failure in reading Renviron");
+	fprintf(stderr, "memory allocation failure in setenv");
+        exit(1);
     }
     strcpy(a, env_var);
     strcpy(b, env_val);
 
     buf = (char *) malloc((strlen(a) + strlen(b) + 2) * sizeof(char));
     if (!buf) {
-	R_Suicide("allocation failure in reading Renviron");
+	fprintf(stderr, "memory allocation failure in setenv");
+        exit(1);
     }
     strcpy(buf, a); strcat(buf, "=");
     value = buf+strlen(buf);
