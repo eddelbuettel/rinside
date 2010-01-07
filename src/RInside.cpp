@@ -1,9 +1,23 @@
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; tab-width: 8 -*-
 //
-// RInside.cpp: Easier R embedding into C++
+// RInside.cpp: R/C++ interface class library -- Easier R embedding into C++
 //
-// Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
-
+// Copyright (C) 2009 - 2010 Dirk Eddelbuettel
+//
+// This file is part of RInside.
+//
+// RInside is free software: you can redistribute it and/or modify it
+// under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// RInside is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with RInside.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "RInside.h"
 #include <sys/time.h>		// gettimeofday
@@ -22,7 +36,7 @@ RInside::~RInside() {		// now empty as MemBuf is internal
     R_dot_Last();
     R_RunExitFinalizers();
     R_CleanTempDir();
-    Rf_KillAllDevices();
+    //Rf_KillAllDevices();
     //#ifndef WIN32
     //fpu_setup(FALSE);
     //#endif
@@ -63,6 +77,11 @@ RInside::RInside(const int argc, const char* const argv[]) {
     Rf_initEmbeddedR(R_argc, (char**)R_argv);
 
     R_ReplDLLinit(); 		// this is to populate the repl console buffers 
+
+    structRstart Rst;
+    R_DefParams(&Rst);
+    Rst.R_Interactive = (Rboolean) FALSE;	// sets interactive() to eval to false 
+    R_SetParams(&Rst);
 
     //ptr_R_CleanUp = littler_CleanUp; --- we do that in the destructor
 
