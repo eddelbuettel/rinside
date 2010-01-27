@@ -164,6 +164,8 @@ void RInside::autoloads() {
     SEXP da, dacall, al, alcall, AutoloadEnv, name, package;
     int i,j, idx=0, errorOccurred, ptct;
 
+    /* TODO: use the Rcpp::Language class */
+    
     /* delayedAssign call*/
     PROTECT(da = Rf_findFun(Rf_install("delayedAssign"), R_GlobalEnv));
     PROTECT(AutoloadEnv = Rf_findVar(Rf_install(".AutoloadEnv"), R_GlobalEnv));
