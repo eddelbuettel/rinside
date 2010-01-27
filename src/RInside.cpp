@@ -22,7 +22,7 @@
 #include "RInside.h"
 #include <sys/time.h>		// gettimeofday
 
-bool verbose = true;
+bool verbose = false;
 const char *programName = "RInside";
 
 #ifdef WIN32
@@ -32,7 +32,7 @@ extern int optind;
 #endif
 
 RInside::~RInside() {		// now empty as MemBuf is internal
-    logTxt("RInside::dtor BEGIN", verbose);
+    logTxT("RInside::dtor BEGIN", verbose);
     R_dot_Last();
     R_RunExitFinalizers();
     R_CleanTempDir();
@@ -41,11 +41,11 @@ RInside::~RInside() {		// now empty as MemBuf is internal
     //fpu_setup(FALSE);
     //#endif
     Rf_endEmbeddedR(0);
-    logTxt("RInside::dtor END", verbose);
+    logTxT("RInside::dtor END", verbose);
 }
 
 RInside::RInside(const int argc, const char* const argv[]) {
-    logTxt("RInside::ctor BEGIN", verbose);
+    logTxT("RInside::ctor BEGIN", verbose);
 
     verbose_m = false; 		// Default is false
 
@@ -90,19 +90,19 @@ RInside::RInside(const int argc, const char* const argv[]) {
     SEXP s_argv = R_NilValue;
     if ((argc - optind) > 1){    	// for argv vector in Global Env */
 	int nargv = argc - optind - 1;	// Build string vector 
-	PROTECT(s_argv = allocVector(STRSXP,nargv));
+	PROTECT(s_argv = Rf_allocVector(STRSXP,nargv));
 	for (int i = 0; i <nargv; i++){
-	    STRING_PTR(s_argv)[i] = mkChar(argv[i+1+optind]);
+	    STRING_PTR(s_argv)[i] = Rf_mkChar(argv[i+1+optind]);
 	}
 	UNPROTECT(1);
     
-	setVar(install("argv"),s_argv,R_GlobalEnv);
+	Rf_setVar(Rf_install("argv"),s_argv,R_GlobalEnv);
     } else {
-	setVar(install("argv"),R_NilValue,R_GlobalEnv);
+	Rf_setVar(Rf_install("argv"),R_NilValue,R_GlobalEnv);
     }
   
     init_rand();    			// for tempfile() to work correctly */
-    logTxt("RInside::ctor END", verbose);
+    logTxT("RInside::ctor END", verbose);
 }
 
 void RInside::init_tempdir(void) {
@@ -174,7 +174,7 @@ void RInside::autoloads() {
 	fprintf(stderr,"%s: Cannot find .AutoloadEnv!\n", programName);
 	exit(1);
     }
-    PROTECT(dacall = allocVector(LANGSXP,5));
+    PROTECT(dacall = Rf_allocVector(LANGSXP,5));
     SETCAR(dacall,da);
     /* SETCAR(CDR(dacall),name); */          /* arg1: assigned in loop */
     /* SETCAR(CDR(CDR(dacall)),alcall); */  /* arg2: assigned in loop */
@@ -183,7 +183,7 @@ void RInside::autoloads() {
 
     /* autoloader call */
     PROTECT(al = Rf_findFun(Rf_install("autoloader"), R_GlobalEnv));
-    PROTECT(alcall = allocVector(LANGSXP,3));
+    PROTECT(alcall = Rf_allocVector(LANGSXP,3));
     SET_TAG(alcall, R_NilValue); /* just like do_ascall() does */
     SETCAR(alcall,al);
     /* SETCAR(CDR(alcall),name); */          /* arg1: assigned in loop */
@@ -195,13 +195,13 @@ void RInside::autoloads() {
 	for (j = 0; j < packobjc[i]; j++){
 	    /*printf("autload(%s,%s)\n",packobj[idx+j],pack[i]);*/
 
-	    PROTECT(name = NEW_CHARACTER(1));
-	    PROTECT(package = NEW_CHARACTER(1));
-	    SET_STRING_ELT(name, 0, COPY_TO_USER_STRING(packobj[idx+j]));
-	    SET_STRING_ELT(package, 0, COPY_TO_USER_STRING(pack[i]));
+	    PROTECT(name = Rf_allocVector(STRSXP,1));
+	    PROTECT(package = Rf_allocVector(STRSXP,1));
+	    SET_STRING_ELT(name, 0, Rf_mkChar(packobj[idx+j]));
+	    SET_STRING_ELT(package, 0, Rf_mkChar(pack[i]));
 
 	    /* Set up autoloader call */
-	    PROTECT(alcall = allocVector(LANGSXP,3));
+	    PROTECT(alcall = Rf_allocVector(LANGSXP,3));
 	    SET_TAG(alcall, R_NilValue); /* just like do_ascall() does */
 	    SETCAR(alcall,al);
 	    SETCAR(CDR(alcall),name);
@@ -231,15 +231,15 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
 
     mb_m.add((char*)line.c_str());
     
-    PROTECT(cmdSexp = allocVector(STRSXP, 1));
-    SET_STRING_ELT(cmdSexp, 0, mkChar((char*)mb_m.getBufPtr()));
+    PROTECT(cmdSexp = Rf_allocVector(STRSXP, 1));
+    SET_STRING_ELT(cmdSexp, 0, Rf_mkChar((char*)mb_m.getBufPtr()));
 
     cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
 
     switch (status){
     case PARSE_OK:
 	/* Loop is needed here as EXPSEXP might be of length > 1 */
-	for(i = 0; i < length(cmdexpr); i++){
+	for(i = 0; i < Rf_length(cmdexpr); i++){
 	    ans = R_tryEval(VECTOR_ELT(cmdexpr, i),NULL,&errorOccurred);
 	    if (errorOccurred) {
 		fprintf(stderr, "%s: Error in evaluating R code (%d)\n", programName, status);
@@ -247,7 +247,7 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
 		return 1;
 	    }
 	    if (verbose_m) {
-		PrintValue(ans);
+		Rf_PrintValue(ans);
 	    }
 	}
 	mb_m.rewind();
@@ -288,13 +288,13 @@ int RInside::parseEvalQ(const std::string & line) {
 void RInside::assign(const std::vector< std::vector< double > > & mat, const std::string & nam) {
     int nx = mat.size();
     int ny = mat[0].size();
-    SEXP sexpmat = PROTECT(allocMatrix(REALSXP, nx, ny));
+    SEXP sexpmat = PROTECT(Rf_allocMatrix(REALSXP, nx, ny));
     for(int i = 0; i < nx; i++) {
 	for(int j = 0; j < ny; j++) {
 	    REAL(sexpmat)[i + nx*j] = mat[i][j];
 	}
     }
-    setVar(install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
+    Rf_setVar(Rf_install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
     UNPROTECT(1);
 }
 
@@ -302,35 +302,35 @@ void RInside::assign(const std::vector< std::vector< double > > & mat, const std
 void RInside::assign(const std::vector< std::vector< int > > & mat, const std::string & nam) {
     int nx = mat.size();
     int ny = mat[0].size();
-    SEXP sexpmat = PROTECT(allocMatrix(INTSXP, nx, ny));
+    SEXP sexpmat = PROTECT(Rf_allocMatrix(INTSXP, nx, ny));
     for(int i = 0; i < nx; i++) {
 	for(int j = 0; j < ny; j++) {
 	    INTEGER(sexpmat)[i + nx*j] = mat[i][j];
 	}
     }
-    setVar(install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
+    Rf_setVar(Rf_install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
     UNPROTECT(1);
 }
 
 // assign for vector< double > 
 void RInside::assign(const std::vector< double > & vec, const std::string & nam) {
     int nx = vec.size();
-    SEXP sexpvec = PROTECT(allocVector(REALSXP, nx));
+    SEXP sexpvec = PROTECT(Rf_allocVector(REALSXP, nx));
     for(int i = 0; i < nx; i++) {
 	REAL(sexpvec)[i] = vec[i];
     }
-    setVar(install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
+    Rf_setVar(Rf_install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
     UNPROTECT(1);
 }
 
 // assign for vector< string > 
 void RInside::assign(const std::vector< std::string > & vec, const std::string & nam) {
     int len = (int)vec.size();
-    SEXP sexpvec = PROTECT(allocVector(STRSXP, len));
+    SEXP sexpvec = PROTECT(Rf_allocVector(STRSXP, len));
     for (int i = 0; i < len; i++) {
-        SET_STRING_ELT(sexpvec, i, mkChar(vec[i].c_str()));
+        SET_STRING_ELT(sexpvec, i, Rf_mkChar(vec[i].c_str()));
     }
-    setVar(install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
+    Rf_setVar(Rf_install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
     UNPROTECT(1);
 }
 
@@ -338,17 +338,17 @@ void RInside::assign(const std::vector< std::string > & vec, const std::string &
 // assign for vector< int > 
 void RInside::assign(const std::vector< int > & vec, const std::string & nam) {
     int nx = vec.size();
-    SEXP sexpvec = PROTECT(allocVector(INTSXP, nx));
+    SEXP sexpvec = PROTECT(Rf_allocVector(INTSXP, nx));
     for(int i = 0; i < nx; i++) {
 	INTEGER(sexpvec)[i] = vec[i];
     }
-    setVar(install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
+    Rf_setVar(Rf_install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
     UNPROTECT(1);
 }
 
 void RInside::assign(const std::string & txt, const std::string & nam) {
-    SEXP value = PROTECT(allocVector(STRSXP, 1));
-    SET_STRING_ELT(value, 0, mkChar(txt.c_str()));
-    setVar(install((char*) nam.c_str()), value, R_GlobalEnv);  // now set it
+    SEXP value = PROTECT(Rf_allocVector(STRSXP, 1));
+    SET_STRING_ELT(value, 0, Rf_mkChar(txt.c_str()));
+    Rf_setVar(Rf_install((char*) nam.c_str()), value, R_GlobalEnv);  // now set it
     UNPROTECT(1);
 }

@@ -23,15 +23,13 @@
 #include <vector>
 #include <iostream>
 
-#include <R.h>
+#include <Rcpp.h>
+
 #include <Rembedded.h>
-#include <Rversion.h>
-#include <Rdefines.h>
 #ifndef WIN32
 #define R_INTERFACE_PTRS
 #include <Rinterface.h>
 #endif
-#include <R_ext/Parse.h>
 #include <R_ext/RStartup.h>
 
 #include "MemBuf.h"
@@ -62,13 +60,13 @@ public:
 };
 
 // simple logging help
-inline void logTxtFunction(const char* file, const int line, const char* expression, const bool verbose) {
+inline void logTxtFunction(const char* file, const char* line, const char* expression, const bool verbose) {
     if (verbose) {
 	std::cout << file << ":" << line << " expression: " << expression << std::endl;
     }
 }
 
 #ifndef logTxT
-#define logTxt(x, b) logTxtFunction(__FILE__, __LINE__, x, b);
-//#define logTxt(x, b) 
+//#define logTxt(x, b) logTxtFunction(__FILE__, __LINE__, x, b);
+#define logTxT(x, b) 
 #endif
