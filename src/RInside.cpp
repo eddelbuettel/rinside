@@ -87,18 +87,15 @@ RInside::RInside(const int argc, const char* const argv[]) {
 
     autoloads();    		// Force all default package to be dynamically required */
 
-    SEXP s_argv = R_NilValue;
     if ((argc - optind) > 1){    	// for argv vector in Global Env */
-	int nargv = argc - optind - 1;	// Build string vector 
-	PROTECT(s_argv = Rf_allocVector(STRSXP,nargv));
-	for (int i = 0; i <nargv; i++){
-	    STRING_PTR(s_argv)[i] = Rf_mkChar(argv[i+1+optind]);
-	}
-	UNPROTECT(1);
-    
-	Rf_setVar(Rf_install("argv"),s_argv,R_GlobalEnv);
+    	    int nargv = argc - optind - 1;	// Build string vector
+    	    Rcpp::CharacterVector s_argv( nargv ); 
+    	    for( size_t i=0; i<nargv; i++){
+    	    	s_argv[i] = argv[i+1+optind] ;
+    	    }
+    	    assign(s_argv, "argv");
     } else {
-	Rf_setVar(Rf_install("argv"),R_NilValue,R_GlobalEnv);
+    	    assign(R_NilValue, "argv") ;
     }
   
     init_rand();    			// for tempfile() to work correctly */
