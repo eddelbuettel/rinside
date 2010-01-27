@@ -36,8 +36,8 @@
 
 namespace Rcpp{
 /* specializations of wrap, this should probably go in Rcpp */
-template<> IntegerVector wrap( const std::vector< std::vector<int> >& v) ;
-template<> NumericVector wrap( const std::vector< std::vector<double> >& v) ;
+IntegerVector wrap( const std::vector< std::vector<int> >& v) ;
+NumericVector wrap( const std::vector< std::vector<double> >& v) ;
 }
 
 class RInside {
@@ -56,7 +56,7 @@ public:
 
     template <typename T>
     void assign(const T& object, const std::string& nam){
-    	    Environment.global_env().assign( nam, object ) ;
+    	    Rcpp::Environment::global_env().assign( nam, object ) ;
     }
 
     RInside(const int argc, const char* const argv[]);

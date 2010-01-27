@@ -88,11 +88,8 @@ RInside::RInside(const int argc, const char* const argv[]) {
     autoloads();    		// Force all default package to be dynamically required */
 
     if ((argc - optind) > 1){    	// for argv vector in Global Env */
-    	    int nargv = argc - optind - 1;	// Build string vector
-    	    Rcpp::CharacterVector s_argv( nargv ); 
-    	    for( size_t i=0; i<nargv; i++){
-    	    	s_argv[i] = argv[i+1+optind] ;
-    	    }
+    	    // int nargv = argc - optind - 1;	// Build string vector
+    	    Rcpp::CharacterVector s_argv( argv+(1+optind), argv+argc );
     	    assign(s_argv, "argv");
     } else {
     	    assign(R_NilValue, "argv") ;
@@ -287,17 +284,17 @@ int RInside::parseEvalQ(const std::string & line) {
 
 namespace Rcpp{
 
-template<> NumericVector wrap(const std::vector< std::vector< double > > & v) {
+NumericVector wrap(const std::vector< std::vector< double > > & v) {
     
     /* this just assumes this is not a rugged array */
-    int nx = mat.size();
-    int ny = mat[0].size();
+    int nx = v.size();
+    int ny = v[0].size();
     SEXP sexpmat = PROTECT(Rf_allocMatrix(REALSXP, nx, ny));
     double* p = REAL(sexpmat) ;
     /* TODO: use stl algorithms to copy data more efficiently */
     for(int i = 0; i < nx; i++) {
 	for(int j = 0; j < ny; j++) {
-	    p[i + nx*j] = mat[i][j];
+	    p[i + nx*j] = v[i][j];
 	}
     }
     NumericVector out(sexpmat) ;
@@ -305,14 +302,14 @@ template<> NumericVector wrap(const std::vector< std::vector< double > > & v) {
     return out ;
 }
 
-template<> wrap(const std::vector< std::vector< int > > & v) {
-    int nx = mat.size();
-    int ny = mat[0].size();
+IntegerVector wrap(const std::vector< std::vector< int > > & v) {
+    int nx = v.size();
+    int ny = v[0].size();
     SEXP sexpmat = PROTECT(Rf_allocMatrix(INTSXP, nx, ny));
     int *p = INTEGER(sexpmat) ; /* do this just once */
     for(int i = 0; i < nx; i++) {
 	for(int j = 0; j < ny; j++) {
-	    p[i + nx*j] = mat[i][j];
+	    p[i + nx*j] = v[i][j];
 	}
     }
     IntegerVector out(sexpmat) ;
