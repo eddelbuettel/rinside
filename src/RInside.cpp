@@ -284,71 +284,41 @@ int RInside::parseEvalQ(const std::string & line) {
     return rc;
 }
 
-// assign for vector< vector< double > >
-void RInside::assign(const std::vector< std::vector< double > > & mat, const std::string & nam) {
+// specializations of Rcpp wrap template
+
+namespace Rcpp{
+
+template<> NumericVector wrap(const std::vector< std::vector< double > > & v) {
+    
+    /* this just assumes this is not a rugged array */
     int nx = mat.size();
     int ny = mat[0].size();
     SEXP sexpmat = PROTECT(Rf_allocMatrix(REALSXP, nx, ny));
+    double* p = REAL(sexpmat) ;
+    /* TODO: use stl algorithms to copy data more efficiently */
     for(int i = 0; i < nx; i++) {
 	for(int j = 0; j < ny; j++) {
-	    REAL(sexpmat)[i + nx*j] = mat[i][j];
+	    p[i + nx*j] = mat[i][j];
 	}
     }
-    Rf_setVar(Rf_install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
+    NumericVector out(sexpmat) ;
     UNPROTECT(1);
+    return out ;
 }
 
-// assign for vector< vector< int > >
-void RInside::assign(const std::vector< std::vector< int > > & mat, const std::string & nam) {
+template<> wrap(const std::vector< std::vector< int > > & v) {
     int nx = mat.size();
     int ny = mat[0].size();
     SEXP sexpmat = PROTECT(Rf_allocMatrix(INTSXP, nx, ny));
+    int *p = INTEGER(sexpmat) ; /* do this just once */
     for(int i = 0; i < nx; i++) {
 	for(int j = 0; j < ny; j++) {
-	    INTEGER(sexpmat)[i + nx*j] = mat[i][j];
+	    p[i + nx*j] = mat[i][j];
 	}
     }
-    Rf_setVar(Rf_install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
+    IntegerVector out(sexpmat) ;
     UNPROTECT(1);
+    return out ;
 }
 
-// assign for vector< double > 
-void RInside::assign(const std::vector< double > & vec, const std::string & nam) {
-    int nx = vec.size();
-    SEXP sexpvec = PROTECT(Rf_allocVector(REALSXP, nx));
-    for(int i = 0; i < nx; i++) {
-	REAL(sexpvec)[i] = vec[i];
-    }
-    Rf_setVar(Rf_install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
-    UNPROTECT(1);
-}
-
-// assign for vector< string > 
-void RInside::assign(const std::vector< std::string > & vec, const std::string & nam) {
-    int len = (int)vec.size();
-    SEXP sexpvec = PROTECT(Rf_allocVector(STRSXP, len));
-    for (int i = 0; i < len; i++) {
-        SET_STRING_ELT(sexpvec, i, Rf_mkChar(vec[i].c_str()));
-    }
-    Rf_setVar(Rf_install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
-    UNPROTECT(1);
-}
-
-
-// assign for vector< int > 
-void RInside::assign(const std::vector< int > & vec, const std::string & nam) {
-    int nx = vec.size();
-    SEXP sexpvec = PROTECT(Rf_allocVector(INTSXP, nx));
-    for(int i = 0; i < nx; i++) {
-	INTEGER(sexpvec)[i] = vec[i];
-    }
-    Rf_setVar(Rf_install((char*) nam.c_str()), sexpvec, R_GlobalEnv);  // now set it
-    UNPROTECT(1);
-}
-
-void RInside::assign(const std::string & txt, const std::string & nam) {
-    SEXP value = PROTECT(Rf_allocVector(STRSXP, 1));
-    SET_STRING_ELT(value, 0, Rf_mkChar(txt.c_str()));
-    Rf_setVar(Rf_install((char*) nam.c_str()), value, R_GlobalEnv);  // now set it
-    UNPROTECT(1);
 }

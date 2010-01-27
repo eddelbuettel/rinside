@@ -3,6 +3,12 @@
 	* src/RInside.{h,cpp}: include Rcpp.h and use the Rf_ prefixed R API
 	functions. stop using macros from Rdefines because they don't
 	work with R_NOREMAP
+	
+	* src/RInside.{h,cpp}: using the new Rcpp API assign becomes 
+	a template and let Rcpp::Environment.assign deal with the type
+	of the object and how to wrap it. specializations of wrap
+	for vector<vector<int>> and vector<vector<double>> are created
+	to maintain original interface.
 
 2010-01-06  Dirk Eddelbuettel  <edd@debian.org>
 

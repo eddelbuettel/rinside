@@ -34,6 +34,12 @@
 
 #include "MemBuf.h"
 
+namespace Rcpp{
+/* specializations of wrap, this should probably go in Rcpp */
+template<> IntegerVector wrap( const std::vector< std::vector<int> >& v) ;
+template<> NumericVector wrap( const std::vector< std::vector<double> >& v) ;
+}
+
 class RInside {
 private:
     MemBuf mb_m;
@@ -48,12 +54,10 @@ public:
     int parseEval(const std::string & line, SEXP &ans);
     int parseEvalQ(const std::string & line);
 
-    void assign(const std::vector< std::vector< double > > & mat, const std::string & nam);
-    void assign(const std::vector< std::vector< int > > & mat, const std::string & nam);
-    void assign(const std::vector< std::string > & vec, const std::string & nam);
-    void assign(const std::vector< double > & vec, const std::string & nam);
-    void assign(const std::vector< int > & vec, const std::string & nam);
-    void assign(const std::string & txt, const std::string & nam);
+    template <typename T>
+    void assign(const T& object, const std::string& nam){
+    	    Environment.global_env().assign( nam, object ) ;
+    }
 
     RInside(const int argc, const char* const argv[]);
     ~RInside();
