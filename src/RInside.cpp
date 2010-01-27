@@ -22,7 +22,7 @@
 #include "RInside.h"
 #include <sys/time.h>		// gettimeofday
 
-bool verbose = false;
+bool verbose = true;
 const char *programName = "RInside";
 
 #ifdef WIN32
