@@ -59,6 +59,9 @@ public:
     void assign(const T& object, const std::string& nam){
 	Rcpp::Environment::global_env().assign( nam, object ) ;
     }
+    
+    // non-templated version
+    void assign(const std::vector< std::vector< double > > & mat, const std::string & nam);
 
     RInside(const int argc, const char* const argv[]);
     ~RInside();

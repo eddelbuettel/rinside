@@ -1,10 +1,19 @@
+2010-01-28  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.{h,cpp}: Restore assign(vector<vector<double>>) which
+	  is not (yet?) covered by the more general templated solution
+
+	* src/RInside.h: Minor cleanup regarding logTxt usage
+
+	* src/Makefile: Make sure we find Rcpp.h headers
+
 2010-01-27  Romain Francois <francoisromain@free.fr>
 
 	* src/RInside.{h,cpp}: include Rcpp.h and use the Rf_ prefixed R API
 	functions. stop using macros from Rdefines because they don't
 	work with R_NOREMAP
-	
-	* src/RInside.{h,cpp}: using the new Rcpp API assign becomes 
+
+	* src/RInside.{h,cpp}: using the new Rcpp API assign becomes
 	a template and let Rcpp::Environment.assign deal with the type
 	of the object and how to wrap it. specializations of wrap
 	for vector<vector<int>> and vector<vector<double>> are created
