@@ -42,8 +42,8 @@ RLDFLAGS := 		$(shell $(R_HOME)/bin/R CMD config --ldflags)
 RCPPINCL := 		$(shell echo 'Rcpp:::CxxFlags()' | $(R_HOME)/bin/R --vanilla --slave)
 
 CXX := 			$(shell $(R_HOME)/bin/R CMD config CXX)
-CPPFLAGS := 		-Wall $(shell $(R_HOME)/bin/R CMD config CPPFLAGS)
-CXXFLAGS := 		-I. $(RCPPFLAGS) $(RCPPINCL) $(shell $(R_HOME)/bin/R CMD config CXXFLAGS)
+CPPFLAGS := 		-Wall $(RCPPFLAGS) $(RCPPINCL) 
+CXXFLAGS := 		-I. $(RCPPFLAGS) $(shell $(R_HOME)/bin/R CMD config CXXFLAGS)
 LDFLAGS	= 		-s
 LDLIBS = 		$(RLDFLAGS)
 

@@ -71,7 +71,8 @@ inline void logTxtFunction(const char* file, const int line, const char* express
     }
 }
 
-#ifndef logTxT
+#ifdef logTxt
+#undef logTxt
+#endif
 //#define logTxt(x, b) logTxtFunction(__FILE__, __LINE__, x, b);
 #define logTxt(x, b) 
-#endif
