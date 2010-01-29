@@ -2,7 +2,8 @@
 //
 // RInside.h: R/C++ interface class library -- Easier R embedding into C++
 //
-// Copyright (C) 2009 - 2010 Dirk Eddelbuettel
+// Copyright (C) 2009        Dirk Eddelbuettel
+// Copyright (C) 2010        Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -56,7 +57,7 @@ public:
 
     template <typename T>
     void assign(const T& object, const std::string& nam){
-    	    Rcpp::Environment::global_env().assign( nam, object ) ;
+	Rcpp::Environment::global_env().assign( nam, object ) ;
     }
 
     RInside(const int argc, const char* const argv[]);
@@ -64,7 +65,7 @@ public:
 };
 
 // simple logging help
-inline void logTxtFunction(const char* file, const char* line, const char* expression, const bool verbose) {
+inline void logTxtFunction(const char* file, const int line, const char* expression, const bool verbose) {
     if (verbose) {
 	std::cout << file << ":" << line << " expression: " << expression << std::endl;
     }
@@ -72,5 +73,5 @@ inline void logTxtFunction(const char* file, const char* line, const char* expre
 
 #ifndef logTxT
 //#define logTxt(x, b) logTxtFunction(__FILE__, __LINE__, x, b);
-#define logTxT(x, b) 
+#define logTxt(x, b) 
 #endif

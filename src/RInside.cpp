@@ -2,7 +2,8 @@
 //
 // RInside.cpp: R/C++ interface class library -- Easier R embedding into C++
 //
-// Copyright (C) 2009 - 2010 Dirk Eddelbuettel
+// Copyright (C) 2009        Dirk Eddelbuettel
+// Copyright (C) 2010        Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -32,7 +33,7 @@ extern int optind;
 #endif
 
 RInside::~RInside() {		// now empty as MemBuf is internal
-    logTxT("RInside::dtor BEGIN", verbose);
+    logTxt("RInside::dtor BEGIN", verbose);
     R_dot_Last();
     R_RunExitFinalizers();
     R_CleanTempDir();
@@ -41,11 +42,11 @@ RInside::~RInside() {		// now empty as MemBuf is internal
     //fpu_setup(FALSE);
     //#endif
     Rf_endEmbeddedR(0);
-    logTxT("RInside::dtor END", verbose);
+    logTxt("RInside::dtor END", verbose);
 }
 
 RInside::RInside(const int argc, const char* const argv[]) {
-    logTxT("RInside::ctor BEGIN", verbose);
+    logTxt("RInside::ctor BEGIN", verbose);
 
     verbose_m = false; 		// Default is false
 
@@ -88,15 +89,15 @@ RInside::RInside(const int argc, const char* const argv[]) {
     autoloads();    		// Force all default package to be dynamically required */
 
     if ((argc - optind) > 1){    	// for argv vector in Global Env */
-    	    // int nargv = argc - optind - 1;	// Build string vector
-    	    Rcpp::CharacterVector s_argv( argv+(1+optind), argv+argc );
-    	    assign(s_argv, "argv");
+	// int nargv = argc - optind - 1;	// Build string vector
+	Rcpp::CharacterVector s_argv( argv+(1+optind), argv+argc );
+	assign(s_argv, "argv");
     } else {
-    	    assign(R_NilValue, "argv") ;
+	assign(R_NilValue, "argv") ;
     }
   
     init_rand();    			// for tempfile() to work correctly */
-    logTxT("RInside::ctor END", verbose);
+    logTxt("RInside::ctor END", verbose);
 }
 
 void RInside::init_tempdir(void) {
