@@ -37,8 +37,8 @@
 
 namespace Rcpp{
 /* specializations of wrap, this should probably go in Rcpp */
-IntegerVector wrap( const std::vector< std::vector<int> >& v) ;
-NumericVector wrap( const std::vector< std::vector<double> >& v) ;
+template<> SEXP wrap< std::vector< std::vector<int> > >( const std::vector< std::vector<int> >& v) ;
+template<> SEXP wrap< std::vector< std::vector<double> > >( const std::vector< std::vector<double> >& v) ;
 }
 
 class RInside {
@@ -61,7 +61,7 @@ public:
     }
     
     // non-templated version
-    void assign(const std::vector< std::vector< double > > & mat, const std::string & nam);
+    // void assign(const std::vector< std::vector< double > > & mat, const std::string & nam);
 
     RInside(const int argc, const char* const argv[]);
     ~RInside();

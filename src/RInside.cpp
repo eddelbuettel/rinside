@@ -282,24 +282,24 @@ int RInside::parseEvalQ(const std::string & line) {
 }
 
 // assign for vector< vector< double > >
-void RInside::assign(const std::vector< std::vector< double > > & mat, const std::string & nam) {
-    int nx = mat.size();
-    int ny = mat[0].size();
-    SEXP sexpmat = PROTECT(Rf_allocMatrix(REALSXP, nx, ny));
-    for(int i = 0; i < nx; i++) {
-	for(int j = 0; j < ny; j++) {
-	    REAL(sexpmat)[i + nx*j] = mat[i][j];
-	}
-    }
-    Rf_setVar(Rf_install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
-    UNPROTECT(1);
-}
+//void RInside::assign(const std::vector< std::vector< double > > & mat, const std::string & nam) {
+//    int nx = mat.size();
+//    int ny = mat[0].size();
+//    SEXP sexpmat = PROTECT(Rf_allocMatrix(REALSXP, nx, ny));
+//    for(int i = 0; i < nx; i++) {
+//	for(int j = 0; j < ny; j++) {
+//	    REAL(sexpmat)[i + nx*j] = mat[i][j];
+//	}
+//    }
+//    Rf_setVar(Rf_install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
+//    UNPROTECT(1);
+//}
 
 // specializations of Rcpp wrap template
 
 namespace Rcpp{
 
-NumericVector wrap(const std::vector< std::vector< double > > & v) {
+template<> SEXP wrap(const std::vector< std::vector< double > > & v) {
     
     /* this just assumes this is not a rugged array */
     int nx = v.size();
@@ -312,12 +312,11 @@ NumericVector wrap(const std::vector< std::vector< double > > & v) {
 	    p[i + nx*j] = v[i][j];
 	}
     }
-    NumericVector out(sexpmat) ;
     UNPROTECT(1);
-    return out ;
+    return sexpmat ;
 }
 
-IntegerVector wrap(const std::vector< std::vector< int > > & v) {
+template<> SEXP wrap(const std::vector< std::vector< int > > & v) {
     int nx = v.size();
     int ny = v[0].size();
     SEXP sexpmat = PROTECT(Rf_allocMatrix(INTSXP, nx, ny));
@@ -327,9 +326,8 @@ IntegerVector wrap(const std::vector< std::vector< int > > & v) {
 	    p[i + nx*j] = v[i][j];
 	}
     }
-    IntegerVector out(sexpmat) ;
     UNPROTECT(1);
-    return out ;
+    return sexpmat ;
 }
 
 }

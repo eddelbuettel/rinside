@@ -1,3 +1,10 @@
+2010-01-28  Romain Francois <francoisromain@free.fr>
+
+	* src/RInside.{h,cpp}: Retire assign(vector<vector<double>> )
+	because now this can be taken care of by template specialization
+	
+	* DESCRIPTION: require Rcpp 0.7.3.6
+
 2010-01-28  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.{h,cpp}: Restore assign(vector<vector<double>>) which
