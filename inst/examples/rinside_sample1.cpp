@@ -6,8 +6,6 @@
 
 #include "RInside.h"            // for the embedded R via RInside
 
-#include "Rcpp.h"               // for the R / Cpp interface used for transfer
-
 std::vector< std::vector< double > > 
 createMatrix(const int n) {     // simple STL matrix content generator
     std::vector< std::vector< double > > mat;

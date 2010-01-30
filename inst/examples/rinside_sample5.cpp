@@ -5,7 +5,6 @@
 // Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
 
 #include "RInside.h"                    // for the embedded R via RInside
-#include "Rcpp.h"                       // for the R / Cpp interface used for transfer
 
 int main(int argc, char *argv[]) {
 
