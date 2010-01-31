@@ -26,6 +26,8 @@
 ##    below which should be all that is needed to support several
 ##    R installations at the same time.
 
+include $(R_HOME)/etc$(R_ARCH)/Makeconf
+
 SOURCES	:= 		$(wildcard *.cpp)
 OBJECTS	:= 		$(SOURCES:.cpp=.o)
 
