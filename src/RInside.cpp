@@ -157,68 +157,67 @@ void RInside::autoloads() {
      * for informational purposes.
      *
      */
-    //void autoloads(void){
-
-    SEXP da, dacall, al, alcall, AutoloadEnv, name, package;
-    int i,j, idx=0, errorOccurred, ptct;
-
-    /* TODO: use the Rcpp::Language class */
     
-    /* delayedAssign call*/
-    PROTECT(da = Rf_findFun(Rf_install("delayedAssign"), R_GlobalEnv));
-    PROTECT(AutoloadEnv = Rf_findVar(Rf_install(".AutoloadEnv"), R_GlobalEnv));
-    if (AutoloadEnv == R_NilValue){
-	fprintf(stderr,"%s: Cannot find .AutoloadEnv!\n", programName);
-	exit(1);
+    /* we build the call : 
+    
+        delayedAssign( NAME, 
+        	autoloader( name = NAME, package = PACKAGE), 
+        	.GlobalEnv, 
+        	.AutoloadEnv )
+        	
+        where : 
+        - PACKAGE is updated in a loop
+        - NAME is updated in a loop
+        
+    */
+    
+    int i,j, idx=0, nobj ;
+    Rcpp::Language delayed_assign_call( 
+    	    Rcpp::Function("delayedAssign"), 
+    	    R_NilValue,     /* arg1: assigned in loop */
+    	    R_NilValue,     /* arg2: assigned in loop */
+    	    R_GlobalEnv,
+    	    Rcpp::Environment::global_env()[".AutoloadEnv"]
+    	    ) ;
+    Rcpp::Language::Proxy delayed_assign_name  = delayed_assign_call[1];
+
+    Rcpp::Language autoloader_call( 
+    	    Rcpp::Function("autoloader"), 
+    	    Rcpp::Named( "name", R_NilValue) ,  /* arg1 : assigned in loop */
+    	    Rcpp::Named( "package", R_NilValue) /* arg2 : assigned in loop */
+    	    );
+    Rcpp::Language::Proxy autoloader_name = autoloader_call[1];
+    Rcpp::Language::Proxy autoloader_pack = autoloader_call[2];
+    delayed_assign_call[2] = autoloader_call ;
+    
+    try{
+    	for( i=0; i<packc; i++){
+    		
+    		/* set the 'package' argument of the autoloader call */
+    		autoloader_pack = pack[i] ;
+		
+    		nobj = packobjc[i] ; 
+    		for (j = 0; j < nobj ; j++){
+		    
+		    /* set the 'name' argument of the autoloader call */ 
+		    autoloader_name = packobj[idx+j] ;
+		   
+		    /* Set the 'name' argument of the delayedAssign call */
+		    delayed_assign_name = packobj[idx+j] ;
+		    
+		    /* evaluate the call */
+		    delayed_assign_call.eval() ;
+		    
+		}
+		
+		idx += packobjc[i] ;
+		
+    	}
+    } catch( std::exception& ex){
+    	    fprintf(stderr,"%s: Error calling delayedAssign!\n", 
+		programName);
+	    exit(1);	    
     }
-    PROTECT(dacall = Rf_allocVector(LANGSXP,5));
-    SETCAR(dacall,da);
-    /* SETCAR(CDR(dacall),name); */          /* arg1: assigned in loop */
-    /* SETCAR(CDR(CDR(dacall)),alcall); */  /* arg2: assigned in loop */
-    SETCAR(CDR(CDR(CDR(dacall))),R_GlobalEnv); /* arg3 */
-    SETCAR(CDR(CDR(CDR(CDR(dacall)))),AutoloadEnv); /* arg3 */
-
-    /* autoloader call */
-    PROTECT(al = Rf_findFun(Rf_install("autoloader"), R_GlobalEnv));
-    PROTECT(alcall = Rf_allocVector(LANGSXP,3));
-    SET_TAG(alcall, R_NilValue); /* just like do_ascall() does */
-    SETCAR(alcall,al);
-    /* SETCAR(CDR(alcall),name); */          /* arg1: assigned in loop */
-    /* SETCAR(CDR(CDR(alcall)),package); */  /* arg2: assigned in loop */
-
-    ptct = 5;
-    for(i = 0; i < packc; i++){
-	idx += (i != 0)? packobjc[i-1] : 0;
-	for (j = 0; j < packobjc[i]; j++){
-	    /*printf("autload(%s,%s)\n",packobj[idx+j],pack[i]);*/
-
-	    PROTECT(name = Rf_allocVector(STRSXP,1));
-	    PROTECT(package = Rf_allocVector(STRSXP,1));
-	    SET_STRING_ELT(name, 0, Rf_mkChar(packobj[idx+j]));
-	    SET_STRING_ELT(package, 0, Rf_mkChar(pack[i]));
-
-	    /* Set up autoloader call */
-	    PROTECT(alcall = Rf_allocVector(LANGSXP,3));
-	    SET_TAG(alcall, R_NilValue); /* just like do_ascall() does */
-	    SETCAR(alcall,al);
-	    SETCAR(CDR(alcall),name);
-	    SETCAR(CDR(CDR(alcall)),package);
-
-	    /* Setup delayedAssign call */
-	    SETCAR(CDR(dacall),name);
-	    SETCAR(CDR(CDR(dacall)),alcall);
-
-	    R_tryEval(dacall,R_GlobalEnv,&errorOccurred);
-	    if (errorOccurred){
-		fprintf(stderr,"%s: Error calling delayedAssign!\n", 
-			programName);
-		exit(1);
-	    }
-
-	    ptct += 3;
-	}
-    }
-    UNPROTECT(ptct);
 }
 
 int RInside::parseEval(const std::string & line, SEXP & ans) {
@@ -281,34 +280,17 @@ int RInside::parseEvalQ(const std::string & line) {
     return rc;
 }
 
-// assign for vector< vector< double > >
-//void RInside::assign(const std::vector< std::vector< double > > & mat, const std::string & nam) {
-//    int nx = mat.size();
-//    int ny = mat[0].size();
-//    SEXP sexpmat = PROTECT(Rf_allocMatrix(REALSXP, nx, ny));
-//    for(int i = 0; i < nx; i++) {
-//	for(int j = 0; j < ny; j++) {
-//	    REAL(sexpmat)[i + nx*j] = mat[i][j];
-//	}
-//    }
-//    Rf_setVar(Rf_install((char*) nam.c_str()), sexpmat, R_GlobalEnv);  // now set it
-//    UNPROTECT(1);
-//}
-
 // specializations of Rcpp wrap template
 
 namespace Rcpp{
 
 template<> SEXP wrap(const std::vector< std::vector< double > > & v) {
-    
-    /* this just assumes this is not a rugged array */
     int nx = v.size();
     int ny = v[0].size();
     SEXP sexpmat = PROTECT(Rf_allocMatrix(REALSXP, nx, ny));
     double* p = REAL(sexpmat) ;
-    /* TODO: use stl algorithms to copy data more efficiently */
     for(int i = 0; i < nx; i++) {
-	for(int j = 0; j < ny; j++) {
+    	for(int j = 0; j < ny; j++) {
 	    p[i + nx*j] = v[i][j];
 	}
     }
