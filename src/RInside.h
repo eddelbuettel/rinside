@@ -50,6 +50,8 @@ private:
     void init_tempdir(void);
     void init_rand(void);
     void autoloads(void);
+    
+    void initialize(const int argc, const char* const argv[] ) ;
 
 public:
     int parseEval(const std::string & line, SEXP &ans);
@@ -60,9 +62,7 @@ public:
 	Rcpp::Environment::global_env().assign( nam, object ) ;
     }
     
-    // non-templated version
-    // void assign(const std::vector< std::vector< double > > & mat, const std::string & nam);
-
+    RInside() ;
     RInside(const int argc, const char* const argv[]);
     ~RInside();
 };

@@ -1,3 +1,10 @@
+2010-02-04  Romain Francois <francoisromain@free.fr>
+
+	* RInside::autoloads revisited with the new Rcpp api
+
+	* RInside gains a default constructor to be used when there 
+	is no command line arguments
+	
 2010-01-28  Romain Francois <francoisromain@free.fr>
 
 	* src/RInside.{h,cpp}: Retire assign(vector<vector<double>> )

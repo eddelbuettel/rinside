@@ -45,7 +45,16 @@ RInside::~RInside() {		// now empty as MemBuf is internal
     logTxt("RInside::dtor END", verbose);
 }
 
+RInside::RInside(){
+	initialize( 0, 0 );
+}
+
 RInside::RInside(const int argc, const char* const argv[]) {
+	initialize( argc, argv ); 
+}
+
+/* TODO: use a vector<string> would make all this a bit more readable */
+void RInside::initialize(const int argc, const char* const argv[]){
     logTxt("RInside::ctor BEGIN", verbose);
 
     verbose_m = false; 		// Default is false
@@ -89,7 +98,6 @@ RInside::RInside(const int argc, const char* const argv[]) {
     autoloads();    		// Force all default package to be dynamically required */
 
     if ((argc - optind) > 1){    	// for argv vector in Global Env */
-	// int nargv = argc - optind - 1;	// Build string vector
 	Rcpp::CharacterVector s_argv( argv+(1+optind), argv+argc );
 	assign(s_argv, "argv");
     } else {
@@ -281,6 +289,10 @@ int RInside::parseEvalQ(const std::string & line) {
 }
 
 // specializations of Rcpp wrap template
+// this overwrites the default behaviour in Rcpp that would 
+// wrap vector<vector<double>> as lists of numeric vectors
+//
+// RInside uses vector<vector<double>> as matrices
 
 namespace Rcpp{
 
