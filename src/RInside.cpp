@@ -45,7 +45,7 @@ RInside::~RInside() {		// now empty as MemBuf is internal
     logTxt("RInside::dtor END", verbose);
 }
 
-RInside::RInside(){
+RInside::RInside() {
 	initialize( 0, 0 );
 }
 
@@ -94,7 +94,8 @@ void RInside::initialize(const int argc, const char* const argv[]){
     R_SetParams(&Rst);
 
     //ptr_R_CleanUp = littler_CleanUp; --- we do that in the destructor
-
+    global_env = R_GlobalEnv ;
+    
     autoloads();    		// Force all default package to be dynamically required */
 
     if ((argc - optind) > 1){    	// for argv vector in Global Env */
@@ -106,6 +107,8 @@ void RInside::initialize(const int argc, const char* const argv[]){
   
     init_rand();    			// for tempfile() to work correctly */
     logTxt("RInside::ctor END", verbose);
+
+    
 }
 
 void RInside::init_tempdir(void) {
@@ -286,6 +289,10 @@ int RInside::parseEvalQ(const std::string & line) {
     SEXP ans;
     int rc = parseEval(line, ans);
     return rc;
+}
+
+Rcpp::Environment::Binding RInside::operator[]( const std::string& name ){
+	return global_env[name]; 
 }
 
 // specializations of Rcpp wrap template

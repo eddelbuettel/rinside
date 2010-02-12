@@ -44,7 +44,8 @@ template<> SEXP wrap< std::vector< std::vector<double> > >( const std::vector< s
 class RInside {
 private:
     MemBuf mb_m;
-
+    Rcpp::Environment global_env ;
+    
     bool verbose_m;				// private switch
 
     void init_tempdir(void);
@@ -59,12 +60,15 @@ public:
 
     template <typename T>
     void assign(const T& object, const std::string& nam){
-	Rcpp::Environment::global_env().assign( nam, object ) ;
+	global_env.assign( nam, object ) ;
     }
     
     RInside() ;
     RInside(const int argc, const char* const argv[]);
     ~RInside();
+    
+    Rcpp::Environment::Binding operator[]( const std::string& name ) ;
+    
 };
 
 // simple logging help

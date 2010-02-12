@@ -1,3 +1,10 @@
+2010-02-12  Romain Francois <romain@r-enthusiasts.com>
+
+	* src/RInside.h: RInside gains an operator[](string) to allow
+	treating the RInside instance as a proxy to the global environment
+	so that we can do: RInside R; R["x"] = 10 ; All the actual work
+	is done by the Rcpp::Environment class
+
 2010-02-04  Romain Francois <francoisromain@free.fr>
 
 	* RInside::autoloads revisited with the new Rcpp api
