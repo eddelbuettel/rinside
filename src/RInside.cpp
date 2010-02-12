@@ -239,7 +239,7 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
     mb_m.add((char*)line.c_str());
     
     PROTECT(cmdSexp = Rf_allocVector(STRSXP, 1));
-    SET_STRING_ELT(cmdSexp, 0, Rf_mkChar((char*)mb_m.getBufPtr()));
+    SET_STRING_ELT(cmdSexp, 0, Rf_mkChar(mb_m.getBufPtr()));
 
     cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
 

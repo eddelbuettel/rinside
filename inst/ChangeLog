@@ -1,5 +1,7 @@
 2010-02-12  Romain Francois <romain@r-enthusiasts.com>
 
+	* src/MemBuf.h: MemBuf simplified using std::string
+
 	* src/RInside.h: RInside gains an operator[](string) to allow
 	treating the RInside instance as a proxy to the global environment
 	so that we can do: RInside R; R["x"] = 10 ; All the actual work

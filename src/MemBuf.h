@@ -2,7 +2,8 @@
 //
 // MemBuf.h: R/C++ interface class library -- Easier R embedding into C++
 //
-// Copyright (C) 2009 - 2010 Dirk Eddelbuettel
+// Copyright (C) 2009 Dirk Eddelbuettel
+// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -21,17 +22,13 @@
 
 class MemBuf {			// simple C++-ification of littler's membuf
 private:
-    typedef struct membuf_st {
-	int size;
-	int count;
-	unsigned char *buf;
-    } *membuf_t;
-    membuf_t p_m;
+    std::string buffer ;
+    
 public:    
     MemBuf(int sizebytes=1024);
     ~MemBuf();
     void resize();
     void rewind();
     void add(char *buf);
-    unsigned char* getBufPtr() { return p_m->buf; };
+    const char* getBufPtr() { return buffer.c_str() ; };
 };
