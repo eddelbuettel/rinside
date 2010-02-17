@@ -187,8 +187,8 @@ void RInside::autoloads() {
     	    Rcpp::Function("delayedAssign"), 
     	    R_NilValue,     /* arg1: assigned in loop */
     	    R_NilValue,     /* arg2: assigned in loop */
-    	    R_GlobalEnv,
-    	    Rcpp::Environment::global_env()[".AutoloadEnv"]
+    	    global_env,
+    	    global_env[".AutoloadEnv"]
     	    ) ;
     Rcpp::Language::Proxy delayed_assign_name  = delayed_assign_call[1];
 
@@ -216,6 +216,8 @@ void RInside::autoloads() {
 		    /* Set the 'name' argument of the delayedAssign call */
 		    delayed_assign_name = packobj[idx+j] ;
 		    
+		    Rf_PrintValue( delayed_assign_call ) ;
+		    
 		    /* evaluate the call */
 		    delayed_assign_call.eval() ;
 		    
@@ -225,7 +227,7 @@ void RInside::autoloads() {
 		
     	}
     } catch( std::exception& ex){
-    	    fprintf(stderr,"%s: Error calling delayedAssign!%s\n", 
+    	    fprintf(stderr,"%s: Error calling delayedAssign:\n %s", 
 		programName, ex.what() );
 	    exit(1);	    
     }
