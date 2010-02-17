@@ -225,8 +225,8 @@ void RInside::autoloads() {
 		
     	}
     } catch( std::exception& ex){
-    	    fprintf(stderr,"%s: Error calling delayedAssign!\n", 
-		programName);
+    	    fprintf(stderr,"%s: Error calling delayedAssign!%s\n", 
+		programName, ex.what() );
 	    exit(1);	    
     }
 }
