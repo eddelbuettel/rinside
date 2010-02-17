@@ -188,7 +188,7 @@ void RInside::autoloads() {
     	    R_NilValue,     /* arg1: assigned in loop */
     	    R_NilValue,     /* arg2: assigned in loop */
     	    global_env,
-    	    global_env[".AutoloadEnv"]
+    	    global_env.find(".AutoloadEnv")
     	    ) ;
     Rcpp::Language::Proxy delayed_assign_name  = delayed_assign_call[1];
 
