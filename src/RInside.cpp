@@ -181,19 +181,20 @@ void RInside::autoloads() {
         - NAME is updated in a loop
         
     */
-    
+     
     int i,j, idx=0, nobj ;
     Rcpp::Language delayed_assign_call( 
     	    Rcpp::Function("delayedAssign"), 
     	    R_NilValue,     /* arg1: assigned in loop */
     	    R_NilValue,     /* arg2: assigned in loop */
     	    global_env,
-    	    global_env[".AutoloadEnv"]
+    	    // global_env[".AutoloadEnv"]
+    	    Rf_findVar(Rf_install(".AutoloadEnv"), global_env )
     	    ) ;
     Rcpp::Language::Proxy delayed_assign_name  = delayed_assign_call[1];
 
     Rcpp::Language autoloader_call( 
-    	    Rcpp::Function("autoloader"), 
+    	    Rcpp::Function("autoloader"),
     	    Rcpp::Named( "name", R_NilValue) ,  /* arg1 : assigned in loop */
     	    Rcpp::Named( "package", R_NilValue) /* arg2 : assigned in loop */
     	    );
@@ -215,8 +216,6 @@ void RInside::autoloads() {
 		   
 		    /* Set the 'name' argument of the delayedAssign call */
 		    delayed_assign_name = packobj[idx+j] ;
-		    
-		    Rf_PrintValue( delayed_assign_call ) ;
 		    
 		    /* evaluate the call */
 		    delayed_assign_call.eval() ;
