@@ -2,7 +2,10 @@
 //
 // Simple example with data in C++ that is passed to R, processed and a result is extracted
 //
-// Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
+// Copyright (C) 2009 Dirk Eddelbuettel 
+// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
+//
+// GPL'ed 
 
 #include "RInside.h"            // for the embedded R via RInside
 
@@ -21,28 +24,27 @@ createMatrix(const int n) {     // simple STL matrix content generator
 
 int main(int argc, char *argv[]) {
     const int mdim = 4;
-    std::string evalstr = "\
-        cat('Running ls()\n'); print(ls()); \
-        cat('Showing M\n'); print(M); \
-        cat('Showing colSums()\n'); Z <- colSums(M); print(Z); \
-        Z";                     // returns Z
-
-    RInside R(argc, argv);
     SEXP ans;
+
+    RInside R(argc, argv); 		        // create an embedded R instance 
     
     // create and fill a sample data Matrix 
     std::vector< std::vector< double > > myMatrix = createMatrix(mdim);
     
-    R.assign( myMatrix, "M");                   // assign STL matrix to R's 'M' var
+    R["M"] = myMatrix;      		        // assign STL matrix to R's 'M' var
+
+    std::string evalstr = "\
+        cat('Running ls()\n'); print(ls()); 		       \
+        cat('Showing M\n'); print(M);			       \
+        cat('Showing colSums()\n'); Z <- colSums(M); print(Z); \
+        Z";                     // returns Z
+
     R.parseEval(evalstr, ans);                  // eval the init string -- Z is now in ans
 
-    RcppVector<double> vec(ans);                // now vec contains Z via ans
-    std::vector<double> v = vec.stlVector();    // convert RcppVector to STL vector
-    // We could also do the assignment in one line:
-    //    vector<double> v = RcppVector<double>(ans).stlVector();
+    						// convert SEXP ans to a vector of doubles
+    std::vector<double> v = Rcpp::as <std::vector<double> >(ans);
 
-    // show the result
-    for (unsigned int i=0; i< v.size(); i++) {
+    for (unsigned int i=0; i< v.size(); i++) {	// show the result
         std::cout << "In C++ element " << i << " is " << v[i] << std::endl;
     }
     exit(0);
