@@ -17,6 +17,10 @@ int main(int argc, char *argv[]) {
     int sum = Rcpp::as<int>( R["z"] ); 
   
     std::cout << "10 + 20 = " << sum << std::endl ; 
+
+    sum = Rcpp::as<int>( R.parseEval("z <- x + y") ); 
+    std::cout << "10 + 20 = " << sum << std::endl ; 
+
     exit(0);
 }
 

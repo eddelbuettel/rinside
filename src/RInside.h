@@ -57,6 +57,7 @@ private:
 public:
     int parseEval(const std::string & line, SEXP &ans);
     int parseEvalQ(const std::string & line);
+    SEXP parseEval(const std::string & line);
 
     template <typename T>
     void assign(const T& object, const std::string& nam){

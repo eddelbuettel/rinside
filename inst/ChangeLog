@@ -1,3 +1,15 @@
+2010-02-23  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.cpp: Add new parseEval() member function returning a SEXP
+	* src/RInside.h: idem
+
+	* src/inst/examples/standard/rinside_sample8.cpp: Show new parseEval()
+
+2010-02-17  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/mpi/: Add examples contributed by Jianping Hua
+	* inst/examples/: Update two existing examples to new Rcpp API
+
 2010-02-12  Romain Francois <romain@r-enthusiasts.com>
 
 	* src/MemBuf.h: MemBuf simplified using std::string
@@ -11,14 +23,14 @@
 
 	* RInside::autoloads revisited with the new Rcpp api
 
-	* RInside gains a default constructor to be used when there 
+	* RInside gains a default constructor to be used when there
 	is no command line arguments
-	
+
 2010-01-28  Romain Francois <francoisromain@free.fr>
 
 	* src/RInside.{h,cpp}: Retire assign(vector<vector<double>> )
 	because now this can be taken care of by template specialization
-	
+
 	* DESCRIPTION: require Rcpp 0.7.3.6
 
 2010-01-28  Dirk Eddelbuettel  <edd@debian.org>

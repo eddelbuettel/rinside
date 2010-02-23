@@ -291,6 +291,12 @@ int RInside::parseEvalQ(const std::string & line) {
     return rc;
 }
 
+SEXP RInside::parseEval(const std::string & line) {
+    SEXP ans;
+    int rc = parseEval(line, ans);
+    return ans;
+}
+
 Rcpp::Environment::Binding RInside::operator[]( const std::string& name ){
 	return global_env[name]; 
 }
