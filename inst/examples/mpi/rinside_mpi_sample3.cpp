@@ -1,0 +1,78 @@
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4;  tab-width: 8; -*-
+//
+// Simple mpi example: simulate sampling/averaging on multiple nodes and gathering the results.
+//
+// MPI C++ API version of file contributed by Jianping Hua 
+
+#include "mpi.h"     // mpi header file
+#include "RInside.h" // for the embedded R via RInside
+#include "Rcpp.h"    // for the R / Cpp interface used for transfer
+
+int main(int argc, char *argv[]) {
+
+    MPI::Init(argc, argv);                      // mpi initialization
+    int myrank = MPI::COMM_WORLD.Get_rank();    // obtain current node rank
+    int nodesize = MPI::COMM_WORLD.Get_size();  // obtain total nodes running.
+
+    int sndcnt = 1, rcvcnt = 1;                 // # of elements in send/recv buffer
+    double sendValue;                           // value to be collected in current node
+    double *allvalues = new double[nodesize]; 	// to save all results
+
+    // simulation info
+    // to sample from a uniform distribution
+    int rangeMin = 0, rangeMax = 10; // range of uniform distribution
+    int sampleSize = 2;              // points in each sample
+
+    try {
+        RInside R(argc, argv);              // create an embedded R instance
+        SEXP ans;                           // return value
+
+        std::stringstream txt;
+        txt << "x <- " << rangeMin << std::endl;
+        R.parseEvalQ( txt.str() );      // assign x with lower range of uniform distribution
+
+        txt << "y <- " << rangeMax << std::endl;
+        R.parseEvalQ( txt.str() );      // assign y with upper range of uniform distribution
+
+        txt << "n <- " << sampleSize << std::endl;
+        R.parseEvalQ( txt.str() );      // assign n with the size of sample
+
+        std::string evalstr = " mean(runif(n,x,y))";  // sampling, compute the mean
+        if ( R.parseEval(evalstr, ans) )              // eval the evalstr string, return results
+            throw std::runtime_error( "R cannot evalueate '" + evalstr + "'" );
+
+        RcppVector<double> m(ans);      // convert SEXP variable to an RcppVector
+
+        sendValue = m( 0 );             // assign the return value to the variable to be gathered
+
+        //gather together values from all processes to allvalues
+	MPI::COMM_WORLD.Gather((const void*)&sendValue, sndcnt, MPI::DOUBLE, (void*)allvalues, rcvcnt, MPI::DOUBLE, 0);
+
+	//rinside_mpi_sample3.cpp:49: error: no matching function for call to ‘MPI::Comm::Gather(double*, int&, const MPI::Datatype&, double*&, int&, const MPI::Datatype&, int, MPI::Intracomm&)’
+	///usr/lib/openmpi/include/openmpi/ompi/mpi/cxx/comm_inln.h:320: note: candidates are: virtual void MPI::Comm::Gather(const void*, int, const MPI::Datatype&, void*, int, const MPI::Datatype&, int) const
+
+        // show what inidividual node's contribution
+        std::cout << "node " << myrank << " has mean " << m(0) << std::endl;
+
+    } catch(std::exception& ex) {
+        std::cerr << "Exception caught: " << ex.what() << std::endl;
+    } catch(...) {
+        std::cerr << "Unknown exception caught" << std::endl;
+    }
+
+    // show gathered results in node 0
+    if ( myrank == 0 ) {
+	std::cout << "values of all " << nodesize << " trials: " << std::endl;
+	for ( int i = 0; i < nodesize; i++ )
+	    std::cout << allvalues[ i ] << ", ";
+	std::cout << std::endl;
+    }
+
+    // clean up
+    delete[] allvalues;
+
+    MPI::Finalize();             // mpi finalization
+
+    exit(0);
+}
+
