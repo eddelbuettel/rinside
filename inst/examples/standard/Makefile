@@ -43,3 +43,5 @@ all : 			$(programs)
 clean:
 			rm -vf $(programs)
 
+runAll:
+			for p in $(programs); do echo "Running $$p"; ./$$p; done
