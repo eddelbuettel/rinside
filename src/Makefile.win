@@ -41,6 +41,7 @@ RCPPFLAGS := 		$(shell $(R_HOME)/bin/R CMD config --cppflags)
 RLDFLAGS := 		$(shell $(R_HOME)/bin/R CMD config --ldflags)
 
 RCPPINCL := 		$(shell echo 'Rcpp:::CxxFlags()' | $(R_HOME)/bin/R --vanilla --slave)
+RCPPLIB := 		$(shell echo 'Rcpp:::LdFlags()' | $(R_HOME)/bin/R --vanilla --slave)
 
 CXX := 			$(shell $(R_HOME)/bin/R CMD config CXX)
 CPPFLAGS := 		-Wall $(shell $(R_HOME)/bin/R CMD config CPPFLAGS)
@@ -69,7 +70,7 @@ userLibrary : 		$(USERLIB) $(USERLIBST)
 			rm $(USERLIB) $(USERLIBST)
 
 $(USERLIB) : 		$(HEADERS) $(OBJECTS)
-			$(CXX) -Wl,--export-all-symbols -shared -o $(USERLIB) $(OBJECTS) $(RLDFLAGS) $(ALL_LIBS) -lws2_32
+			$(CXX) -Wl,--export-all-symbols -shared -o $(USERLIB) $(OBJECTS) $(RCPPLIB) $(RLDFLAGS) $(ALL_LIBS) -lws2_32
 			@if test -e "/usr/bin/install_name_tool"; then \
 				/usr/bin/install_name_tool -id $(R_PACKAGE_DIR)/lib$(R_ARCH)/$(USERLIB) $(USERLIB); fi
 
