@@ -1,3 +1,7 @@
+2010-02-25  Dirk Eddelbuettel  <edd@dexter>
+
+	* inst/examples/mpi/: Added two variants using the C++ API to MPI
+
 2010-02-23  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp: Add new parseEval() member function returning a SEXP
