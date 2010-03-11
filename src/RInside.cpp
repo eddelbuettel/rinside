@@ -293,7 +293,8 @@ int RInside::parseEvalQ(const std::string & line) {
 
 SEXP RInside::parseEval(const std::string & line) {
     SEXP ans;
-    int rc = parseEval(line, ans);
+    /*nt rc = */ parseEval(line, ans);
+    // TODO: throw on error
     return ans;
 }
 
