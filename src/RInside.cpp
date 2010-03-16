@@ -46,11 +46,11 @@ RInside::~RInside() {		// now empty as MemBuf is internal
 }
 
 RInside::RInside() {
-	initialize( 0, 0 );
+    initialize( 0, 0 );
 }
 
 RInside::RInside(const int argc, const char* const argv[]) {
-	initialize( argc, argv ); 
+    initialize( argc, argv ); 
 }
 
 /* TODO: use a vector<string> would make all this a bit more readable */
@@ -66,7 +66,9 @@ void RInside::initialize(const int argc, const char* const argv[]){
 	if (getenv(R_VARS[i]) == NULL) { // if env variable is not yet set
 	    if (setenv(R_VARS[i],R_VARS[i+1],1) != 0){
 		perror("ERROR: couldn't set/replace an R environment variable");
-		exit(1);
+		//exit(1);
+		throw runtime_error("Could not set R environment variable " + 
+				    std::string(R_VARS[i]) + " to " std::string(R_VARS[i+1]));
 	    }
 	}
     }
@@ -107,8 +109,6 @@ void RInside::initialize(const int argc, const char* const argv[]){
   
     init_rand();    			// for tempfile() to work correctly */
     logTxt("RInside::ctor END", verbose);
-
-    
 }
 
 void RInside::init_tempdir(void) {
@@ -126,7 +126,8 @@ void RInside::init_tempdir(void) {
     R_TempDir = (char*) tmp;
     if (setenv("R_SESSION_TMPDIR",tmp,1) != 0){
 	perror("Fatal Error: couldn't set/replace R_SESSION_TMPDIR!");
-	exit(1);
+	//exit(1);
+	throw runtime_error("Could not set / replace R_SESSION_TMPDIR to " + std::string(tmp));
     }
 }
 
@@ -183,20 +184,18 @@ void RInside::autoloads() {
     */
      
     int i,j, idx=0, nobj ;
-    Rcpp::Language delayed_assign_call( 
-    	    Rcpp::Function("delayedAssign"), 
-    	    R_NilValue,     /* arg1: assigned in loop */
-    	    R_NilValue,     /* arg2: assigned in loop */
-    	    global_env,
-    	    global_env.find(".AutoloadEnv")
-    	    ) ;
+    Rcpp::Language delayed_assign_call(Rcpp::Function("delayedAssign"), 
+				       R_NilValue,     /* arg1: assigned in loop */
+				       R_NilValue,     /* arg2: assigned in loop */
+				       global_env,
+				       global_env.find(".AutoloadEnv")
+				       ) ;
     Rcpp::Language::Proxy delayed_assign_name  = delayed_assign_call[1];
 
-    Rcpp::Language autoloader_call( 
-    	    Rcpp::Function("autoloader"),
-    	    Rcpp::Named( "name", R_NilValue) ,  /* arg1 : assigned in loop */
-    	    Rcpp::Named( "package", R_NilValue) /* arg2 : assigned in loop */
-    	    );
+    Rcpp::Language autoloader_call(Rcpp::Function("autoloader"),
+				   Rcpp::Named( "name", R_NilValue) ,  /* arg1 : assigned in loop */
+				   Rcpp::Named( "package", R_NilValue) /* arg2 : assigned in loop */
+				   );
     Rcpp::Language::Proxy autoloader_name = autoloader_call[1];
     Rcpp::Language::Proxy autoloader_pack = autoloader_call[2];
     delayed_assign_call[2] = autoloader_call ;
@@ -204,30 +203,27 @@ void RInside::autoloads() {
     try{
     	for( i=0; i<packc; i++){
     		
-    		/* set the 'package' argument of the autoloader call */
-    		autoloader_pack = pack[i] ;
+	    /* set the 'package' argument of the autoloader call */
+	    autoloader_pack = pack[i] ;
 		
-    		nobj = packobjc[i] ; 
-    		for (j = 0; j < nobj ; j++){
-		    
-		    /* set the 'name' argument of the autoloader call */ 
-		    autoloader_name = packobj[idx+j] ;
+	    nobj = packobjc[i] ; 
+	    for (j = 0; j < nobj ; j++){
+		
+		/* set the 'name' argument of the autoloader call */ 
+		autoloader_name = packobj[idx+j] ;
 		   
-		    /* Set the 'name' argument of the delayedAssign call */
-		    delayed_assign_name = packobj[idx+j] ;
+		/* Set the 'name' argument of the delayedAssign call */
+		delayed_assign_name = packobj[idx+j] ;
 		    
-		    /* evaluate the call */
-		    delayed_assign_call.eval() ;
+		/* evaluate the call */
+		delayed_assign_call.eval() ;
 		    
-		}
-		
-		idx += packobjc[i] ;
-		
+	    }
+	    idx += packobjc[i] ;
     	}
     } catch( std::exception& ex){
-    	    fprintf(stderr,"%s: Error calling delayedAssign:\n %s", 
-		programName, ex.what() );
-	    exit(1);	    
+	fprintf(stderr,"%s: Error calling delayedAssign:\n %s", programName, ex.what() );
+	exit(1);	    
     }
 }
 
@@ -299,7 +295,7 @@ SEXP RInside::parseEval(const std::string & line) {
 }
 
 Rcpp::Environment::Binding RInside::operator[]( const std::string& name ){
-	return global_env[name]; 
+    return global_env[name]; 
 }
 
 // specializations of Rcpp wrap template
@@ -310,32 +306,32 @@ Rcpp::Environment::Binding RInside::operator[]( const std::string& name ){
 
 namespace Rcpp{
 
-template<> SEXP wrap(const std::vector< std::vector< double > > & v) {
-    int nx = v.size();
-    int ny = v[0].size();
-    SEXP sexpmat = PROTECT(Rf_allocMatrix(REALSXP, nx, ny));
-    double* p = REAL(sexpmat) ;
-    for(int i = 0; i < nx; i++) {
-    	for(int j = 0; j < ny; j++) {
-	    p[i + nx*j] = v[i][j];
+    template<> SEXP wrap(const std::vector< std::vector< double > > & v) {
+	int nx = v.size();
+	int ny = v[0].size();
+	SEXP sexpmat = PROTECT(Rf_allocMatrix(REALSXP, nx, ny));
+	double* p = REAL(sexpmat) ;
+	for(int i = 0; i < nx; i++) {
+	    for(int j = 0; j < ny; j++) {
+		p[i + nx*j] = v[i][j];
+	    }
 	}
+	UNPROTECT(1);
+	return sexpmat ;
     }
-    UNPROTECT(1);
-    return sexpmat ;
-}
 
-template<> SEXP wrap(const std::vector< std::vector< int > > & v) {
-    int nx = v.size();
-    int ny = v[0].size();
-    SEXP sexpmat = PROTECT(Rf_allocMatrix(INTSXP, nx, ny));
-    int *p = INTEGER(sexpmat) ; /* do this just once */
-    for(int i = 0; i < nx; i++) {
-	for(int j = 0; j < ny; j++) {
-	    p[i + nx*j] = v[i][j];
+    template<> SEXP wrap(const std::vector< std::vector< int > > & v) {
+	int nx = v.size();
+	int ny = v[0].size();
+	SEXP sexpmat = PROTECT(Rf_allocMatrix(INTSXP, nx, ny));
+	int *p = INTEGER(sexpmat) ; /* do this just once */
+	for(int i = 0; i < nx; i++) {
+	    for(int j = 0; j < ny; j++) {
+		p[i + nx*j] = v[i][j];
+	    }
 	}
+	UNPROTECT(1);
+	return sexpmat ;
     }
-    UNPROTECT(1);
-    return sexpmat ;
-}
 
 }
