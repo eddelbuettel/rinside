@@ -13,28 +13,26 @@ int main(int argc, char *argv[]) {
         SEXP ans;
 
         std::string txt = "suppressMessages(library(fPortfolio))";
-        if (R.parseEvalQ(txt))          // load library, no return value
-            throw std::runtime_error("R cannot evaluate '" + txt + "'");
+        R.parseEvalQ(txt);	        // load library, no return value
 
         txt = "M <- as.matrix(SWX.RET); print(head(M)); M";
-        if (R.parseEval(txt, ans))      // assign matrix M to SEXP variable ans
-            throw std::runtime_error("R cannot evaluate '" + txt + "'");
-        RcppMatrix<double> M(ans);      // convert SEXP variable to an RcppMatrix
+        ans = R.parseEval(txt);	      	// assign matrix M to SEXP variable ans
+
+	Rcpp::NumericMatrix M(ans);     // convert SEXP variable to a NumericMatrix
 
         std::cout << "M has " 
-                  << M.getDim1() << " rows and " 
-                  << M.getDim2() << " cols" << std::endl;
+                  << M.nrow() << " rows and " 
+                  << M.ncol() << " cols" << std::endl;
         
         txt = "colnames(M)";
-        if (R.parseEval(txt, ans))      // assign columns names of M to ans
-            throw std::runtime_error("R cannot evaluate '" + txt + "'");
-        RcppStringVector cnames(ans);   // and into string vector cnames
-        
+        ans = R.parseEval(txt); 	// assign columns names of M to ans
 
-        for (int i=0; i<M.getDim2(); i++) {
-            std::cout << "Column " << cnames(i) << " in row 42 has " << M(42,i) << std::endl;
+	Rcpp::CharacterVector cnames(ans);   // and into string vector cnames
+
+        for (int i=0; i<M.ncol(); i++) {
+            std::cout << "Column " << cnames[i] << " in row 42 has " << M(42,i) << std::endl;
         }
-        
+    
     } catch(std::exception& ex) {
         std::cerr << "Exception caught: " << ex.what() << std::endl;
     } catch(...) {

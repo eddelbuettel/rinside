@@ -65,10 +65,10 @@ void RInside::initialize(const int argc, const char* const argv[]){
     for (int i = 0; R_VARS[i] != NULL; i+= 2) {
 	if (getenv(R_VARS[i]) == NULL) { // if env variable is not yet set
 	    if (setenv(R_VARS[i],R_VARS[i+1],1) != 0){
-		perror("ERROR: couldn't set/replace an R environment variable");
+		//perror("ERROR: couldn't set/replace an R environment variable");
 		//exit(1);
-		throw runtime_error("Could not set R environment variable " + 
-				    std::string(R_VARS[i]) + " to " std::string(R_VARS[i+1]));
+		throw std::runtime_error("Could not set R environment variable " + 
+					 std::string(R_VARS[i]) + " to " +  std::string(R_VARS[i+1]));
 	    }
 	}
     }
@@ -125,9 +125,9 @@ void RInside::init_tempdir(void) {
     }
     R_TempDir = (char*) tmp;
     if (setenv("R_SESSION_TMPDIR",tmp,1) != 0){
-	perror("Fatal Error: couldn't set/replace R_SESSION_TMPDIR!");
+	//perror("Fatal Error: couldn't set/replace R_SESSION_TMPDIR!");
 	//exit(1);
-	throw runtime_error("Could not set / replace R_SESSION_TMPDIR to " + std::string(tmp));
+	throw std::runtime_error("Could not set / replace R_SESSION_TMPDIR to " + std::string(tmp));
     }
 }
 
@@ -222,8 +222,10 @@ void RInside::autoloads() {
 	    idx += packobjc[i] ;
     	}
     } catch( std::exception& ex){
-	fprintf(stderr,"%s: Error calling delayedAssign:\n %s", programName, ex.what() );
-	exit(1);	    
+	//fprintf(stderr,"%s: Error calling delayedAssign:\n %s", programName, ex.what() );
+	//exit(1);	    
+	// is it wrong to throw in a catch() block?
+	throw std::runtime_error("Error calling delayedAssign: " + std::string(ex.what()));
     }
 }
 
@@ -281,16 +283,20 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
     return 0;
 }
 
-int RInside::parseEvalQ(const std::string & line) {
+void RInside::parseEvalQ(const std::string & line) {
     SEXP ans;
     int rc = parseEval(line, ans);
-    return rc;
+    if (rc != 0) {
+	throw std::runtime_error("Error evaluating: " + line);
+    }
 }
 
 SEXP RInside::parseEval(const std::string & line) {
     SEXP ans;
-    /*nt rc = */ parseEval(line, ans);
-    // TODO: throw on error
+    int rc = parseEval(line, ans);
+    if (rc != 0) {
+	throw std::runtime_error("Error evaluating: " + line);
+    }
     return ans;
 }
 

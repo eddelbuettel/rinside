@@ -55,9 +55,9 @@ private:
     void initialize(const int argc, const char* const argv[] ) ;
 
 public:
-    int parseEval(const std::string & line, SEXP &ans);
-    int parseEvalQ(const std::string & line);
-    SEXP parseEval(const std::string & line);
+    int  parseEval(const std::string & line, SEXP &ans); // parse line, return in ans; error code rc
+    void parseEvalQ(const std::string & line);		 // parse line, no return (throws on error)
+    SEXP parseEval(const std::string & line);		 // parse line, return SEXP (throws on error)
 
     template <typename T>
     void assign(const T& object, const std::string& nam){

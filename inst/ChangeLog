@@ -1,3 +1,14 @@
+2010-03-16  Dirk Eddelbuettel  <edd@dexter>
+
+	* src/RInside.{h,cpp}: parseEval* function changed slightly so that
+	  SEXP parseEval(string) is now preferred, and it as well as
+	  void parseEvalQ(string) now throw exceptions; they call the
+	  non-throwing older int parseEval(string, SEXP). We changed the
+	  parseEvalQ from int to void which is more in-line with it purpose.
+	* inst/examples/standard/rinside_sample{2,4,5}.cpp: Adapted
+	  accordingly, mostly by removing no-longer-needed error checking
+	  and exepction throw which has now move 'up' into RInside.cpp
+
 2010-02-25  Dirk Eddelbuettel  <edd@dexter>
 
 	* inst/examples/mpi/: Added two variants using the C++ API to MPI
