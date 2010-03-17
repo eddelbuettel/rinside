@@ -1,9 +1,9 @@
-
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4;  tab-width: 8; -*-
 //
 // Showing off some of the templated conversion due to Rcpp
 //
-// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois and GPL'ed 
+// Copyright (C) 2009 Dirk Eddelbuettel 
+// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
 
 #include "RInside.h"                    // for the embedded R via RInside
 

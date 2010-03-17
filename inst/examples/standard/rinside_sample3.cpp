@@ -2,7 +2,8 @@
 //
 // Simple example for using lm() using the example from help(swiss)
 //
-// Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
+// Copyright (C) 2009 Dirk Eddelbuettel 
+// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
 
 #include "RInside.h"                    // for the embedded R via RInside
 #include <iomanip>

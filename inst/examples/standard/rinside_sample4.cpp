@@ -2,7 +2,8 @@
 //
 // Another simple example inspired by an r-devel mail by Abhijit Bera
 //
-// Copyright (C) 2009 Dirk Eddelbuettel and GPL'ed 
+// Copyright (C) 2009 Dirk Eddelbuettel 
+// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
 
 #include "RInside.h"                    // for the embedded R via RInside
 #include <iomanip>
