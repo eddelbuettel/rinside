@@ -14,14 +14,12 @@ int main(int argc, char *argv[]) {
         SEXP ans;
 
         std::string txt = "suppressMessages(library(fPortfolio))";
-        if (R.parseEvalQ(txt))          // load library, no return value
-            throw std::runtime_error("R cannot evaluate '" + txt + "'");
+        R.parseEvalQ(txt);	        // load library, no return value
 
         txt = "lppData <- 100 * LPP2005.RET[, 1:6]; "
-	  "ewSpec <- portfolioSpec(); " 
-	  "nAssets <- ncol(lppData); ";
-        if (R.parseEval(txt, ans))      // prepare problem
-            throw std::runtime_error("R cannot evaluate '" + txt + "'");
+	    "ewSpec <- portfolioSpec(); " 
+	    "nAssets <- ncol(lppData); ";
+        R.parseEval(txt, ans);		// prepare problem
 	
 	const double dvec[6] = { 0.1, 0.1, 0.1, 0.1, 0.3, 0.3 }; // choose any weights you want
 	const std::vector<double> w(dvec, &dvec[6]);
@@ -29,22 +27,21 @@ int main(int argc, char *argv[]) {
 	R.assign( w, "weightsvec");	// assign STL vector to R's 'weightsvec' variable
 
 	txt = "setWeights(ewSpec) <- weightsvec";
-        if (R.parseEvalQ(txt))		// evaluate assignment
-            throw std::runtime_error("R cannot evaluate '" + txt + "'");
+        R.parseEvalQ(txt);		// evaluate assignment
 
-	txt = "ewPortfolio <- feasiblePortfolio(data = lppData, spec = ewSpec, constraints = \"LongOnly\"); "
-	  "print(ewPortfolio); "
-	  "vec <- getCovRiskBudgets(ewPortfolio@portfolio)";
-        if (R.parseEval(txt, ans))      // assign covRiskBudget weights to ans
-            throw std::runtime_error("R cannot evaluate '" + txt + "'");
-	RcppVector<double> V(ans);      // convert SEXP variable to an RcppVector
+	txt = "ewPortfolio <- feasiblePortfolio(data = lppData, spec = ewSpec, "
+	    "                                   constraints = \"LongOnly\"); "
+	    "print(ewPortfolio); "
+	    "vec <- getCovRiskBudgets(ewPortfolio@portfolio)";
+        ans = R.parseEval(txt);  	// assign covRiskBudget weights to ans
+	Rcpp::NumericVector V(ans);  	// convert SEXP variable to an RcppVector
   
-	R.parseEval("names(vec)", ans);	// assign columns names to ans
-	RcppStringVector names(ans);   
+	ans = R.parseEval("names(vec)");	// assign columns names to ans
+	Rcpp::CharacterVector names(ans);   
 
 	for (int i=0; i<names.size(); i++) {
-	  std::cout << std::setw(16) << names(i) << "\t"
-		    << std::setw(11) << V(i) << "\n";
+	  std::cout << std::setw(16) << names[i] << "\t"
+		    << std::setw(11) << V[i] << "\n";
         }
         
     } catch(std::exception& ex) {
