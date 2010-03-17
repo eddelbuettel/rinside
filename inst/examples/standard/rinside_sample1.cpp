@@ -9,17 +9,14 @@
 
 #include "RInside.h"            // for the embedded R via RInside
 
-std::vector< std::vector< double > > 
-createMatrix(const int n) {     // simple STL matrix content generator
-    std::vector< std::vector< double > > mat;
+Rcpp::NumericMatrix createMatrix(const int n) {
+    Rcpp::NumericMatrix M(n,n);
     for (int i=0; i<n; i++) {
-        std::vector<double> row;
         for (int j=0; j<n; j++) {
-            row.push_back((i*10+j)); 
+            M(i,j) = i*10+j; 
         }
-        mat.push_back(row);
     }
-    return(mat);
+    return(M);
 }
 
 int main(int argc, char *argv[]) {
@@ -28,10 +25,8 @@ int main(int argc, char *argv[]) {
 
     RInside R(argc, argv); 		        // create an embedded R instance 
     
-    // create and fill a sample data Matrix 
-    std::vector< std::vector< double > > myMatrix = createMatrix(mdim);
-    
-    R["M"] = myMatrix;      		        // assign STL matrix to R's 'M' var
+    Rcpp::NumericMatrix M = createMatrix(mdim);	// create and fill a sample data Matrix 
+    R["M"] = M;   	   		        // assign C++ matrix M to R's 'M' var
 
     std::string evalstr = "\
         cat('Running ls()\n'); print(ls()); 		       \
@@ -39,12 +34,10 @@ int main(int argc, char *argv[]) {
         cat('Showing colSums()\n'); Z <- colSums(M); print(Z); \
         Z";                     // returns Z
 
-    R.parseEval(evalstr, ans);                  // eval the init string -- Z is now in ans
-
-    						// convert SEXP ans to a vector of doubles
-    std::vector<double> v = Rcpp::as <std::vector<double> >(ans);
-
-    for (unsigned int i=0; i< v.size(); i++) {	// show the result
+    ans = R.parseEval(evalstr);    		// eval the init string -- Z is now in ans
+    						
+    Rcpp::NumericVector v(ans);			// convert SEXP ans to a vector of doubles
+    for (int i=0; i< v.size(); i++) {		// show the result
         std::cout << "In C++ element " << i << " is " << v[i] << std::endl;
     }
     exit(0);
