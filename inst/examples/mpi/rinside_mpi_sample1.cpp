@@ -39,10 +39,8 @@ int main(int argc, char *argv[]) {
         R.parseEvalQ( txt.str() );      // assign n with the size of sample
 
         std::string evalstr = " mean(runif(n,x,y))";  // sampling, compute the mean
-        if ( R.parseEval(evalstr, ans) )              // eval the evalstr string, return results
-            throw std::runtime_error( "R cannot evalueate '" + evalstr + "'" );
-
-        RcppVector<double> m(ans);      // convert SEXP variable to an RcppVector
+        ans = R.parseEval(evalstr);	// eval the evalstr string, return results
+	Rcpp::NumericVector m(ans);     // convert SEXP variable to an Rcpp::NumericVector
 
         sendValue = m( 0 );             // assign the return value to the variable to be gathered
 

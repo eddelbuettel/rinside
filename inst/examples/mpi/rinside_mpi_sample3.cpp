@@ -38,18 +38,13 @@ int main(int argc, char *argv[]) {
         R.parseEvalQ( txt.str() );      // assign n with the size of sample
 
         std::string evalstr = " mean(runif(n,x,y))";  // sampling, compute the mean
-        if ( R.parseEval(evalstr, ans) )              // eval the evalstr string, return results
-            throw std::runtime_error( "R cannot evalueate '" + evalstr + "'" );
-
-        RcppVector<double> m(ans);      // convert SEXP variable to an RcppVector
+        ans = R.parseEval(evalstr);	// eval the evalstr string, return results
+	Rcpp::NumericVector m(ans);     // convert SEXP variable to an Rcpp::NumericVector
 
         sendValue = m( 0 );             // assign the return value to the variable to be gathered
 
         //gather together values from all processes to allvalues
 	MPI::COMM_WORLD.Gather((const void*)&sendValue, sndcnt, MPI::DOUBLE, (void*)allvalues, rcvcnt, MPI::DOUBLE, 0);
-
-	//rinside_mpi_sample3.cpp:49: error: no matching function for call to ‘MPI::Comm::Gather(double*, int&, const MPI::Datatype&, double*&, int&, const MPI::Datatype&, int, MPI::Intracomm&)’
-	///usr/lib/openmpi/include/openmpi/ompi/mpi/cxx/comm_inln.h:320: note: candidates are: virtual void MPI::Comm::Gather(const void*, int, const MPI::Datatype&, void*, int, const MPI::Datatype&, int) const
 
         // show what inidividual node's contribution
         std::cout << "node " << myrank << " has mean " << m(0) << std::endl;
