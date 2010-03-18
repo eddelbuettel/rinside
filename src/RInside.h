@@ -35,12 +35,6 @@
 
 #include "MemBuf.h"
 
-namespace Rcpp{
-/* specializations of wrap, this should probably go in Rcpp */
-template<> SEXP wrap< std::vector< std::vector<int> > >( const std::vector< std::vector<int> >& v) ;
-template<> SEXP wrap< std::vector< std::vector<double> > >( const std::vector< std::vector<double> >& v) ;
-}
-
 class RInside {
 private:
     MemBuf mb_m;
@@ -59,8 +53,8 @@ public:
     void parseEvalQ(const std::string & line);		 // parse line, no return (throws on error)
     SEXP parseEval(const std::string & line);		 // parse line, return SEXP (throws on error)
 
-    template <typename T>
-    void assign(const T& object, const std::string& nam){
+    template <typename T> 
+    void assign(const T& object, const std::string& nam) {
 	global_env.assign( nam, object ) ;
     }
     

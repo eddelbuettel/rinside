@@ -27,9 +27,9 @@ bool verbose = false;
 const char *programName = "RInside";
 
 #ifdef WIN32
-// on Windows, we need to provide setenv which is in the file setenv.c here
-#include "setenv.c"
-extern int optind;
+    // on Windows, we need to provide setenv which is in the file setenv.c here
+    #include "setenv.c"
+    extern int optind;
 #endif
 
 RInside::~RInside() {		// now empty as MemBuf is internal
@@ -53,7 +53,7 @@ RInside::RInside(const int argc, const char* const argv[]) {
     initialize( argc, argv ); 
 }
 
-/* TODO: use a vector<string> would make all this a bit more readable */
+// TODO: use a vector<string> would make all this a bit more readable 
 void RInside::initialize(const int argc, const char* const argv[]){
     logTxt("RInside::ctor BEGIN", verbose);
 
@@ -144,91 +144,91 @@ void RInside::autoloads() {
 
     #include "RInsideAutoloads.h"
  
-    /* Autoload default packages and names from autoloads.h
-     *
-     * This function behaves in almost every way like
-     * R's autoload:
-     * function (name, package, reset = FALSE, ...)
-     * {
-     *     if (!reset && exists(name, envir = .GlobalEnv, inherits = FALSE))
-     *        stop("an object with that name already exists")
-     *     m <- match.call()
-     *     m[[1]] <- as.name("list")
-     *     newcall <- eval(m, parent.frame())
-     *     newcall <- as.call(c(as.name("autoloader"), newcall))
-     *     newcall$reset <- NULL
-     *     if (is.na(match(package, .Autoloaded)))
-     *        assign(".Autoloaded", c(package, .Autoloaded), env = .AutoloadEnv)
-     *     do.call("delayedAssign", list(name, newcall, .GlobalEnv,
-     *                                                         .AutoloadEnv))
-     *     invisible()
-     * }
-     *
-     * What's missing is the updating of the string vector .Autoloaded with 
-     * the list of packages, which by my code analysis is useless and only 
-     * for informational purposes.
-     *
-     */
+    // Autoload default packages and names from autoloads.h
+    //
+    // This function behaves in almost every way like
+    // R's autoload:
+    // function (name, package, reset = FALSE, ...)
+    // {
+    //     if (!reset && exists(name, envir = .GlobalEnv, inherits = FALSE))
+    //        stop("an object with that name already exists")
+    //     m <- match.call()
+    //     m[[1]] <- as.name("list")
+    //     newcall <- eval(m, parent.frame())
+    //     newcall <- as.call(c(as.name("autoloader"), newcall))
+    //     newcall$reset <- NULL
+    //     if (is.na(match(package, .Autoloaded)))
+    //        assign(".Autoloaded", c(package, .Autoloaded), env = .AutoloadEnv)
+    //     do.call("delayedAssign", list(name, newcall, .GlobalEnv,
+    //                                                         .AutoloadEnv))
+    //     invisible()
+    // }
+    //
+    // What's missing is the updating of the string vector .Autoloaded with 
+    // the list of packages, which by my code analysis is useless and only 
+    // for informational purposes.
+    //
+    //
     
-    /* we build the call : 
-    
-        delayedAssign( NAME, 
-        	autoloader( name = NAME, package = PACKAGE), 
-        	.GlobalEnv, 
-        	.AutoloadEnv )
-        	
-        where : 
-        - PACKAGE is updated in a loop
-        - NAME is updated in a loop
-        
-    */
+    // we build the call : 
+    //
+    //  delayedAssign( NAME, 
+    //  	autoloader( name = NAME, package = PACKAGE), 
+    //  	.GlobalEnv, 
+    //  	.AutoloadEnv )
+    //  	
+    //  where : 
+    //  - PACKAGE is updated in a loop
+    //  - NAME is updated in a loop
+    //  
+    //
      
     int i,j, idx=0, nobj ;
     Rcpp::Language delayed_assign_call(Rcpp::Function("delayedAssign"), 
-				       R_NilValue,     /* arg1: assigned in loop */
-				       R_NilValue,     /* arg2: assigned in loop */
+				       R_NilValue,     // arg1: assigned in loop 
+				       R_NilValue,     // arg2: assigned in loop 
 				       global_env,
 				       global_env.find(".AutoloadEnv")
 				       ) ;
     Rcpp::Language::Proxy delayed_assign_name  = delayed_assign_call[1];
 
     Rcpp::Language autoloader_call(Rcpp::Function("autoloader"),
-				   Rcpp::Named( "name", R_NilValue) ,  /* arg1 : assigned in loop */
-				   Rcpp::Named( "package", R_NilValue) /* arg2 : assigned in loop */
+				   Rcpp::Named( "name", R_NilValue) ,  // arg1 : assigned in loop 
+				   Rcpp::Named( "package", R_NilValue) // arg2 : assigned in loop 
 				   );
     Rcpp::Language::Proxy autoloader_name = autoloader_call[1];
     Rcpp::Language::Proxy autoloader_pack = autoloader_call[2];
     delayed_assign_call[2] = autoloader_call ;
     
-    try{
+    try { 
     	for( i=0; i<packc; i++){
     		
-	    /* set the 'package' argument of the autoloader call */
+	    // set the 'package' argument of the autoloader call */
 	    autoloader_pack = pack[i] ;
 		
 	    nobj = packobjc[i] ; 
 	    for (j = 0; j < nobj ; j++){
 		
-		/* set the 'name' argument of the autoloader call */ 
+		// set the 'name' argument of the autoloader call */ 
 		autoloader_name = packobj[idx+j] ;
 		   
-		/* Set the 'name' argument of the delayedAssign call */
+		// Set the 'name' argument of the delayedAssign call */
 		delayed_assign_name = packobj[idx+j] ;
 		    
-		/* evaluate the call */
+		// evaluate the call */
 		delayed_assign_call.eval() ;
 		    
 	    }
 	    idx += packobjc[i] ;
     	}
     } catch( std::exception& ex){
-	//fprintf(stderr,"%s: Error calling delayedAssign:\n %s", programName, ex.what() );
-	//exit(1);	    
-	// is it wrong to throw in a catch() block?
+	// fprintf(stderr,"%s: Error calling delayedAssign:\n %s", programName, ex.what() );
+	// exit(1);	    
 	throw std::runtime_error("Error calling delayedAssign: " + std::string(ex.what()));
     }
 }
 
+// this is a non-throwing version returning an error code
 int RInside::parseEval(const std::string & line, SEXP & ans) {
     ParseStatus status;
     SEXP cmdSexp, cmdexpr = R_NilValue;
@@ -243,7 +243,7 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
 
     switch (status){
     case PARSE_OK:
-	/* Loop is needed here as EXPSEXP might be of length > 1 */
+	// Loop is needed here as EXPSEXP might be of length > 1 
 	for(i = 0; i < Rf_length(cmdexpr); i++){
 	    ans = R_tryEval(VECTOR_ELT(cmdexpr, i),NULL,&errorOccurred);
 	    if (errorOccurred) {
@@ -258,7 +258,7 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
 	mb_m.rewind();
 	break;
     case PARSE_INCOMPLETE:
-	/* need to read another line */
+	// need to read another line 
 	break;
     case PARSE_NULL:
 	fprintf(stderr, "%s: ParseStatus is null (%d)\n", programName, status);

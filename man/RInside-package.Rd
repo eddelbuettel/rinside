@@ -8,6 +8,6 @@
   from the \code{R} environment. Rather, you write \code{C++} programs
   that embed \code{R} which is illustrated by some the included examples.
 }
-\author{Dirk Eddelbuettel}
+\author{Dirk Eddelbuettel and Romain Francois}
 \keyword{programming}
 \keyword{interface}

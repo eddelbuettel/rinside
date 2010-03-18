@@ -18,4 +18,4 @@ Description: C++ classes to embed R in C++ applications
 Depends: R (>= 2.10.0), Rcpp (>= 0.7.10)
 SystemRequirements: None
 URL: http://dirk.eddelbuettel.com/code/rinside.html
-License: GPL-2
+License: GPL (>= 2)
