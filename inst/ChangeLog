@@ -1,5 +1,9 @@
 2010-03-20  Dirk Eddelbuettel  <edd@debian.org>
 
+	* R/RInsidePaths.R: Updated to current version of Rcpp's file (minus
+	  the cxx0x bits) in order to standardize linking options, with this
+	  we now default to static linking on OS X and Windows as Rcpp does.
+
 	* src/RInside.cpp: Use explicit std::string() constructors for all
 	  text arguments inside throw() calls (to satisfy the Windows compiler)
 
