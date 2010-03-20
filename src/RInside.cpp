@@ -67,8 +67,9 @@ void RInside::initialize(const int argc, const char* const argv[]){
 	    if (setenv(R_VARS[i],R_VARS[i+1],1) != 0){
 		//perror("ERROR: couldn't set/replace an R environment variable");
 		//exit(1);
-		throw std::runtime_error("Could not set R environment variable " + 
-					 std::string(R_VARS[i]) + " to " +  std::string(R_VARS[i+1]));
+		throw std::runtime_error(std::string("Could not set R environment variable ") +
+					 std::string(R_VARS[i]) + std::string(" to ") +  
+					 std::string(R_VARS[i+1]));
 	    }
 	}
     }
@@ -127,7 +128,7 @@ void RInside::init_tempdir(void) {
     if (setenv("R_SESSION_TMPDIR",tmp,1) != 0){
 	//perror("Fatal Error: couldn't set/replace R_SESSION_TMPDIR!");
 	//exit(1);
-	throw std::runtime_error("Could not set / replace R_SESSION_TMPDIR to " + std::string(tmp));
+	throw std::runtime_error(std::string("Could not set / replace R_SESSION_TMPDIR to ") + std::string(tmp));
     }
 }
 
@@ -224,7 +225,7 @@ void RInside::autoloads() {
     } catch( std::exception& ex){
 	// fprintf(stderr,"%s: Error calling delayedAssign:\n %s", programName, ex.what() );
 	// exit(1);	    
-	throw std::runtime_error("Error calling delayedAssign: " + std::string(ex.what()));
+	throw std::runtime_error(std::string("Error calling delayedAssign: ") + std::string(ex.what()));
     }
 }
 
@@ -287,7 +288,7 @@ void RInside::parseEvalQ(const std::string & line) {
     SEXP ans;
     int rc = parseEval(line, ans);
     if (rc != 0) {
-	throw std::runtime_error("Error evaluating: " + line);
+	throw std::runtime_error(std::string("Error evaluating: ") + line);
     }
 }
 
@@ -295,7 +296,7 @@ SEXP RInside::parseEval(const std::string & line) {
     SEXP ans;
     int rc = parseEval(line, ans);
     if (rc != 0) {
-	throw std::runtime_error("Error evaluating: " + line);
+	throw std::runtime_error(std::string("Error evaluating: ") + line);
     }
     return ans;
 }

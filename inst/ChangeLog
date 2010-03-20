@@ -1,4 +1,9 @@
-2010-03-16  Dirk Eddelbuettel  <edd@dexter>
+2010-03-20  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.cpp: Use explicit std::string() constructors for all
+	  text arguments inside throw() calls (to satisfy the Windows compiler)
+
+2010-03-16  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.{h,cpp}: parseEval* function changed slightly so that
 	  SEXP parseEval(string) is now preferred, and it as well as
@@ -9,7 +14,7 @@
 	  accordingly, mostly by removing no-longer-needed error checking
 	  and exepction throw which has now move 'up' into RInside.cpp
 
-2010-02-25  Dirk Eddelbuettel  <edd@dexter>
+2010-02-25  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/mpi/: Added two variants using the C++ API to MPI
 
