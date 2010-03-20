@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 
 	txt = "m <- 1.23";
         R.parseEval(txt, ans);
-	double d1 = Rcpp::as< double  >(ans);
+	double d1 = Rcpp::as< double >(ans);
 	std::cout << "d1 " << d1 << std::endl;
 
 	txt = "M <- 1.0 * 1:6";

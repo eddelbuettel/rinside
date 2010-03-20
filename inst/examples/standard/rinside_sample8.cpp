@@ -10,14 +10,14 @@ int main(int argc, char *argv[]) {
 
     RInside R(argc, argv);              // create an embedded R instance 
     
-    R["x"] = 10 ;
+    R["x"] = 10 ;			// assignment can be done directly via []
     R["y"] = 20 ;
 
-    R.parseEvalQ("z <- x + y") ;
-    int sum = Rcpp::as<int>( R["z"] ); 
-  
+    R.parseEvalQ("z <- x + y") ;	// R statement evaluation and result 
+    int sum = Rcpp::as<int>( R["z"] ); 	// retrieval via access using [] and as() wrapper
     std::cout << "10 + 20 = " << sum << std::endl ; 
 
+    // we can also return the value directly
     sum = Rcpp::as<int>( R.parseEval("z <- x + y") ); 
     std::cout << "10 + 20 = " << sum << std::endl ; 
 
