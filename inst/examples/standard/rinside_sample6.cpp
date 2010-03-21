@@ -5,7 +5,7 @@
 // Copyright (C) 2009 Dirk Eddelbuettel 
 // Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
 
-#include "RInside.h"                    // for the embedded R via RInside
+#include <RInside.h>                    // for the embedded R via RInside
 
 int main(int argc, char *argv[]) {
 

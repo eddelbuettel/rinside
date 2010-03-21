@@ -5,7 +5,7 @@
 // Copyright (C) 2009 Dirk Eddelbuettel 
 // Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
 
-#include "RInside.h"                    // for the embedded R via RInside
+#include <RInside.h>                    // for the embedded R via RInside
 
 int main(int argc, char *argv[]) {
 
@@ -14,21 +14,21 @@ int main(int argc, char *argv[]) {
         SEXP ans;
 
         std::string txt = "suppressMessages(library(fPortfolio))";
-        R.parseEvalQ(txt);	        // load library, no return value
+        R.parseEvalQ(txt);              // load library, no return value
 
         txt = "M <- as.matrix(SWX.RET); print(head(M)); M";
-        ans = R.parseEval(txt);	      	// assign matrix M to SEXP variable ans
+        ans = R.parseEval(txt);         // assign matrix M to SEXP variable ans
 
-	Rcpp::NumericMatrix M(ans);     // convert SEXP variable to a NumericMatrix
+        Rcpp::NumericMatrix M(ans);     // convert SEXP variable to a NumericMatrix
 
         std::cout << "M has " 
                   << M.nrow() << " rows and " 
                   << M.ncol() << " cols" << std::endl;
         
         txt = "colnames(M)";
-        ans = R.parseEval(txt); 	// assign columns names of M to ans
+        ans = R.parseEval(txt);         // assign columns names of M to ans
 
-	Rcpp::CharacterVector cnames(ans);   // and into string vector cnames
+        Rcpp::CharacterVector cnames(ans);   // and into string vector cnames
 
         for (int i=0; i<M.ncol(); i++) {
             std::cout << "Column " << cnames[i] << " in row 42 has " << M(42,i) << std::endl;

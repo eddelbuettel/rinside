@@ -4,25 +4,25 @@
 //
 // Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
 
-#include "RInside.h"                    // for the embedded R via RInside
+#include <RInside.h>                    // for the embedded R via RInside
 
 int main(int argc, char *argv[]) {
 
     try {
 
         RInside R(argc, argv);          // create an embedded R instance 
-	SEXP ans;
-	std::string txt;
+        SEXP ans;
+        std::string txt;
 
-	txt = "m <- 1.23";
+        txt = "m <- 1.23";
         R.parseEval(txt, ans);
-	double d1 = Rcpp::as< double >(ans);
-	std::cout << "d1 " << d1 << std::endl;
+        double d1 = Rcpp::as< double >(ans);
+        std::cout << "d1 " << d1 << std::endl;
 
-	txt = "M <- 1.0 * 1:6";
+        txt = "M <- 1.0 * 1:6";
         R.parseEval(txt, ans);
-	std::vector<double> d2 = Rcpp::as< std::vector< double > >(ans);
-	std::cout << "d2[0] " << d2[0] << " d2[1] " << d2[1] << std::endl;
+        std::vector<double> d2 = Rcpp::as< std::vector< double > >(ans);
+        std::cout << "d2[0] " << d2[0] << " d2[1] " << d2[1] << std::endl;
         
     } catch(std::exception& ex) {
         std::cerr << "Exception caught: " << ex.what() << std::endl;

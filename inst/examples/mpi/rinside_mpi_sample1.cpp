@@ -4,9 +4,8 @@
 //
 // This file was contributed by Jianping Hua 
 
-#include "mpi.h"     // mpi header file
-#include "RInside.h" // for the embedded R via RInside
-#include "Rcpp.h"    // for the R / Cpp interface used for transfer
+#include <mpi.h>     // mpi header file
+#include <RInside.h> // for the embedded R via RInside
 
 int main(int argc, char *argv[]) {
 
@@ -17,7 +16,7 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &myrank);     // obtain current node rank
     MPI_Comm_size(MPI_COMM_WORLD, &nodesize);   // obtain total nodes running.
     double sendValue;                           // value to be collected in current node
-    double *allvalues = new double[nodesize]; 	// to save all results
+    double *allvalues = new double[nodesize];   // to save all results
 
     // simulation info
     // to sample from a uniform distribution
@@ -39,8 +38,8 @@ int main(int argc, char *argv[]) {
         R.parseEvalQ( txt.str() );      // assign n with the size of sample
 
         std::string evalstr = " mean(runif(n,x,y))";  // sampling, compute the mean
-        ans = R.parseEval(evalstr);	// eval the evalstr string, return results
-	Rcpp::NumericVector m(ans);     // convert SEXP variable to an Rcpp::NumericVector
+        ans = R.parseEval(evalstr);     // eval the evalstr string, return results
+        Rcpp::NumericVector m(ans);     // convert SEXP variable to an Rcpp::NumericVector
 
         sendValue = m( 0 );             // assign the return value to the variable to be gathered
 
@@ -58,10 +57,10 @@ int main(int argc, char *argv[]) {
 
     // show gathered results in node 0
     if ( myrank == 0 ) {
-	std::cout << "values of all " << nodesize << " trials: " << std::endl;
-	for ( int i = 0; i < nodesize; i++ )
-	    std::cout << allvalues[ i ] << ", ";
-	std::cout << std::endl;
+        std::cout << "values of all " << nodesize << " trials: " << std::endl;
+        for ( int i = 0; i < nodesize; i++ )
+            std::cout << allvalues[ i ] << ", ";
+        std::cout << std::endl;
     }
 
     // clean up
