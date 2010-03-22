@@ -3,6 +3,10 @@
 // Simple example showing in R console information about current node
 //
 // This file was contributed by Jianping Hua 
+//
+// Copyright (C) 2010 Jianping Hua, Dirk Eddelbuettel and Romain Francois
+//
+// GPL'ed 
 
 #include <mpi.h>     // mpi header
 #include <RInside.h> // for the embedded R via RInside

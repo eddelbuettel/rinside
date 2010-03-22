@@ -3,6 +3,10 @@
 // Simple mpi example: simulate sampling/averaging on multiple nodes and gathering the results.
 //
 // This file was contributed by Jianping Hua 
+//
+// Copyright (C) 2010 Jianping Hua, Dirk Eddelbuettel and Romain Francois
+//
+// GPL'ed 
 
 #include <mpi.h>     // mpi header file
 #include <RInside.h> // for the embedded R via RInside

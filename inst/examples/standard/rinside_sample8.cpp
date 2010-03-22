@@ -2,7 +2,7 @@
 //
 // Simple example showing how to use R[] = ; 
 //
-// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois and GPL'ed 
+// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
 
 #include <RInside.h>                    // for the embedded R via RInside
 
