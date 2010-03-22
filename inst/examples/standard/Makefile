@@ -40,6 +40,9 @@ LDLIBS := 		$(RLDFLAGS) $(RBLAS) $(RLAPACK) $(RCPPLIBS) $(RINSIDELIBS)
 
 all : 			$(programs)
 
+run :			$(programs)
+			@for p in $(programs); do echo; echo "Running $$p:"; ./$$p; done
+
 clean:
 			rm -vf $(programs)
 
