@@ -35,10 +35,10 @@ RINSIDELIBS := 		$(shell echo 'RInside:::LdFlags()'  | $(R_HOME)/bin/R --vanilla
 CXX := 			$(shell $(R_HOME)/bin/R CMD config CXX)
 CPPFLAGS := 		-Wall $(shell $(R_HOME)/bin/R CMD config CPPFLAGS)
 CXXFLAGS := 		$(RCPPFLAGS) $(RCPPINCL) $(RINSIDEINCL) $(shell $(R_HOME)/bin/R CMD config CXXFLAGS)
-LDFLAGS	= 		-s
 LDLIBS := 		$(RLDFLAGS) $(RBLAS) $(RLAPACK) $(RCPPLIBS) $(RINSIDELIBS)
 
 all : 			$(programs)
+			@test -x /usr/bin/strip && strip $^
 
 run :			$(programs)
 			@for p in $(programs); do echo; echo "Running $$p:"; ./$$p; done

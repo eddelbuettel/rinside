@@ -39,10 +39,13 @@ RINSIDELIBS := 		$(shell echo 'RInside:::LdFlags()'  | $(R_HOME)/bin/R --vanilla
 CXX := 			$(shell $(R_HOME)/bin/R CMD config CXX)
 CPPFLAGS := 		-Wall $(shell $(R_HOME)/bin/R CMD config CPPFLAGS)
 CXXFLAGS := 		$(MPICPPFLAGS) $(RCPPFLAGS) $(RCPPINCL) $(RINSIDEINCL) $(shell $(R_HOME)/bin/R CMD config CXXFLAGS)
-LDFLAGS	= 		-s
 LDLIBS := 		$(MPILIBS) $(RLDFLAGS) $(RBLAS) $(RLAPACK) $(RCPPLIBS) $(RINSIDELIBS)
 
 all : 			$(programs)
+			@test -x /usr/bin/strip && strip $^
+
+run :			$(programs)
+			@test -x /usr/bin/mpirun && for p in $(programs); do echo; echo "Running $$p:"; mpirun -n 4 ./$$p; done
 
 clean:
 			rm -vf $(programs)
