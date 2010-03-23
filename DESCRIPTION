@@ -12,7 +12,7 @@ Description: C++ classes to embed R in C++ applications
  build of R is required. This works on Linux, OS X and even on 
  Windows provided you use the same tools used to build R itself.
  .
- Several examples are provided in the examples/ directory of
+ Several examples are provided below the examples/ directory of
  the installed package, and Doxygen-generated documentation of
  the C++ classes is included as well.
 Depends: R (>= 2.10.0), Rcpp (>= 0.7.10)
