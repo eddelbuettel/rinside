@@ -1,3 +1,9 @@
+2010-03-25  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.h: New Proxy class with operator T() to borrow
+	  Rcpp's automatic wrappers
+	* inst/examples/standard/rinside_sample8.cpp: Use Proxy()
+
 2010-03-22  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Increase Version: to 0.2.2

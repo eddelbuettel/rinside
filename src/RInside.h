@@ -66,6 +66,18 @@ public:
     
 };
 
+class Proxy {
+public:
+    Proxy(SEXP xx): x(xx) { };
+
+    template <typename T>
+    operator T() {
+	return ::Rcpp::as<T>(x);
+    }
+private:
+    Rcpp::RObject x;
+};
+
 // simple logging help
 inline void logTxtFunction(const char* file, const int line, const char* expression, const bool verbose) {
     if (verbose) {
