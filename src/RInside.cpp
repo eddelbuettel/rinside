@@ -292,13 +292,13 @@ void RInside::parseEvalQ(const std::string & line) {
     }
 }
 
-SEXP RInside::parseEval(const std::string & line) {
+RInside::Proxy RInside::parseEval(const std::string & line) {
     SEXP ans;
     int rc = parseEval(line, ans);
     if (rc != 0) {
 	throw std::runtime_error(std::string("Error evaluating: ") + line);
     }
-    return ans;
+    return Proxy( ans );
 }
 
 Rcpp::Environment::Binding RInside::operator[]( const std::string& name ){

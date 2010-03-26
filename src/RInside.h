@@ -41,7 +41,7 @@ private:
     Rcpp::Environment global_env ;
     
     bool verbose_m;				// private switch
-
+                                                  
     void init_tempdir(void);
     void init_rand(void);
     void autoloads(void);
@@ -51,7 +51,20 @@ private:
 public:
     int  parseEval(const std::string & line, SEXP &ans); // parse line, return in ans; error code rc
     void parseEvalQ(const std::string & line);		 // parse line, no return (throws on error)
-    SEXP parseEval(const std::string & line);		 // parse line, return SEXP (throws on error)
+
+	class Proxy {
+	public:
+	    Proxy(SEXP xx): x(xx) { };
+	
+	    template <typename T>
+	    operator T() {
+		return ::Rcpp::as<T>(x);
+	    }
+	private:
+	    Rcpp::RObject x;
+	};
+
+    Proxy parseEval(const std::string & line);		 // parse line, return SEXP (throws on error)
 
     template <typename T> 
     void assign(const T& object, const std::string& nam) {
@@ -64,18 +77,6 @@ public:
     
     Rcpp::Environment::Binding operator[]( const std::string& name ) ;
     
-};
-
-class Proxy {
-public:
-    Proxy(SEXP xx): x(xx) { };
-
-    template <typename T>
-    operator T() {
-	return ::Rcpp::as<T>(x);
-    }
-private:
-    Rcpp::RObject x;
 };
 
 // simple logging help

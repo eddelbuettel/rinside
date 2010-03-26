@@ -18,11 +18,7 @@ int main(int argc, char *argv[]) {
     std::cout << "10 + 20 = " << sum << std::endl ; 
 
     // we can also return the value directly
-    sum = Rcpp::as<int>( R.parseEval("z <- x + y") ); 
-    std::cout << "10 + 20 = " << sum << std::endl ; 
-
-    // Or we can use the Proxy() class
-    sum = Proxy( R.parseEval("z <- x + y") ); 
+    sum = R.parseEval("x + y") ;
     std::cout << "10 + 20 = " << sum << std::endl ; 
 
     exit(0);

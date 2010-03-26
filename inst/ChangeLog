@@ -1,3 +1,11 @@
+2010-03-26  Romain Francois <romain@r-enthusiasts.com>
+
+	* src/RInside.h: the Proxy class is moved inside RInside and parseEval now
+	returns a Proxy so that the proxy class does its job implicitely
+	
+	* inst/examples/standard/rinside_sample8.cpp: simplify the example to 
+	implicit use of the Proxy class
+
 2010-03-25  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.h: New Proxy class with operator T() to borrow
