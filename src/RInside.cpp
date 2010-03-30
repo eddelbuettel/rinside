@@ -43,10 +43,11 @@ RInside::~RInside() {		// now empty as MemBuf is internal
     //#endif
     Rf_endEmbeddedR(0);
     logTxt("RInside::dtor END", verbose);
+    instance_ = 0 ;
 }
 
 RInside::RInside() {
-    initialize( 0, 0 );
+	initialize( 0, 0 );
 }
 
 RInside::RInside(const int argc, const char* const argv[]) {
@@ -57,6 +58,12 @@ RInside::RInside(const int argc, const char* const argv[]) {
 void RInside::initialize(const int argc, const char* const argv[]){
     logTxt("RInside::ctor BEGIN", verbose);
 
+    if( instance_ ){
+    	throw std::runtime_error( "can only have one RInside instance" ) ;
+    } else {
+    	instance_ = *this ;	
+    }
+    
     verbose_m = false; 		// Default is false
 
     // generated as littler.h via from svn/littler/littler.R

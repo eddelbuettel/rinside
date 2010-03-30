@@ -48,6 +48,8 @@ private:
     
     void initialize(const int argc, const char* const argv[] ) ;
 
+    static RInside* instance_ ;
+    
 public:
     int  parseEval(const std::string & line, SEXP &ans); // parse line, return in ans; error code rc
     void parseEvalQ(const std::string & line);		 // parse line, no return (throws on error)
@@ -77,7 +79,10 @@ public:
     
     Rcpp::Environment::Binding operator[]( const std::string& name ) ;
     
+    static RInside& instance() ;
 };
+
+RInside* RInside::instance_ = 0 ;
 
 // simple logging help
 inline void logTxtFunction(const char* file, const int line, const char* expression, const bool verbose) {
@@ -90,4 +95,4 @@ inline void logTxtFunction(const char* file, const int line, const char* express
 #undef logTxt
 #endif
 //#define logTxt(x, b) logTxtFunction(__FILE__, __LINE__, x, b);
-#define logTxt(x, b) 
+#define logTxt(x, b)
