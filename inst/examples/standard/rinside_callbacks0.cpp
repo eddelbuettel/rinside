@@ -12,9 +12,8 @@
 int main(int argc, char *argv[]) {
 
     RInside R(argc, argv);              // create an embedded R instance 
-    DummyCallbacks* callbacks = new DummyCallbacks() ;
-    R.set_callbacks( callbacks );
-    R.parseEval( "print( 'foof' )" ) ;
+    R.set_callbacks( new Callbacks() );
+    R.repl() ;
     exit(0);
 }
 

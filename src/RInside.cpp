@@ -322,14 +322,14 @@ RInside& RInside::instance(){
 
 /* callbacks */
 
-void Callbacks::busy_( int which ){
+void Callbacks::Busy_( int which ){
 	R_is_busy = static_cast<bool>( which ) ;
-	busy( R_is_busy ) ;	
+	Busy( R_is_busy ) ;	
 }
 
-int Callbacks::readConsole_( const char* prompt, unsigned char* buf, int len, int addtohistory ){
+int Callbacks::ReadConsole_( const char* prompt, unsigned char* buf, int len, int addtohistory ){
 	try {
-		std::string res( readConsole( prompt, static_cast<bool>(addtohistory) ) ) ;
+		std::string res( ReadConsole( prompt, static_cast<bool>(addtohistory) ) ) ;
 		
 		/* At some point we need to figure out what to do if the result is
 		 * longer than "len"... For now, just truncate. */
@@ -345,83 +345,76 @@ int Callbacks::readConsole_( const char* prompt, unsigned char* buf, int len, in
 }
 
 
-void Callbacks::writeConsole_( const char* buf, int len, int oType ){
-	std::string line ;
-	line.assign( buf, buf + len ) ;
-	writeConsole( line, oType) ;
+void Callbacks::WriteConsole_( const char* buf, int len, int oType ){
+	if( len ){
+		buffer.assign( buf, buf + len - 1 ) ;
+		WriteConsole( buffer, oType) ;
+	}
 }
 
 void RInside_ShowMessage( const char* message ){
-	RInside::instance().callbacks->showMessage( message ) ;	
+	RInside::instance().callbacks->ShowMessage( message ) ;	
 }
 
 void RInside_WriteConsoleEx( const char* message, int len, int oType ){
-	RInside::instance().callbacks->writeConsole_( message, len, oType ) ;		
+	RInside::instance().callbacks->WriteConsole_( message, len, oType ) ;		
 }
 
 int RInside_ReadConsole(const char *prompt, unsigned char *buf, int len, int addtohistory){
-	return RInside::instance().callbacks->readConsole_( prompt, buf, len, addtohistory ) ;
+	return RInside::instance().callbacks->ReadConsole_( prompt, buf, len, addtohistory ) ;
 }
 
 void RInside_ResetConsole(){
-	RInside::instance().callbacks->resetConsole() ;
+	RInside::instance().callbacks->ResetConsole() ;
 }
 
 void RInside_FlushConsole(){                                       
-	RInside::instance().callbacks->flushConsole() ;
+	RInside::instance().callbacks->FlushConsole() ;
 }
 
 void RInside_ClearerrConsole(){
-	RInside::instance().callbacks->cleanerrConsole() ;
+	RInside::instance().callbacks->CleanerrConsole() ;
 }
 
 void RInside_Busy( int which ){
-	RInside::instance().callbacks->busy_(which) ;
+	RInside::instance().callbacks->Busy_(which) ;
 }
 
 void RInside::set_callbacks(Callbacks* callbacks_){
-	Rprintf( "<set_callbacks>\n" ) ;
-	if( ! callbacks ){
-		/* short circuit the callback function pointers */
-		Rprintf( "ptr_R_ShowMessage : <%p> = <%p>\n", ptr_R_ShowMessage, RInside_ShowMessage ) ;
+	callbacks = callbacks_ ;
+	
+	/* short circuit the callback function pointers */
+	if( callbacks->has_ShowMessage() ){
 		ptr_R_ShowMessage = RInside_ShowMessage ;
-		
-		Rprintf( "ptr_R_ReadConsole : <%p> = <%p>\n", ptr_R_ReadConsole, RInside_ReadConsole ) ;
+	}
+	if( callbacks->has_ReadConsole() ){
 		ptr_R_ReadConsole = RInside_ReadConsole;
-    	
-		// Rprintf( "ptr_R_WriteConsoleEx : <%p> = <%p>\n", ptr_R_WriteConsoleEx, RInside_WriteConsoleEx ) ;
-		// ptr_R_WriteConsoleEx = RInside_WriteConsoleEx;
-		// ptr_R_WriteConsole = NULL;
-		Rprintf( "after\n") ;
-		
-		
-		Rprintf( "ptr_R_FlushConsole : <%p> = <%p>\n", ptr_R_FlushConsole, RInside_FlushConsole ) ;
-		ptr_R_FlushConsole = RInside_FlushConsole;
-    	
-		Rprintf( "ptr_R_ClearerrConsole : <%p> = <%p>\n", ptr_R_ClearerrConsole, RInside_ClearerrConsole ) ;
-		ptr_R_ClearerrConsole = RInside_ClearerrConsole;
-    	
-		Rprintf( "ptr_R_Busy : <%p> = <%p>\n", ptr_R_Busy, RInside_Busy ) ;
-		ptr_R_Busy = RInside_Busy;
-    	
-		Rprintf( "ptr_R_ResetConsole : <%p> = <%p>\n", ptr_R_ResetConsole, RInside_ResetConsole ) ;
+	}
+    if( callbacks->has_WriteConsole() ){
+    	ptr_R_WriteConsoleEx = RInside_WriteConsoleEx ;
+    	ptr_R_WriteConsole = NULL;
+	}
+	if( callbacks->has_ResetConsole() ){
 		ptr_R_ResetConsole = RInside_ResetConsole;
-    	
-    	R_Outputfile = NULL;
-    	R_Consolefile = NULL;    
-    	
-    	// setup_Rmainloop()
-    	// this gives this message: 
-    	// Erreur dans .Call("R_isMethodsDispatchOn", onOff, PACKAGE = "base") : 
-		//   Nombre d'arguments incorrect (2), attendu 1 pour R_isMethodsDispatchOn
-		// Segmentation fault
-
-    	
     }
-    // callbacks = callbacks_ ;
-	// this gives a segfauylt
-	
-	Rprintf( "</set_callbacks>\n" ) ;
-	
+    if( callbacks->has_FlushConsole() ){
+    	ptr_R_FlushConsole = RInside_FlushConsole;
+    }
+    if( callbacks->has_CleanerrConsole() ){
+    	ptr_R_ClearerrConsole = RInside_ClearerrConsole;
+    }
+    if( callbacks->has_Busy() ){
+    	ptr_R_Busy = RInside_Busy;
+    }
+    
+    R_Outputfile = NULL;
+    R_Consolefile = NULL;    
+    
 }
+
+void RInside::repl(){
+	R_ReplDLLinit();
+	while( R_ReplDLLdo1() > 0 ){}
+}
+
 

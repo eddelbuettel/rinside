@@ -52,7 +52,8 @@ private:
     
 public:
 	void set_callbacks(Callbacks* callbacks_) ;
-    
+	void repl() ;
+	
     int  parseEval(const std::string & line, SEXP &ans); // parse line, return in ans; error code rc
     void parseEvalQ(const std::string & line);		 // parse line, no return (throws on error)
 

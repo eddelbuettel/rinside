@@ -27,62 +27,40 @@
 class Callbacks {
 public:
 	
-	Callbacks() : R_is_busy(false){} ;
+	Callbacks() : R_is_busy(false), buffer() {} ;
 	virtual ~Callbacks(){} ;
 	
-	virtual void showMessage(const char* message) = 0;
-	virtual void suicide(const char* message) = 0;
-	virtual std::string readConsole( const char* prompt, bool addtohistory ) = 0;
-	virtual void writeConsole( const std::string& line, int type ) = 0;
-	virtual void flushConsole() = 0;
-	virtual void resetConsole() = 0;
-	virtual void cleanerrConsole() = 0;
-	virtual void busy( bool is_busy ) = 0 ;
+	virtual void ShowMessage(const char* message) {} ;
+	virtual void Suicide(const char* message) {};
+	virtual std::string ReadConsole( const char* prompt, bool addtohistory ) { return ""; };
+	virtual void WriteConsole( const std::string& line, int type ) {};
+	virtual void FlushConsole() {};
+	virtual void ResetConsole() {};
+	virtual void CleanerrConsole(){} ;
+	virtual void Busy( bool is_busy ) {} ;
 	
-	void busy_( int which ) ;
-	int readConsole_( const char* prompt, unsigned char* buf, int len, int addtohistory ) ;
-	void writeConsole_( const char* buf, int len, int oType ) ;
+	void Busy_( int which ) ;
+	int ReadConsole_( const char* prompt, unsigned char* buf, int len, int addtohistory ) ;
+	void WriteConsole_( const char* buf, int len, int oType ) ;
 	
 	// TODO: ShowFiles
 	// TODO: ChooseFile
 	// TODO: loadHistory
 	// TODO: SaveHistory                                                                                      
 	
+	virtual bool has_ShowMessage() { return false ; } ;
+	virtual bool has_Suicide() { return false ; } ;
+	virtual bool has_ReadConsole() { return false ; } ;
+	virtual bool has_WriteConsole() { return false ; } ;
+	virtual bool has_ResetConsole() { return false ; } ;
+	virtual bool has_CleanerrConsole() { return false ; } ;
+	virtual bool has_Busy() { return false ; } ;
+	virtual bool has_FlushConsole(){ return false; } ;
+	
 private:
 	bool R_is_busy ;
-	             
+	std::string buffer ;
+	
 } ;                                       
-
-class DummyCallbacks : public Callbacks{
-public:
-	DummyCallbacks() : Callbacks(){}
-	
-	void showMessage(const char* message){
-		Rprintf( ">> showMessage('%s')\n", message ) ;	
-	}
-	void suicide(const char* message){
-		Rprintf( ">> suicide('%s')\n", message ) ;
-	}
-	std::string readConsole(const char* prompt, bool addtohistory){ 
-		Rprintf( ">> readConsole('%s', %d)\n", prompt, addtohistory ) ;
-		return " " ; 
-	}
-	void writeConsole( const std::string& line, int type){
-		Rprintf( ">> writeConsole('%s', %d)\n", line.c_str(), type ) ;
-	}
-	void flushConsole(){
-		Rprintf( ">> flushConsole()\n" ) ;
-	}
-	void resetConsole(){
-		Rprintf( ">> resetConsole()\n" ) ;
-	}
-	void cleanerrConsole(){
-		Rprintf( ">> cleanerrConsole()\n" ) ;
-	}
-	void busy( bool is_busy ){
-		Rprintf( ">> busy(%d) \n", is_busy ) ;
-	}
-	
-} ;
 
 #endif
