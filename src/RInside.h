@@ -20,25 +20,17 @@
 // You should have received a copy of the GNU General Public License
 // along with RInside.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <string>
-#include <vector>
-#include <iostream>
+#ifndef RINSIDE_RINSIDE_H
+#define RINSIDE_RINSIDE_H
 
-#include <Rcpp.h>
-
-#include <Rembedded.h>
-#ifndef WIN32
-#define R_INTERFACE_PTRS
-#include <Rinterface.h>
-#endif
-#include <R_ext/RStartup.h>
-
-#include "MemBuf.h"
+#include "RInsideCommon.h"
+#include "Callbacks.h"
 
 class RInside {
 private:
     MemBuf mb_m;
     Rcpp::Environment global_env ;
+    Callbacks* callbacks ;
     
     bool verbose_m;				// private switch
                                                   
@@ -50,7 +42,17 @@ private:
 
     static RInside* instance_ ;
     
+    friend void RInside_ShowMessage( const char* message) ;
+    friend void RInside_WriteConsoleEx( const char* message, int len, int oType ) ;
+    friend int RInside_ReadConsole(const char *prompt, unsigned char *buf, int len, int addtohistory) ;
+    friend void RInside_ResetConsole() ;
+    friend void RInside_FlushConsole() ;
+    friend void RInside_ClearerrConsole() ;
+    friend void RInside_Busy(int which) ;
+    
 public:
+	void set_callbacks(Callbacks* callbacks_) ;
+    
     int  parseEval(const std::string & line, SEXP &ans); // parse line, return in ans; error code rc
     void parseEvalQ(const std::string & line);		 // parse line, no return (throws on error)
 
@@ -82,17 +84,4 @@ public:
     static RInside& instance() ;
 };
 
-RInside* RInside::instance_ = 0 ;
-
-// simple logging help
-inline void logTxtFunction(const char* file, const int line, const char* expression, const bool verbose) {
-    if (verbose) {
-	std::cout << file << ":" << line << " expression: " << expression << std::endl;
-    }
-}
-
-#ifdef logTxt
-#undef logTxt
 #endif
-//#define logTxt(x, b) logTxtFunction(__FILE__, __LINE__, x, b);
-#define logTxt(x, b)

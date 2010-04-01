@@ -21,6 +21,10 @@
 // along with RInside.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "RInside.h"
+#include "Callbacks.h"
+
+RInside* RInside::instance_ = 0 ;
+
 #include <sys/time.h>		// gettimeofday
 
 bool verbose = false;
@@ -46,11 +50,11 @@ RInside::~RInside() {		// now empty as MemBuf is internal
     instance_ = 0 ;
 }
 
-RInside::RInside() {
+RInside::RInside() : callbacks(0) {
 	initialize( 0, 0 );
 }
 
-RInside::RInside(const int argc, const char* const argv[]) {
+RInside::RInside(const int argc, const char* const argv[]) : callbacks(0) {
     initialize( argc, argv ); 
 }
 
@@ -61,7 +65,7 @@ void RInside::initialize(const int argc, const char* const argv[]){
     if( instance_ ){
     	throw std::runtime_error( "can only have one RInside instance" ) ;
     } else {
-    	instance_ = *this ;	
+    	instance_ = this ;	
     }
     
     verbose_m = false; 		// Default is false
@@ -310,5 +314,114 @@ RInside::Proxy RInside::parseEval(const std::string & line) {
 
 Rcpp::Environment::Binding RInside::operator[]( const std::string& name ){
     return global_env[name]; 
+}
+
+RInside& RInside::instance(){
+	return *instance_ ;
+}
+
+/* callbacks */
+
+void Callbacks::busy_( int which ){
+	R_is_busy = static_cast<bool>( which ) ;
+	busy( R_is_busy ) ;	
+}
+
+int Callbacks::readConsole_( const char* prompt, unsigned char* buf, int len, int addtohistory ){
+	try {
+		std::string res( readConsole( prompt, static_cast<bool>(addtohistory) ) ) ;
+		
+		/* At some point we need to figure out what to do if the result is
+		 * longer than "len"... For now, just truncate. */
+		 
+		int l = res.size() ;
+		int last = (l>len-1)?len-1:l ;
+		strncpy( (char*)buf, res.c_str(), last ) ;
+		buf[last] = 0 ;
+		return 1 ;
+	} catch( const std::exception& ex){
+		return -1 ;	
+	}
+}
+
+
+void Callbacks::writeConsole_( const char* buf, int len, int oType ){
+	std::string line ;
+	line.assign( buf, buf + len ) ;
+	writeConsole( line, oType) ;
+}
+
+void RInside_ShowMessage( const char* message ){
+	RInside::instance().callbacks->showMessage( message ) ;	
+}
+
+void RInside_WriteConsoleEx( const char* message, int len, int oType ){
+	RInside::instance().callbacks->writeConsole_( message, len, oType ) ;		
+}
+
+int RInside_ReadConsole(const char *prompt, unsigned char *buf, int len, int addtohistory){
+	return RInside::instance().callbacks->readConsole_( prompt, buf, len, addtohistory ) ;
+}
+
+void RInside_ResetConsole(){
+	RInside::instance().callbacks->resetConsole() ;
+}
+
+void RInside_FlushConsole(){                                       
+	RInside::instance().callbacks->flushConsole() ;
+}
+
+void RInside_ClearerrConsole(){
+	RInside::instance().callbacks->cleanerrConsole() ;
+}
+
+void RInside_Busy( int which ){
+	RInside::instance().callbacks->busy_(which) ;
+}
+
+void RInside::set_callbacks(Callbacks* callbacks_){
+	Rprintf( "<set_callbacks>\n" ) ;
+	if( ! callbacks ){
+		/* short circuit the callback function pointers */
+		Rprintf( "ptr_R_ShowMessage : <%p> = <%p>\n", ptr_R_ShowMessage, RInside_ShowMessage ) ;
+		ptr_R_ShowMessage = RInside_ShowMessage ;
+		
+		Rprintf( "ptr_R_ReadConsole : <%p> = <%p>\n", ptr_R_ReadConsole, RInside_ReadConsole ) ;
+		ptr_R_ReadConsole = RInside_ReadConsole;
+    	
+		// Rprintf( "ptr_R_WriteConsoleEx : <%p> = <%p>\n", ptr_R_WriteConsoleEx, RInside_WriteConsoleEx ) ;
+		// ptr_R_WriteConsoleEx = RInside_WriteConsoleEx;
+		// ptr_R_WriteConsole = NULL;
+		Rprintf( "after\n") ;
+		
+		
+		Rprintf( "ptr_R_FlushConsole : <%p> = <%p>\n", ptr_R_FlushConsole, RInside_FlushConsole ) ;
+		ptr_R_FlushConsole = RInside_FlushConsole;
+    	
+		Rprintf( "ptr_R_ClearerrConsole : <%p> = <%p>\n", ptr_R_ClearerrConsole, RInside_ClearerrConsole ) ;
+		ptr_R_ClearerrConsole = RInside_ClearerrConsole;
+    	
+		Rprintf( "ptr_R_Busy : <%p> = <%p>\n", ptr_R_Busy, RInside_Busy ) ;
+		ptr_R_Busy = RInside_Busy;
+    	
+		Rprintf( "ptr_R_ResetConsole : <%p> = <%p>\n", ptr_R_ResetConsole, RInside_ResetConsole ) ;
+		ptr_R_ResetConsole = RInside_ResetConsole;
+    	
+    	R_Outputfile = NULL;
+    	R_Consolefile = NULL;    
+    	
+    	// setup_Rmainloop()
+    	// this gives this message: 
+    	// Erreur dans .Call("R_isMethodsDispatchOn", onOff, PACKAGE = "base") : 
+		//   Nombre d'arguments incorrect (2), attendu 1 pour R_isMethodsDispatchOn
+		// Segmentation fault
+
+    	
+    }
+    // callbacks = callbacks_ ;
+	// this gives a segfauylt
+	
+	Rprintf( "</set_callbacks>\n" ) ;
+	
 }
 
