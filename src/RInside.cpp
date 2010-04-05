@@ -323,79 +323,83 @@ RInside& RInside::instance(){
 /* callbacks */
 
 void Callbacks::Busy_( int which ){
-	R_is_busy = static_cast<bool>( which ) ;
-	Busy( R_is_busy ) ;	
+    R_is_busy = static_cast<bool>( which ) ;
+    Busy( R_is_busy ) ;	
 }
 
 int Callbacks::ReadConsole_( const char* prompt, unsigned char* buf, int len, int addtohistory ){
-	try {
-		std::string res( ReadConsole( prompt, static_cast<bool>(addtohistory) ) ) ;
+    try {
+	std::string res( ReadConsole( prompt, static_cast<bool>(addtohistory) ) ) ;
 		
-		/* At some point we need to figure out what to do if the result is
-		 * longer than "len"... For now, just truncate. */
+	/* At some point we need to figure out what to do if the result is
+	 * longer than "len"... For now, just truncate. */
 		 
-		int l = res.size() ;
-		int last = (l>len-1)?len-1:l ;
-		strncpy( (char*)buf, res.c_str(), last ) ;
-		buf[last] = 0 ;
-		return 1 ;
-	} catch( const std::exception& ex){
-		return -1 ;	
-	}
+	int l = res.size() ;
+	int last = (l>len-1)?len-1:l ;
+	strncpy( (char*)buf, res.c_str(), last ) ;
+	buf[last] = 0 ;
+	return 1 ;
+    } catch( const std::exception& ex){
+	return -1 ;	
+    }
 }
 
 
 void Callbacks::WriteConsole_( const char* buf, int len, int oType ){
-	if( len ){
-		buffer.assign( buf, buf + len - 1 ) ;
-		WriteConsole( buffer, oType) ;
-	}
+    if( len ){
+	buffer.assign( buf, buf + len - 1 ) ;
+	WriteConsole( buffer, oType) ;
+    }
 }
 
 void RInside_ShowMessage( const char* message ){
-	RInside::instance().callbacks->ShowMessage( message ) ;	
+    RInside::instance().callbacks->ShowMessage( message ) ;	
 }
 
 void RInside_WriteConsoleEx( const char* message, int len, int oType ){
-	RInside::instance().callbacks->WriteConsole_( message, len, oType ) ;		
+    RInside::instance().callbacks->WriteConsole_( message, len, oType ) ;		
 }
 
 int RInside_ReadConsole(const char *prompt, unsigned char *buf, int len, int addtohistory){
-	return RInside::instance().callbacks->ReadConsole_( prompt, buf, len, addtohistory ) ;
+    return RInside::instance().callbacks->ReadConsole_( prompt, buf, len, addtohistory ) ;
 }
 
 void RInside_ResetConsole(){
-	RInside::instance().callbacks->ResetConsole() ;
+    RInside::instance().callbacks->ResetConsole() ;
 }
 
 void RInside_FlushConsole(){                                       
-	RInside::instance().callbacks->FlushConsole() ;
+    RInside::instance().callbacks->FlushConsole() ;
 }
 
 void RInside_ClearerrConsole(){
-	RInside::instance().callbacks->CleanerrConsole() ;
+    RInside::instance().callbacks->CleanerrConsole() ;
 }
 
 void RInside_Busy( int which ){
-	RInside::instance().callbacks->Busy_(which) ;
+    RInside::instance().callbacks->Busy_(which) ;
 }
 
 void RInside::set_callbacks(Callbacks* callbacks_){
-	callbacks = callbacks_ ;
+    callbacks = callbacks_ ;
 	
-	/* short circuit the callback function pointers */
-	if( callbacks->has_ShowMessage() ){
-		ptr_R_ShowMessage = RInside_ShowMessage ;
-	}
-	if( callbacks->has_ReadConsole() ){
-		ptr_R_ReadConsole = RInside_ReadConsole;
-	}
+#ifdef WIN32
+    // do something to tell user that he doesn't get this
+#else
+
+    /* short circuit the callback function pointers */
+    if( callbacks->has_ShowMessage() ){
+	ptr_R_ShowMessage = RInside_ShowMessage ;
+    }
+    if( callbacks->has_ReadConsole() ){
+	ptr_R_ReadConsole = RInside_ReadConsole;
+    }
     if( callbacks->has_WriteConsole() ){
     	ptr_R_WriteConsoleEx = RInside_WriteConsoleEx ;
     	ptr_R_WriteConsole = NULL;
 	}
-	if( callbacks->has_ResetConsole() ){
-		ptr_R_ResetConsole = RInside_ResetConsole;
+    if( callbacks->has_ResetConsole() ){
+	ptr_R_ResetConsole = RInside_ResetConsole;
     }
     if( callbacks->has_FlushConsole() ){
     	ptr_R_FlushConsole = RInside_FlushConsole;
@@ -409,12 +413,12 @@ void RInside::set_callbacks(Callbacks* callbacks_){
     
     R_Outputfile = NULL;
     R_Consolefile = NULL;    
-    
+#endif    
 }
 
 void RInside::repl(){
-	R_ReplDLLinit();
-	while( R_ReplDLLdo1() > 0 ){}
+    R_ReplDLLinit();
+    while( R_ReplDLLdo1() > 0 ) {}
 }
 
 
