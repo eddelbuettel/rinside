@@ -2,7 +2,8 @@
 ##
 ## R/C++ interface class library -- Easier R embedding into C++
 ##
-## Copyright (C) 2009 - 2010 Dirk Eddelbuettel
+## Copyright (C) 2009        Dirk Eddelbuettel 
+## Copyright (C) 2009 - 2010 Dirk Eddelbuettel and Romain Francois
 ##
 ## This file is part of RInside.
 ##
@@ -42,7 +43,7 @@ RLDFLAGS := 		$(shell $(R_HOME)/bin/R CMD config --ldflags)
 RCPPINCL := 		$(shell echo 'Rcpp:::CxxFlags()' | $(R_HOME)/bin/R --vanilla --slave)
 
 CXX := 			$(shell $(R_HOME)/bin/R CMD config CXX)
-CPPFLAGS := 		-Wall $(RCPPFLAGS) $(RCPPINCL) 
+CPPFLAGS := 		$(RCPPFLAGS) $(RCPPINCL) 
 CXXFLAGS := 		-I. $(RCPPFLAGS) $(shell $(R_HOME)/bin/R CMD config CXXFLAGS)
 LDFLAGS	= 		-s
 LDLIBS = 		$(RLDFLAGS)
