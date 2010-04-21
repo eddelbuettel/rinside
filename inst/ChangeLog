@@ -1,3 +1,8 @@
+2010-04-21  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/MemBuf.cpp: Added #include <string.h> so that even Solaris sees
+	  strlen() -- with thanks to Brian Ripley
+
 2010-04-05  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp: Add #ifdef to Callback code to break on Windows

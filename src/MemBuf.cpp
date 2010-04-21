@@ -22,6 +22,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <string.h>		// Solaris seems to need this for strlen
 
 #include "MemBuf.h"
 
