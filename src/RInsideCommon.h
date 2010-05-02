@@ -20,6 +20,8 @@
 #ifndef RINSIDE_RINSIDECOMMON_H
 #define RINSIDE_RINSIDECOMMON_H
 
+#include "RInsideConfig.h"
+
 #include <string>
 #include <vector>
 #include <iostream>

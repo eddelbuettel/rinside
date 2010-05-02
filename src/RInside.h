@@ -30,7 +30,6 @@ class RInside {
 private:
     MemBuf mb_m;
     Rcpp::Environment global_env ;
-    Callbacks* callbacks ;
     
     bool verbose_m;				// private switch
                                                   
@@ -42,6 +41,8 @@ private:
 
     static RInside* instance_ ;
     
+#ifdef RINSIDE_CALLBACKS
+    Callbacks* callbacks ;
     friend void RInside_ShowMessage( const char* message) ;
     friend void RInside_WriteConsoleEx( const char* message, int len, int oType ) ;
     friend int RInside_ReadConsole(const char *prompt, unsigned char *buf, int len, int addtohistory) ;
@@ -49,11 +50,9 @@ private:
     friend void RInside_FlushConsole() ;
     friend void RInside_ClearerrConsole() ;
     friend void RInside_Busy(int which) ;
-    
+#endif 
+
 public:
-	void set_callbacks(Callbacks* callbacks_) ;
-	void repl() ;
-	
     int  parseEval(const std::string & line, SEXP &ans); // parse line, return in ans; error code rc
     void parseEvalQ(const std::string & line);		 // parse line, no return (throws on error)
 
@@ -83,6 +82,12 @@ public:
     Rcpp::Environment::Binding operator[]( const std::string& name ) ;
     
     static RInside& instance() ;
+    
+#ifdef RINSIDE_CALLBACKS
+    void set_callbacks(Callbacks* callbacks_) ;
+	void repl() ;
+#endif
+
 };
 
 #endif

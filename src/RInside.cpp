@@ -50,12 +50,20 @@ RInside::~RInside() {		// now empty as MemBuf is internal
     instance_ = 0 ;
 }
 
-RInside::RInside() : callbacks(0) {
+RInside::RInside() 
+#ifdef RINSIDE_CALLBACKS 
+	: callbacks(0)
+#endif
+{
 	initialize( 0, 0 );
 }
 
-RInside::RInside(const int argc, const char* const argv[]) : callbacks(0) {
-    initialize( argc, argv ); 
+RInside::RInside(const int argc, const char* const argv[]) 
+#ifdef RINSIDE_CALLBACKS 
+: callbacks(0)
+#endif 
+{
+initialize( argc, argv ); 
 }
 
 // TODO: use a vector<string> would make all this a bit more readable 
@@ -322,6 +330,8 @@ RInside& RInside::instance(){
 
 /* callbacks */
 
+#ifdef RINSIDE_CALLBACKS
+
 void Callbacks::Busy_( int which ){
     R_is_busy = static_cast<bool>( which ) ;
     Busy( R_is_busy ) ;	
@@ -421,4 +431,4 @@ void RInside::repl(){
     while( R_ReplDLLdo1() > 0 ) {}
 }
 
-
+#endif

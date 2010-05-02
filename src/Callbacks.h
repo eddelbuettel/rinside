@@ -24,6 +24,8 @@
 
 #include "RInsideCommon.h"
 
+#ifdef RINSIDE_CALLBACKS
+
 class Callbacks {
 public:
 	
@@ -62,5 +64,7 @@ private:
 	std::string buffer ;
 	
 } ;                                       
+
+#endif
 
 #endif
