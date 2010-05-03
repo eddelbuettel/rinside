@@ -12,8 +12,10 @@
 int main(int argc, char *argv[]) {
 
     RInside R(argc, argv);              // create an embedded R instance 
+    #if defined(RINSIDE_CALLBACKS)
     R.set_callbacks( new Callbacks() );
     R.repl() ;
+    #endif
     exit(0);
 }
 
