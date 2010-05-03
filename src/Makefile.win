@@ -65,7 +65,7 @@ RInsideAutoloads.h :	tools/RInsideAutoloads.r
 userLibrary : 		$(USERLIB) $(USERLIBST)
 			-@if test ! -e $(USERDIR); then mkdir -p $(USERDIR); fi
 			cp $(USERLIB) $(USERDIR)
-			cp RInside.h MemBuf.h RInsideCommon.h Callbacks.h $(USERDIR)
+			cp RInside.h MemBuf.h RInsideCommon.h RInsideConfig.h Callbacks.h $(USERDIR)
 			cp $(USERLIBST) $(USERDIR)
 			rm $(USERLIB) $(USERLIBST)
 
