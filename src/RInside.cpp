@@ -32,7 +32,7 @@ const char *programName = "RInside";
 
 #ifdef WIN32
     // on Windows, we need to provide setenv which is in the file setenv.c here
-    #include "setenv.c"
+    #include "setenv/setenv.c"
     extern int optind;
 #endif
 
