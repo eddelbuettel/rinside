@@ -36,12 +36,12 @@ RInsideLdFlags <- function(static=TRUE) {
 
 ## Provide compiler flags -- i.e. -I/path/to/RInside.h
 RInsideCxxFlags <- function() {
-    path <- RInsideLdPath()
-    if (.Platform$OS.type=="windows") {
-        path <- shQuote(path)
-    }
-    paste("-I", path, sep="")
-}
+    path <- system.file( "include", package = "RInside" )
+    # if (.Platform$OS.type=="windows") {
+    #     path <- shQuote(path)
+    # }
+    sprintf('-I"%s"', path)
+}     
 
 ## Shorter names, and call cat() directly
 CxxFlags <- function() {

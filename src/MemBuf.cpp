@@ -24,7 +24,7 @@
 #include <cstring>
 #include <string.h>		// Solaris seems to need this for strlen
 
-#include "MemBuf.h"
+#include <MemBuf.h>
 
 extern bool verbose;
 extern const char *programName;

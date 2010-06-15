@@ -23,8 +23,8 @@
 #ifndef RINSIDE_RINSIDE_H
 #define RINSIDE_RINSIDE_H
 
-#include "RInsideCommon.h"
-#include "Callbacks.h"
+#include <RInsideCommon.h>
+#include <Callbacks.h>
 
 class RInside {
 private:

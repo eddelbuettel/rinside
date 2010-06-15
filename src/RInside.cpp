@@ -20,8 +20,8 @@
 // You should have received a copy of the GNU General Public License
 // along with RInside.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "RInside.h"
-#include "Callbacks.h"
+#include <RInside.h>
+#include <Callbacks.h>
 
 RInside* RInside::instance_ = 0 ;
 
@@ -79,7 +79,7 @@ void RInside::initialize(const int argc, const char* const argv[]){
     verbose_m = false; 		// Default is false
 
     // generated as littler.h via from svn/littler/littler.R
-    #include "RInsideEnvVars.h"
+    #include <RInsideEnvVars.h>
 
     for (int i = 0; R_VARS[i] != NULL; i+= 2) {
 	if (getenv(R_VARS[i]) == NULL) { // if env variable is not yet set
@@ -162,7 +162,7 @@ void RInside::init_rand(void) {	/* set seed for tempfile()  */
 
 void RInside::autoloads() {
 
-    #include "RInsideAutoloads.h"
+    #include <RInsideAutoloads.h>  
  
     // Autoload default packages and names from autoloads.h
     //

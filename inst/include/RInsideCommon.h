@@ -20,7 +20,7 @@
 #ifndef RINSIDE_RINSIDECOMMON_H
 #define RINSIDE_RINSIDECOMMON_H
 
-#include "RInsideConfig.h"
+#include <RInsideConfig.h>
 
 #include <string>
 #include <vector>
@@ -35,7 +35,7 @@
 #endif
 #include <R_ext/RStartup.h>
 
-#include "MemBuf.h"
+#include <MemBuf.h>
 
 // simple logging help
 inline void logTxtFunction(const char* file, const int line, const char* expression, const bool verbose) {
