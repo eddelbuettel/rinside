@@ -15,7 +15,6 @@
 ## You should have received a copy of the GNU General Public License
 ## along with RInside.  If not, see <http://www.gnu.org/licenses/>.
 
-USERLIB=libRInside$(DYLIB_EXT)
 USERLIBST=libRInside.a
 USERDIR=../inst/lib
 
@@ -24,18 +23,18 @@ PKG_LIBS = $(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e "Rcpp:::LdFlags()
 
 all:	$(SHLIB) userLibrary
 
-userLibrary: $(USERLIB) $(USERLIBST)
+userLibrary: $(USERLIBST)
 	-@if test ! -e $(USERDIR)$(R_ARCH); then mkdir -p $(USERDIR)$(R_ARCH); fi
-	cp $(USERLIB) $(USERDIR)$(R_ARCH)
+	cp $(SHLIB) $(USERDIR)$(R_ARCH)/libRInside.dll
 	cp $(USERLIBST) $(USERDIR)$(R_ARCH)
-	rm $(USERLIB) $(USERLIBST)
-
-$(USERLIB): $(OBJECTS)
+	rm $(USERLIBST)
 
 $(USERLIBST): $(OBJECTS)
-	
+	$(AR) qc $(USERLIBST) $^
+	@if test -n "$(RANLIB)"; then $(RANLIB) $(USERLIBST); fi
+			
 .PHONY: all clean userLibrary
 
 clean:
-	rm -f $(OBJECTS) $(SHLIB) $(USERLIB) $(USERLIBST)
+	rm -f $(OBJECTS) $(SHLIB) $(USERLIBST)
 
