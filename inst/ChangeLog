@@ -1,3 +1,13 @@
+2010-06-16  Romain Francois <romain@r-enthusiasts.com>
+
+	* inst/examples/standard/rinside_sample9.cpp: new example illustrating 
+	how to expose a C++ function to the embedded R
+	
+	* inst/include/*.h: moved the headers to include so that there is only one copy
+	
+	* inst/include/MemBuf.h: change from signature of add to use
+	const std::string& instead of const char* 
+
 2010-04-21  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/MemBuf.cpp: Added #include <string.h> so that even Solaris sees
