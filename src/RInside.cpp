@@ -120,6 +120,11 @@ void RInside::initialize(const int argc, const char* const argv[]){
     
     autoloads();    		// Force all default package to be dynamically required */
 
+    // load Rcpp
+    Rf_PrintValue( 
+    	Rf_eval( Rf_lang2( Rf_install( "require" ), Rf_mkString("Rcpp") ), R_GlobalEnv ) 
+    	) ;
+    
     if ((argc - optind) > 1){    	// for argv vector in Global Env */
 	Rcpp::CharacterVector s_argv( argv+(1+optind), argv+argc );
 	assign(s_argv, "argv");
