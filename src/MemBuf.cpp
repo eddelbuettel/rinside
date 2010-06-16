@@ -21,8 +21,7 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <cstring>
-#include <string.h>		// Solaris seems to need this for strlen
+#include <string>
 
 #include <MemBuf.h>
 
@@ -45,8 +44,8 @@ void MemBuf::rewind(){
     buffer.clear() ;
 }
 
-void MemBuf::add(char *buf){
-    int buflen = strlen(buf);
+void MemBuf::add(const std::string& buf){
+    int buflen = buf.size() ;
     while ( ( buflen + buffer.size() ) >= buffer.capacity() ) {
 	resize();
     }

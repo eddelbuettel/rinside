@@ -29,6 +29,6 @@ public:
     ~MemBuf();
     void resize();
     void rewind();
-    void add(char *buf);
-    const char* getBufPtr() { return buffer.c_str() ; };
+    void add(const std::string& );
+    inline const char* getBufPtr() { return buffer.c_str() ; };
 };
