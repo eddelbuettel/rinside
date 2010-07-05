@@ -1,4 +1,4 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4;  tab-width: 8; -*-
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4;  tab-width: 4; -*-
 //
 // Another simple example inspired by an r-devel mail by Abhijit Bera
 //
@@ -9,36 +9,29 @@
 #include <iomanip>
 
 int main(int argc, char *argv[]) {
-
+    
     try {
         RInside R(argc, argv);          // create an embedded R instance 
-        SEXP ans;
 
-        std::string txt = "suppressMessages(library(fPortfolio))";
-        R.parseEvalQ(txt);              // load library, no return value
-
-        txt = "lppData <- 100 * LPP2005.RET[, 1:6]; "
+	std::string txt = 
+	    "suppressMessages(library(fPortfolio))"
+	    "lppData <- 100 * LPP2005.RET[, 1:6]; "
             "ewSpec <- portfolioSpec(); " 
             "nAssets <- ncol(lppData); ";
-        R.parseEval(txt, ans);          // prepare problem
+        R.parseEvalQ(txt);          	// prepare problem
         
-        const double dvec[6] = { 0.1, 0.1, 0.1, 0.1, 0.3, 0.3 }; // choose any weights you want
+        const double dvec[6] = { 0.1, 0.1, 0.1, 0.1, 0.3, 0.3 }; // choose any weights
         const std::vector<double> w(dvec, &dvec[6]);
-
-        R.assign( w, "weightsvec");     // assign STL vector to R's 'weightsvec' variable
-
+        R["weightsvec"] = w; 	 	// assign weights
         txt = "setWeights(ewSpec) <- weightsvec";
         R.parseEvalQ(txt);              // evaluate assignment
 
-        txt = "ewPortfolio <- feasiblePortfolio(data = lppData, spec = ewSpec, "
-            "                                   constraints = \"LongOnly\"); "
-            "print(ewPortfolio); "
+        txt = 
+	    "ewPf <- feasiblePortfolio(data=lppData, spec=ewSpec, constraints=\"LongOnly\");"
+            "print(ewPf); "
             "vec <- getCovRiskBudgets(ewPortfolio@portfolio)";
-        ans = R.parseEval(txt);         // assign covRiskBudget weights to ans
-        Rcpp::NumericVector V(ans);     // convert SEXP variable to an RcppVector
-  
-        ans = R.parseEval("names(vec)");        // assign columns names to ans
-        Rcpp::CharacterVector names(ans);   
+        Rcpp::NumericVector   V(     (SEXP) R.parseEval(txt) ); 
+        Rcpp::CharacterVector names( (SEXP) R.parseEval("names(vec)"));   
 
         for (int i=0; i<names.size(); i++) {
           std::cout << std::setw(16) << names[i] << "\t"
