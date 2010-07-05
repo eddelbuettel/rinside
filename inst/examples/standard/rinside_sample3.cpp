@@ -11,7 +11,6 @@
 int main(int argc, char *argv[]) {
 
     RInside R(argc, argv);              // create an embedded R instance 
-    SEXP ans;
 
     std::string txt =                   // load library, run regression, create summary
         "suppressMessages(require(stats));"     
@@ -19,23 +18,18 @@ int main(int argc, char *argv[]) {
         "print(swisssum)";             
     R.parseEvalQ(txt);                  // eval command, no return
 
-    txt = "swcoef <- coef(swisssum)";
-    R.parseEval(txt, ans);              // matrix swisscoef now in SEXP ans
-    RcppMatrix<double> M(ans);          // convert SEXP variable to an RcppMatrix
-  
-    R.parseEval("colnames(swcoef)",ans);// assign columns names to ans
-    RcppStringVector cnames(ans);       // and into string vector cnames
-    R.parseEval("rownames(swcoef)",ans);// assign columns names to ans
-    RcppStringVector rnames(ans);       // and into string vector cnames
+    // evaluate R expressions, and assign directly into Rcpp types
+    Rcpp::NumericMatrix     M( (SEXP) R.parseEval("swcoef <- coef(swisssum)") );  	        
+    Rcpp::StringVector cnames( (SEXP) R.parseEval("colnames(swcoef)") );
+    Rcpp::StringVector rnames( (SEXP) R.parseEval("rownames(swcoef)") ); 
 
-    std::cout << "\t\t\t";
+    std::cout << "\n\nAnd now from C++\n\n\t\t\t";
     for (int i=0; i<cnames.size(); i++) {
-        std::cout << std::setw(11) << cnames(i) << "\t";
+        std::cout << std::setw(11) << cnames[i] << "\t";
     }
     std::cout << std::endl;
-
     for (int i=0; i<rnames.size(); i++) {
-        std::cout << std::setw(16) << rnames(i) << "\t";
+        std::cout << std::setw(16) << rnames[i] << "\t";
         for (int j=0; j<cnames.size(); j++) {
             std::cout << std::setw(11) << M(i,j) << "\t";
         }
