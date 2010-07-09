@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
         RInside R(argc, argv);          // create an embedded R instance 
 
 	std::string txt = 
-	    "suppressMessages(library(fPortfolio))"
+	    "suppressMessages(library(fPortfolio)); "
 	    "lppData <- 100 * LPP2005.RET[, 1:6]; "
             "ewSpec <- portfolioSpec(); " 
             "nAssets <- ncol(lppData); ";
@@ -29,10 +29,11 @@ int main(int argc, char *argv[]) {
         txt = 
 	    "ewPf <- feasiblePortfolio(data=lppData, spec=ewSpec, constraints=\"LongOnly\");"
             "print(ewPf); "
-            "vec <- getCovRiskBudgets(ewPortfolio@portfolio)";
+            "vec <- getCovRiskBudgets(ewPf@portfolio)";
         Rcpp::NumericVector   V(     (SEXP) R.parseEval(txt) ); 
         Rcpp::CharacterVector names( (SEXP) R.parseEval("names(vec)"));   
 
+	std::cout << "\n\nAnd now from C++\n\n";
         for (int i=0; i<names.size(); i++) {
           std::cout << std::setw(16) << names[i] << "\t"
                     << std::setw(11) << V[i] << "\n";
