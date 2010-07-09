@@ -1,4 +1,4 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4;  tab-width: 8; -*-
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4;  tab-width: 4; -*-
 //
 // Simple example showing how expose a C++ function
 //
@@ -20,8 +20,8 @@ RCPP_MODULE(bling){
 
 int main(int argc, char *argv[]) {
 
-	// create an embedded R instance
-    RInside R(argc, argv);               
+	// create an embedded R instance -- and load Rcpp so that modules work
+    RInside R(argc, argv, true);               
         
     // load the bling module
     R["bling"] = LOAD_RCPP_MODULE(bling) ;

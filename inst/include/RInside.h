@@ -1,4 +1,4 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; tab-width: 8 -*-
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; tab-width: 4 -*-
 //
 // RInside.h: R/C++ interface class library -- Easier R embedding into C++
 //
@@ -32,12 +32,12 @@ private:
     Rcpp::Environment global_env ;
     
     bool verbose_m;				// private switch
-                                                  
+
     void init_tempdir(void);
     void init_rand(void);
     void autoloads(void);
     
-    void initialize(const int argc, const char* const argv[] ) ;
+    void initialize(const int argc, const char* const argv[], const bool loadRcpp ) ;
 
     static RInside* instance_ ;
     
@@ -56,13 +56,13 @@ public:
     int  parseEval(const std::string & line, SEXP &ans); // parse line, return in ans; error code rc
     void parseEvalQ(const std::string & line);		 // parse line, no return (throws on error)
 
-	class Proxy {
+    class Proxy {
 	public:
 	    Proxy(SEXP xx): x(xx) { };
 	
 	    template <typename T>
 	    operator T() {
-		return ::Rcpp::as<T>(x);
+			return ::Rcpp::as<T>(x);
 	    }
 	private:
 	    Rcpp::RObject x;
@@ -72,11 +72,11 @@ public:
 
     template <typename T> 
     void assign(const T& object, const std::string& nam) {
-	global_env.assign( nam, object ) ;
+		global_env.assign( nam, object ) ;
     }
     
     RInside() ;
-    RInside(const int argc, const char* const argv[]);
+    RInside(const int argc, const char* const argv[], const bool loadRcpp=false);
     ~RInside();
     
     Rcpp::Environment::Binding operator[]( const std::string& name ) ;

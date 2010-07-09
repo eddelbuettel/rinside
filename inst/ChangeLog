@@ -1,6 +1,8 @@
 2010-07-09  Dirk Eddelbuettel  <edd@debian.org>
 
-	* src/RInside.cpp: Load Rcpp more quietly
+	* inst/include/RInside.h: New argument to constructor to select
+	loading of Rcpp
+	* src/RInside.cpp: Idem, also load Rcpp more quietly
 
 2010-07-05  Dirk Eddelbuettel  <edd@debian.org>
 
