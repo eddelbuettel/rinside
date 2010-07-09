@@ -121,7 +121,10 @@ void RInside::initialize(const int argc, const char* const argv[]){
     autoloads();    		// Force all default package to be dynamically required */
 
     // load Rcpp
-    Rf_eval( Rf_mkString("suppressMessages(library(Rcpp))"), R_GlobalEnv ); 
+    //Rf_eval( Rf_mkString("suppressMessages(library(Rcpp))"), R_GlobalEnv ); 
+    Rf_eval(Rf_lang2(Rf_install( "suppressMessages" ), 
+		     Rf_lang2(Rf_install( "require" ), Rf_mkString("Rcpp"))),
+	    R_GlobalEnv);
     
     if ((argc - optind) > 1){    	// for argv vector in Global Env */
 	Rcpp::CharacterVector s_argv( argv+(1+optind), argv+argc );
