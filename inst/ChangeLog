@@ -4,7 +4,7 @@
 
 	* src/Makevars: Set emacs header for Makefile mode
 	* src/Makevars.win: Set emacs header for Makefile mode
-	
+
 2010-07-09  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/include/RInside.h: New argument to constructor to select
