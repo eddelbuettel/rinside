@@ -1,3 +1,5 @@
 inst/doc/html
 inst/doc/latex
 inst/doc/man
+inst/doc
+inst/lib
