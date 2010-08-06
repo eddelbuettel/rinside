@@ -20,6 +20,8 @@ RLDFLAGS := 		$(shell $(R_HOME)/bin/R CMD config --ldflags)
 RBLAS := 		$(shell $(R_HOME)/bin/R CMD config BLAS_LIBS)
 RLAPACK := 		$(shell $(R_HOME)/bin/R CMD config LAPACK_LIBS)
 
+## if you need to set an rpath to R itself, also uncomment
+#RRPATH :=		-Wl,-rpath,$(R_HOME)/lib
 
 ## include headers and libraries for Rcpp interface classes
 RCPPINCL := 		$(shell echo 'Rcpp:::CxxFlags()' | $(R_HOME)/bin/R --vanilla --slave)
@@ -30,17 +32,16 @@ RCPPLIBS := 		$(shell echo 'Rcpp:::LdFlags()'  | $(R_HOME)/bin/R --vanilla --sla
 RINSIDEINCL := 		$(shell echo 'RInside:::CxxFlags()' | $(R_HOME)/bin/R --vanilla --slave)
 RINSIDELIBS := 		$(shell echo 'RInside:::LdFlags()'  | $(R_HOME)/bin/R --vanilla --slave)
 
-
 ## compiler etc settings used in default make rules
 CXX := 			$(shell $(R_HOME)/bin/R CMD config CXX)
 CPPFLAGS := 		-Wall $(shell $(R_HOME)/bin/R CMD config CPPFLAGS)
 CXXFLAGS := 		$(RCPPFLAGS) $(RCPPINCL) $(RINSIDEINCL) $(shell $(R_HOME)/bin/R CMD config CXXFLAGS)
-LDLIBS := 		$(RLDFLAGS) $(RBLAS) $(RLAPACK) $(RCPPLIBS) $(RINSIDELIBS)
+LDLIBS := 		$(RLDFLAGS) $(RRPATH) $(RBLAS) $(RLAPACK) $(RCPPLIBS) $(RINSIDELIBS)
 
-all : 			$(programs)
+all: 			$(programs)
 			@test -x /usr/bin/strip && strip $^
 
-run :			$(programs)
+run:			$(programs)
 			@for p in $(programs); do echo; echo "Running $$p:"; ./$$p; done
 
 clean:

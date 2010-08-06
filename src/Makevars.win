@@ -1,3 +1,5 @@
+## -*- mode: Makefile; tab-width: 8 -*- 
+##
 ## Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
 ##
 ## This file is part of RInside.
@@ -36,7 +38,7 @@ $(USERLIBST): $(OBJECTS)
 
 $(USERLIB): $(OBJECTS)
 	$(CXX) -Wl,--export-all-symbols -shared -o $(USERLIB) $^ $(ALL_LIBS) -lws2_32
-	
+
 .PHONY: all clean userLibrary
 
 clean:
