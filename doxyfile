@@ -655,7 +655,9 @@ FILE_PATTERNS          = *.c \
                          *.F90 \
                          *.F \
                          *.VHD \
-                         *.VHDL
+                         *.VHDL \
+			 *.r \
+			 *.R
 
 # The RECURSIVE tag can be used to turn specify whether or not subdirectories 
 # should be searched for input files as well. Possible values are YES and NO. 
@@ -1037,7 +1039,7 @@ ENUM_VALUES_PER_LINE   = 4
 # JavaScript, DHTML, CSS and frames is required (i.e. any modern browser). 
 # Windows users are probably better off using the HTML help feature.
 
-GENERATE_TREEVIEW      = NO
+GENERATE_TREEVIEW      = YES
 
 # By enabling USE_INLINE_TREES, doxygen will generate the Groups, Directories, 
 # and Class Hierarchy pages using a tree view instead of an ordered list.
@@ -1434,7 +1436,7 @@ PERL_PATH              = /usr/bin/perl
 # fallback. It is recommended to install and use dot, since it yields more 
 # powerful graphs.
 
-CLASS_DIAGRAMS         = NO
+CLASS_DIAGRAMS         = YES
 
 # You can define message sequence charts within doxygen comments using the \msc 
 # command. Doxygen will then run the mscgen tool (see 
