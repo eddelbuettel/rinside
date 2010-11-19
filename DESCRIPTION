@@ -17,6 +17,5 @@ Description: C++ classes to embed R in C++ applications
  the C++ classes is included as well.
 Depends: R (>= 2.10.0), Rcpp (>= 0.8.5)
 LinkingTo: Rcpp
-SystemRequirements: GNU make
 URL: http://dirk.eddelbuettel.com/code/rinside.html
 License: GPL (>= 2)
