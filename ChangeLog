@@ -1,3 +1,8 @@
+2011-01-20  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.cpp (initialize): Assign results of Rf_install to avoid
+	any risk of garbage collection -- with thaks to Doug and Luke
+
 2010-12-26  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp (initialize): If Rcpp is requested, load it

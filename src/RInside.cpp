@@ -118,9 +118,12 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     global_env = R_GlobalEnv ;
     
     if (loadRcpp) {			// if asked for, load Rcpp (before the autoloads)
-	Rf_eval(Rf_lang2(Rf_install( "suppressMessages" ), 
-			 Rf_lang2(Rf_install( "require" ), Rf_mkString("Rcpp"))),
-		R_GlobalEnv);
+	// Rf_install is used best by first assigning like this so that symbols get into the symbol table 
+	// where they cannot be garbage collected; doing it on the fly does expose a minuscule risk of garbage  
+	// collection -- with thanks to Doug Bates for the explanation and Luke Tierney for the heads-up
+	SEXP suppressMessagesSymbol = Rf_install("suppressMessages");
+	SEXP requireSymbol = Rf_install("require");
+	Rf_eval(Rf_lang2(suppressMessagesSymbol, Rf_lang2(requireSymbol, Rf_mkString("Rcpp"))), R_GlobalEnv);
     }
 
     autoloads();    			// loads all default packages
