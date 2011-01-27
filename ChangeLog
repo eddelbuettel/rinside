@@ -1,3 +1,8 @@
+2011-01-26  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/rinside_sample10.cpp: New example in
+	response to r-devel question by Wayne Zhang
+
 2011-01-20  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp (initialize): Assign results of Rf_install to avoid
