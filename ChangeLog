@@ -1,3 +1,8 @@
+2011-02-17  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/rinside_sample6.cpp: Updated to
+	direct `R["a"] = a;' assignments
+
 2011-01-26  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/rinside_sample10.cpp: New example in
