@@ -1,3 +1,8 @@
+2011-03-06  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/rinside_sample11.cpp: New example in
+	response to r-help question by Paul Smith
+
 2011-02-17  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/rinside_sample6.cpp: Updated to
@@ -11,7 +16,7 @@
 2011-01-20  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp (initialize): Assign results of Rf_install to avoid
-	any risk of garbage collection -- with thaks to Doug and Luke
+	any risk of garbage collection -- with thanks to Doug and Luke
 
 2010-12-26  Dirk Eddelbuettel  <edd@debian.org>
 
