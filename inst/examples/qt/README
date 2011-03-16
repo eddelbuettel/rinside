@@ -1,0 +1,19 @@
+
+This directory provides a simple example of using RInside with the Qt
+toolkit.  Usage is standard Qt usage, do
+
+    qmake 
+
+to generate a Makefile from the qmake source file ending in .pro, followed
+by
+
+    make
+
+which should generate the qtdensity binary.  Doing
+
+    make clean
+
+tidies things up.
+
+  
+

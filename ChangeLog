@@ -1,3 +1,9 @@
+2011-03-15  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/qt/*: Added new example combining RInside with Qt
+	illustrating the standard 'slider to select bandwidth for density
+	estimate' example found in demo(tkdensity) and other places
+
 2011-03-06  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/rinside_sample11.cpp: New example in
