@@ -102,9 +102,9 @@ void QtDensity::setupDisplay(void)  {
 }
 
 QtDensity::~QtDensity() {
-    std::cerr << "Dtor" << std::endl;
+    //std::cerr << "Dtor" << std::endl;
     m_R.parseEvalQ("q('no')");	// we never needed that before -- but maybe the Qt threads get in the way
-    std::cerr << "Dtor R stopped" << std::endl; // not reached !!
+    //std::cerr << "Dtor R stopped" << std::endl; // not reached !!
 }
 
 void QtDensity::plot(void) {

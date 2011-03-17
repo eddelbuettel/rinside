@@ -32,9 +32,9 @@ private slots:
 
 private:
     void setupDisplay(void);	// standard GUI boilderplate of arranging things
-    void plot(void);		// run a density plot in R and update the display
+    void plot(void);		// run a density plot in R and update the
 
-    qlabel *imageLabel;
+    QLabel *imageLabel;
     QImage *image;
 
     RInside & m_R;		// reference to the R instance passed to constructor
