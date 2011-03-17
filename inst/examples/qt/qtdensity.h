@@ -27,25 +27,20 @@ public:
 private slots:
     void getBandwidth(int bw);
     void getKernel(int kernel);
-    void getN1(QString txt);
-    void getM1(QString txt);
-    void getSD1(QString txt);
-    void getN2(QString txt);
-    void getM2(QString txt);
-    void getSD2(QString txt);
+    void getRandomDataCmd(QString txt);
+    void runRandomDataCmd(void);
 
 private:
-    void plot(void);
-    void draw(void);
+    void setupDisplay(void);	// standard GUI boilderplate of arranging things
+    void plot(void);		// run a density plot in R and update the display
 
-    QLabel *imageLabel;
+    qlabel *imageLabel;
     QImage *image;
 
     RInside & m_R;		// reference to the R instance passed to constructor
     std::string m_tempfile;	// name of file used by R for plots
-    int m_bw, m_kernel;
-    std::vector< std::string > m_kernelstrings;
-    std::map<std::string, std::string> m_mixparams; 	// simple map for n1,n2,m1,m2,sd1,sd2 
+    int m_bw, m_kernel;		// parameters used to estimate the density
+    std::string m_cmd;		// random draw command string
 };
 
 #endif

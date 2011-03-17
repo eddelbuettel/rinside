@@ -11,39 +11,33 @@
 
 QtDensity::QtDensity(RInside & R) : m_R(R)
 {
-    m_bw = 100;
-    m_kernel = 0;
-    m_kernelstrings.push_back("gaussian");
-    m_kernelstrings.push_back("epanechnikov");
-    m_kernelstrings.push_back("rectangular");
-    m_kernelstrings.push_back("triangular");
-    m_kernelstrings.push_back("cosine");
+    m_bw = 100;			// initial bandwidth, will be scaled by 100 so 1.0
+    m_kernel = 0;		// initial kernel: gaussian
+    m_cmd = "c(rnorm(100,0,1), rnorm(50,5,1))"; // simple mixture
 
-    m_mixparams["n1"] = "100";
-    m_mixparams["n2"] =  "50";
-    m_mixparams["m1"] =   "0";
-    m_mixparams["m2"] =   "5";
-    m_mixparams["sd1"] =  "1";
-    m_mixparams["sd2"] =  "0.5";
-
-    m_R["bw"] = m_bw;
+    m_R["bw"] = m_bw;		// pass bandwidth to R, and have R compute a temp.file name
     m_tempfile = Rcpp::as<std::string>(m_R.parseEval("tfile <- tempfile()"));
-    draw();
-    //std::cout << "Used R-assigned tempfile " << m_tempfile << std::endl;
 
+    setupDisplay();
+}
+
+void QtDensity::setupDisplay(void)  {
     QWidget *window = new QWidget;
-    window->setWindowTitle("Qt and embedded R demo: density estimation");
+    window->setWindowTitle("Qt and RInside demo: density estimation");
 
     QSpinBox *spinBox = new QSpinBox;
     QSlider *slider = new QSlider(Qt::Horizontal);
     spinBox->setRange(5, 200);
     slider->setRange(5, 200);
-
     QObject::connect(spinBox, SIGNAL(valueChanged(int)), slider, SLOT(setValue(int)));
     QObject::connect(slider, SIGNAL(valueChanged(int)), spinBox, SLOT(setValue(int)));
     spinBox->setValue(m_bw);
-
     QObject::connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(getBandwidth(int)));
+
+    QLabel *cmdLabel = new QLabel("R command for random data creation");
+    QLineEdit *cmdEntry = new QLineEdit(QString(m_cmd.c_str()));
+    QObject::connect(cmdEntry,  SIGNAL(textEdited(QString)), this, SLOT(getRandomDataCmd(QString)));
+    QObject::connect(cmdEntry,  SIGNAL(editingFinished()), this, SLOT(runRandomDataCmd()));
 
     QGroupBox *kernelRadioBox = new QGroupBox("Density Estimation kernel");
     QRadioButton *radio1 = new QRadioButton("&Gaussian");
@@ -58,8 +52,8 @@ QtDensity::QtDensity(RInside & R) : m_R(R)
     vbox->addWidget(radio3);
     vbox->addWidget(radio4);
     vbox->addWidget(radio5);
-    kernelRadioBox->setMinimumSize(300,140);
-    kernelRadioBox->setMaximumSize(300,140);
+    kernelRadioBox->setMinimumSize(260,140);
+    kernelRadioBox->setMaximumSize(260,140);
     kernelRadioBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     kernelRadioBox->setLayout(vbox);
 
@@ -71,70 +65,40 @@ QtDensity::QtDensity(RInside & R) : m_R(R)
     kernelGroup->addButton(radio5, 4);
     QObject::connect(kernelGroup, SIGNAL(buttonClicked(int)), this, SLOT(getKernel(int)));
 
-    QLabel *labelN1 = new QLabel("Nobs 1");
-    QLabel *labelM1 = new QLabel("Mean 1");
-    QLabel *labelSD1 = new QLabel("StdDev 1");
-    QLineEdit *entryN1 = new QLineEdit(QString(m_mixparams["n1"].c_str()));
-    QLineEdit *entryM1 = new QLineEdit(QString(m_mixparams["m1"].c_str()));
-    QLineEdit *entrySD1 = new QLineEdit(QString(m_mixparams["sd1"].c_str()));
-    QLabel *labelN2 = new QLabel("Nobs 2");
-    QLabel *labelM2 = new QLabel("Mean 2");
-    QLabel *labelSD2 = new QLabel("StdDev 2");
-    QLineEdit *entryN2 = new QLineEdit( QString(m_mixparams["n2"].c_str()));
-    QLineEdit *entryM2 = new QLineEdit(QString(m_mixparams["m2"].c_str()));
-    QLineEdit *entrySD2 = new QLineEdit(QString(m_mixparams["sd2"].c_str()));
-    QWidget *gridbox = new QWidget();
-    QGridLayout *grid = new QGridLayout(gridbox);
-    grid->addWidget(labelN1, 0, 0);
-    grid->addWidget(labelM1, 0, 1);
-    grid->addWidget(labelSD1, 0, 2);
-    grid->addWidget(entryN1, 1, 0);
-    grid->addWidget(entryM1, 1, 1);
-    grid->addWidget(entrySD1, 1, 2);
-    grid->addWidget(labelN2, 2, 0);
-    grid->addWidget(labelM2, 2, 1);
-    grid->addWidget(labelSD2, 2, 2);
-    grid->addWidget(entryN2, 3, 0);
-    grid->addWidget(entryM2, 3, 1);
-    grid->addWidget(entrySD2, 3, 2);
-    gridbox->setMinimumSize(300,140);
-    gridbox->setMaximumSize(300,140);
-    gridbox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QObject::connect(entryN1,  SIGNAL(textEdited(QString)), this, SLOT(getN1(QString)));
-    QObject::connect(entryM1,  SIGNAL(textEdited(QString)), this, SLOT(getM1(QString)));
-    QObject::connect(entrySD1, SIGNAL(textEdited(QString)), this, SLOT(getSD1(QString)));
-    QObject::connect(entryN2,  SIGNAL(textEdited(QString)), this, SLOT(getN2(QString)));
-    QObject::connect(entryM2,  SIGNAL(textEdited(QString)), this, SLOT(getM2(QString)));
-    QObject::connect(entrySD2, SIGNAL(textEdited(QString)), this, SLOT(getSD2(QString)));
-
     imageLabel = new QLabel;
     imageLabel->setBackgroundRole(QPalette::Base);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
     image = new QImage(QString(m_tempfile.c_str()));
-
+    runRandomDataCmd();
     plot();			// now that we have an image, we can diplay
 
-    QVBoxLayout *outer = new QVBoxLayout;
+    QGroupBox *estimationBox = new QGroupBox("Density estimation bandwidth (scaled by 100)");
+    QHBoxLayout *spinners = new QHBoxLayout;
+    spinners->addWidget(spinBox);
+    spinners->addWidget(slider);
+    QVBoxLayout *topright = new QVBoxLayout;
+    topright->addLayout(spinners);
+    topright->addWidget(cmdLabel);
+    topright->addWidget(cmdEntry);
+    estimationBox->setMinimumSize(360,140);
+    estimationBox->setMaximumSize(360,140);
+    estimationBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    estimationBox->setLayout(topright);
     QHBoxLayout *upperlayout = new QHBoxLayout;
-    upperlayout->addWidget(spinBox);
-    upperlayout->addWidget(slider);
-
-    QHBoxLayout *middlelayout = new QHBoxLayout;
-    middlelayout->addWidget(kernelRadioBox);
-    middlelayout->addWidget(gridbox);
+    upperlayout->addWidget(kernelRadioBox);
+    upperlayout->addWidget(estimationBox);
 
     QHBoxLayout *lowerlayout = new QHBoxLayout;
     lowerlayout->addWidget(imageLabel);
 
+    QVBoxLayout *outer = new QVBoxLayout;
     outer->addLayout(upperlayout);
-    outer->addLayout(middlelayout);
     outer->addLayout(lowerlayout);
     window->setLayout(outer);
     window->show();
     window->resize(650, 750);
-
 }
 
 QtDensity::~QtDensity() {
@@ -144,24 +108,15 @@ QtDensity::~QtDensity() {
 }
 
 void QtDensity::plot(void) {
+    const char *kernelstrings[] = { "gaussian", "epanechnikov", "rectangular", "triangular", "cosine" };
     m_R["bw"] = m_bw;
-    m_R["kernel"] = m_kernelstrings[m_kernel]; // that passes the string to R
+    m_R["kernel"] = kernelstrings[m_kernel]; // that passes the string to R
     std::string cmd1 = "png(tfile,600,600); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
     std::string cmd2 = "\"); points(y, rep(0, length(y)), pch=16, col=rgb(0,0,0,1/4));  dev.off()";
-    std::string cmd = cmd1 + m_kernelstrings[m_kernel] + cmd2;
+    std::string cmd = cmd1 + kernelstrings[m_kernel] + cmd2;
     m_R.parseEvalQ(cmd);
     image->load(QString(m_tempfile.c_str()));
     imageLabel->setPixmap(QPixmap::fromImage(*image));
-}
-
-void QtDensity::draw(void) {
-    m_R["n1"] = m_mixparams["n1"];
-    m_R["m1"] = m_mixparams["m1"];
-    m_R["sd1"] = m_mixparams["sd1"];
-    m_R["n2"] = m_mixparams["n2"];
-    m_R["m2"] = m_mixparams["m2"];
-    m_R["sd2"] = m_mixparams["sd2"];
-    m_R.parseEvalQ("y <- c(rnorm(as.numeric(n1), as.numeric(m1), as.numeric(sd1)), rnorm(as.numeric(n2), as.numeric(m2), as.numeric(sd2)));");
 }
 
 void QtDensity::getBandwidth(int bw) {
@@ -180,48 +135,14 @@ void QtDensity::getKernel(int kernel) {
     }
 }
 
-void QtDensity::getN1(QString txt) {
-    if (txt != "") {
-	m_mixparams["n1"] = txt.toStdString();
-	draw();
-	plot();
-    }
+void QtDensity::getRandomDataCmd(QString txt) {
+    //std::cout << "Cmd: " << txt.toStdString() << std::endl;
+    m_cmd = txt.toStdString();
 }
 
-void QtDensity::getM1(QString txt) {
-    if (txt != "") {
-	m_mixparams["m1"] = txt.toStdString();
-	draw();
-	plot();
-    }
-}
-
-void QtDensity::getSD1(QString txt) {
-    if (txt != "") {
-	m_mixparams["sd1"] = txt.toStdString();
-	draw();
-	plot();
-    }
-}
-
-void QtDensity::getN2(QString txt) {
-    if (txt != "") {
-	m_mixparams["n2"] = txt.toStdString();
-	draw();
-	plot();
-    }
-}
-
-void QtDensity::getM2(QString txt) {
-    if (txt != "") {
-	m_mixparams["m2"] = txt.toStdString();
-	draw();
-	plot();
-    }
-}
-
-void QtDensity::getSD2(QString txt) {
-    m_mixparams["sd2"] = txt.toStdString();
-    draw();
+void QtDensity::runRandomDataCmd(void) {
+    std::string cmd = "y <- " + m_cmd;
+    //std::cout << "Running: " << cmd << std::endl;
+    m_R.parseEvalQ(cmd);
     plot();
 }

@@ -1,3 +1,8 @@
+2011-03-16  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/qt/qtdensity.h: Small rearrangements and
+	simplifications 
+
 2011-03-15  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/qt/*: Added new example combining RInside with Qt
