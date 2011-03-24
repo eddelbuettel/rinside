@@ -6,6 +6,7 @@
 // Copyright (C) 2011  Dirk Eddelbuettel and Romain Francois
 
 #include <QtGui>
+//#include <QSvgWidget>
 
 #include "qtdensity.h"
 
@@ -17,6 +18,7 @@ QtDensity::QtDensity(RInside & R) : m_R(R)
 
     m_R["bw"] = m_bw;		// pass bandwidth to R, and have R compute a temp.file name
     m_tempfile = Rcpp::as<std::string>(m_R.parseEval("tfile <- tempfile()"));
+    //m_R.parseEvalQ("library(cairoDevice)");
 
     setupDisplay();
 }
@@ -93,18 +95,23 @@ void QtDensity::setupDisplay(void)  {
     QHBoxLayout *lowerlayout = new QHBoxLayout;
     lowerlayout->addWidget(imageLabel);
 
+    //QSvgWidget *svg = new QSvgWidget("/tmp/foo.svg");
+    //QHBoxLayout *svglayout = new QHBoxLayout;
+    //svglayout->addWidget(svg);
+
     QVBoxLayout *outer = new QVBoxLayout;
     outer->addLayout(upperlayout);
     outer->addLayout(lowerlayout);
+    //outer->addLayout(svglayout);
     window->setLayout(outer);
     window->show();
-    window->resize(650, 750);
+    window->resize(625, 725);
 }
 
 QtDensity::~QtDensity() {
     //std::cerr << "Dtor" << std::endl;
     m_R.parseEvalQ("q('no')");	// we never needed that before -- but maybe the Qt threads get in the way
-    //std::cerr << "Dtor R stopped" << std::endl; // not reached !!
+    //std::cerr << "Dtor R stopped" << std::endl; // never reached ?
 }
 
 void QtDensity::plot(void) {
@@ -112,6 +119,7 @@ void QtDensity::plot(void) {
     m_R["bw"] = m_bw;
     m_R["kernel"] = kernelstrings[m_kernel]; // that passes the string to R
     std::string cmd1 = "png(tfile,600,600); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
+    //std::string cmd1 = "Cairo_svg(tfile,6,6); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
     std::string cmd2 = "\"); points(y, rep(0, length(y)), pch=16, col=rgb(0,0,0,1/4));  dev.off()";
     std::string cmd = cmd1 + kernelstrings[m_kernel] + cmd2;
     m_R.parseEvalQ(cmd);
