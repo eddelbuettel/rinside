@@ -67,13 +67,7 @@ void QtDensity::setupDisplay(void)  {
     kernelGroup->addButton(radio5, 4);
     QObject::connect(kernelGroup, SIGNAL(buttonClicked(int)), this, SLOT(getKernel(int)));
 
-    //imageLabel = new QLabel;
-    //imageLabel->setBackgroundRole(QPalette::Base);
-    //imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    //imageLabel->setScaledContents(true);
-
-    //image = new QImage(QString(m_tempfile.c_str()));
-    svg = new QSvgWidget();
+    m_svg = new QSvgWidget();
     runRandomDataCmd();	   	// also calls plot()
 
     QGroupBox *estimationBox = new QGroupBox("Density estimation bandwidth (scaled by 100)");
@@ -92,15 +86,11 @@ void QtDensity::setupDisplay(void)  {
     upperlayout->addWidget(kernelRadioBox);
     upperlayout->addWidget(estimationBox);
 
-    //QHBoxLayout *lowerlayout = new QHBoxLayout;
-    //lowerlayout->addWidget(imageLabel);
-
     QHBoxLayout *svglayout = new QHBoxLayout;
-    svglayout->addWidget(svg);
+    svglayout->addWidget(m_svg);
 
     QVBoxLayout *outer = new QVBoxLayout;
     outer->addLayout(upperlayout);
-    //outer->addLayout(lowerlayout);
     outer->addLayout(svglayout);
     window->setLayout(outer);
     window->show();
@@ -123,9 +113,7 @@ void QtDensity::plot(void) {
     std::string cmd = cmd1 + kernelstrings[m_kernel] + cmd2;
     m_R.parseEvalQ(cmd);
     filterFile();
-    //image->load(QString(m_tempfile.c_str()));
-    //imageLabel->setPixmap(QPixmap::fromImage(*image));
-    svg->load(QString(m_svgfile.c_str()));
+    m_svg->load(QString(m_svgfile.c_str()));
 }
 
 void QtDensity::getBandwidth(int bw) {
