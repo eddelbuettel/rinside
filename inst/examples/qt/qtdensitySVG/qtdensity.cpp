@@ -1,7 +1,7 @@
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4;  tab-width: 8; -*-
 //
 // Qt usage example for RInside, inspired by the standard 'density
-// sliders' example for other GUI toolkits
+// sliders' example for other GUI toolkits -- this time with SVG
 //
 // Copyright (C) 2011  Dirk Eddelbuettel and Romain Francois
 
@@ -14,10 +14,9 @@ QtDensity::QtDensity(RInside & R) : m_R(R)
     m_bw = 100;			// initial bandwidth, will be scaled by 100 so 1.0
     m_kernel = 0;		// initial kernel: gaussian
     m_cmd = "c(rnorm(100,0,1), rnorm(50,5,1))"; // simple mixture
-
     m_R["bw"] = m_bw;		// pass bandwidth to R, and have R compute a temp.file name
-    m_tempfile = Rcpp::as<std::string>(m_R.parseEval("tfile <- tempfile()"));
-    m_svgfile = Rcpp::as<std::string>(m_R.parseEval("sfile <- tempfile()"));
+    m_tempfile = QString::fromStdString(Rcpp::as<std::string>(m_R.parseEval("tfile <- tempfile()")));
+    m_svgfile = QString::fromStdString(Rcpp::as<std::string>(m_R.parseEval("sfile <- tempfile()")));
     m_R.parseEvalQ("library(cairoDevice)");
 
     setupDisplay();
@@ -37,7 +36,7 @@ void QtDensity::setupDisplay(void)  {
     QObject::connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(getBandwidth(int)));
 
     QLabel *cmdLabel = new QLabel("R command for random data creation");
-    QLineEdit *cmdEntry = new QLineEdit(QString(m_cmd.c_str()));
+    QLineEdit *cmdEntry = new QLineEdit(m_cmd);
     QObject::connect(cmdEntry,  SIGNAL(textEdited(QString)), this, SLOT(getRandomDataCmd(QString)));
     QObject::connect(cmdEntry,  SIGNAL(editingFinished()), this, SLOT(runRandomDataCmd()));
 
@@ -94,32 +93,24 @@ void QtDensity::setupDisplay(void)  {
     outer->addLayout(svglayout);
     window->setLayout(outer);
     window->show();
-    window->resize(625, 725);
-}
-
-QtDensity::~QtDensity() {
-    //std::cerr << "Dtor" << std::endl;
-    m_R.parseEvalQ("q('no')");	// we never needed that before -- but maybe the Qt threads get in the way
-    //std::cerr << "Dtor R stopped" << std::endl; // never reached ?
 }
 
 void QtDensity::plot(void) {
     const char *kernelstrings[] = { "gaussian", "epanechnikov", "rectangular", "triangular", "cosine" };
     m_R["bw"] = m_bw;
     m_R["kernel"] = kernelstrings[m_kernel]; // that passes the string to R
-    //std::string cmd1 = "png(tfile,600,600); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
-    std::string cmd1 = "Cairo_svg(tfile,6,6); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
+    std::string cmd1 = "Cairo(width=6,height=6,pointsize=10,surface='svg',filename=tfile); "
+                       "plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
     std::string cmd2 = "\"); points(y, rep(0, length(y)), pch=16, col=rgb(0,0,0,1/4));  dev.off()";
-    std::string cmd = cmd1 + kernelstrings[m_kernel] + cmd2;
+    std::string cmd = cmd1 + kernelstrings[m_kernel] + cmd2; // stick the selected kernel in the middle
     m_R.parseEvalQ(cmd);
-    filterFile();
-    m_svg->load(QString(m_svgfile.c_str()));
+    filterFile();		// we need to simplify the svg file for display by Qt 
+    m_svg->load(m_svgfile);
 }
 
 void QtDensity::getBandwidth(int bw) {
     if (bw != m_bw) {
 	m_bw = bw;
-	//std::cout << "Bandwidth now " << m_bw << std::endl;
 	plot();
     }
 }
@@ -127,30 +118,27 @@ void QtDensity::getBandwidth(int bw) {
 void QtDensity::getKernel(int kernel) {
     if (kernel != m_kernel) {
 	m_kernel = kernel;
-	//std::cout << "Kernel now " << kernel << std::endl;
 	plot();
     }
 }
 
 void QtDensity::getRandomDataCmd(QString txt) {
-    //std::cout << "Cmd: " << txt.toStdString() << std::endl;
-    m_cmd = txt.toStdString();
+    m_cmd = txt;
 }
 
 void QtDensity::runRandomDataCmd(void) {
-    std::string cmd = "y <- " + m_cmd;
-    //std::cout << "Running: " << cmd << std::endl;
+    std::string cmd = "y <- " + m_cmd.toStdString();
     m_R.parseEvalQ(cmd);
-    plot();
+    plot();			// after each random draw, update plot with estimate
 }
 
 void QtDensity::filterFile() {
     // cairoDevice creates richer SVG than Qt can display
     // but per Michaele Lawrence, a simple trick is to s/symbol/g/ which we do here
 
-    QFile infile(m_tempfile.c_str());
+    QFile infile(m_tempfile);
     infile.open(QFile::ReadOnly);
-    QFile outfile(m_svgfile.c_str());
+    QFile outfile(m_svgfile);
     outfile.open(QFile::WriteOnly | QFile::Truncate);
     
     QTextStream in(&infile);
@@ -159,8 +147,8 @@ void QtDensity::filterFile() {
     QRegExp rx2("</symbol");	
     while (!in.atEnd()) {
 	QString line = in.readLine();
-	line.replace(rx1, "<g");
-	line.replace(rx2, "</g");
+	line.replace(rx1, "<g"); // so '<symbol' becomes '<g ...'
+	line.replace(rx2, "</g");// and '</symbol becomes '</g'
 	out << line << "\n";
     }
     infile.close();
