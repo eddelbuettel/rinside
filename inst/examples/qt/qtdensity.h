@@ -15,6 +15,8 @@
 #include <QSlider>
 #include <QSpinBox>
 #include <QLabel>
+#include <QTemporaryFile>
+#include <QSvgWidget>
 
 class QtDensity : public QMainWindow
 {
@@ -33,12 +35,15 @@ private slots:
 private:
     void setupDisplay(void);	// standard GUI boilderplate of arranging things
     void plot(void);		// run a density plot in R and update the
+    void filterFile(void);	// modify the richer SVG produced by R
 
-    QLabel *imageLabel;
-    QImage *image;
+    //QLabel *imageLabel;
+    //QImage *image;
+    QSvgWidget *svg;
 
     RInside & m_R;		// reference to the R instance passed to constructor
     std::string m_tempfile;	// name of file used by R for plots
+    std::string m_svgfile;	// another temp file, this time from Qt
     int m_bw, m_kernel;		// parameters used to estimate the density
     std::string m_cmd;		// random draw command string
 };

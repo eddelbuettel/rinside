@@ -6,7 +6,6 @@
 // Copyright (C) 2011  Dirk Eddelbuettel and Romain Francois
 
 #include <QtGui>
-//#include <QSvgWidget>
 
 #include "qtdensity.h"
 
@@ -18,7 +17,8 @@ QtDensity::QtDensity(RInside & R) : m_R(R)
 
     m_R["bw"] = m_bw;		// pass bandwidth to R, and have R compute a temp.file name
     m_tempfile = Rcpp::as<std::string>(m_R.parseEval("tfile <- tempfile()"));
-    //m_R.parseEvalQ("library(cairoDevice)");
+    m_svgfile = Rcpp::as<std::string>(m_R.parseEval("sfile <- tempfile()"));
+    m_R.parseEvalQ("library(cairoDevice)");
 
     setupDisplay();
 }
@@ -67,14 +67,14 @@ void QtDensity::setupDisplay(void)  {
     kernelGroup->addButton(radio5, 4);
     QObject::connect(kernelGroup, SIGNAL(buttonClicked(int)), this, SLOT(getKernel(int)));
 
-    imageLabel = new QLabel;
-    imageLabel->setBackgroundRole(QPalette::Base);
-    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    imageLabel->setScaledContents(true);
+    //imageLabel = new QLabel;
+    //imageLabel->setBackgroundRole(QPalette::Base);
+    //imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    //imageLabel->setScaledContents(true);
 
-    image = new QImage(QString(m_tempfile.c_str()));
-    runRandomDataCmd();
-    plot();			// now that we have an image, we can diplay
+    //image = new QImage(QString(m_tempfile.c_str()));
+    svg = new QSvgWidget();
+    runRandomDataCmd();	   	// also calls plot()
 
     QGroupBox *estimationBox = new QGroupBox("Density estimation bandwidth (scaled by 100)");
     QHBoxLayout *spinners = new QHBoxLayout;
@@ -92,17 +92,16 @@ void QtDensity::setupDisplay(void)  {
     upperlayout->addWidget(kernelRadioBox);
     upperlayout->addWidget(estimationBox);
 
-    QHBoxLayout *lowerlayout = new QHBoxLayout;
-    lowerlayout->addWidget(imageLabel);
+    //QHBoxLayout *lowerlayout = new QHBoxLayout;
+    //lowerlayout->addWidget(imageLabel);
 
-    //QSvgWidget *svg = new QSvgWidget("/tmp/foo.svg");
-    //QHBoxLayout *svglayout = new QHBoxLayout;
-    //svglayout->addWidget(svg);
+    QHBoxLayout *svglayout = new QHBoxLayout;
+    svglayout->addWidget(svg);
 
     QVBoxLayout *outer = new QVBoxLayout;
     outer->addLayout(upperlayout);
-    outer->addLayout(lowerlayout);
-    //outer->addLayout(svglayout);
+    //outer->addLayout(lowerlayout);
+    outer->addLayout(svglayout);
     window->setLayout(outer);
     window->show();
     window->resize(625, 725);
@@ -118,13 +117,15 @@ void QtDensity::plot(void) {
     const char *kernelstrings[] = { "gaussian", "epanechnikov", "rectangular", "triangular", "cosine" };
     m_R["bw"] = m_bw;
     m_R["kernel"] = kernelstrings[m_kernel]; // that passes the string to R
-    std::string cmd1 = "png(tfile,600,600); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
-    //std::string cmd1 = "Cairo_svg(tfile,6,6); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
+    //std::string cmd1 = "png(tfile,600,600); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
+    std::string cmd1 = "Cairo_svg(tfile,6,6); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
     std::string cmd2 = "\"); points(y, rep(0, length(y)), pch=16, col=rgb(0,0,0,1/4));  dev.off()";
     std::string cmd = cmd1 + kernelstrings[m_kernel] + cmd2;
     m_R.parseEvalQ(cmd);
-    image->load(QString(m_tempfile.c_str()));
-    imageLabel->setPixmap(QPixmap::fromImage(*image));
+    filterFile();
+    //image->load(QString(m_tempfile.c_str()));
+    //imageLabel->setPixmap(QPixmap::fromImage(*image));
+    svg->load(QString(m_svgfile.c_str()));
 }
 
 void QtDensity::getBandwidth(int bw) {
@@ -153,4 +154,27 @@ void QtDensity::runRandomDataCmd(void) {
     //std::cout << "Running: " << cmd << std::endl;
     m_R.parseEvalQ(cmd);
     plot();
+}
+
+void QtDensity::filterFile() {
+    // cairoDevice creates richer SVG than Qt can display
+    // but per Michaele Lawrence, a simple trick is to s/symbol/g/ which we do here
+
+    QFile infile(m_tempfile.c_str());
+    infile.open(QFile::ReadOnly);
+    QFile outfile(m_svgfile.c_str());
+    outfile.open(QFile::WriteOnly | QFile::Truncate);
+    
+    QTextStream in(&infile);
+    QTextStream out(&outfile);
+    QRegExp rx1("<symbol"); 
+    QRegExp rx2("</symbol");	
+    while (!in.atEnd()) {
+	QString line = in.readLine();
+	line.replace(rx1, "<g");
+	line.replace(rx2, "</g");
+	out << line << "\n";
+    }
+    infile.close();
+    outfile.close();
 }
