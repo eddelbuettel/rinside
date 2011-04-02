@@ -2,6 +2,11 @@
 
 	* inst/examples/qt/qtdensity.cpp: Merged PNG and SVG version
 
+2011-03-25  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/qt/: Split qtdensity example into default (png) and
+	svg variants as svg needs cairoDevice and has a clipping bug
+
 2011-03-16  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/qt/qtdensity.h: Small rearrangements and
