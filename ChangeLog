@@ -1,7 +1,11 @@
+2011-04-01  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/qt/qtdensity.cpp: Merged PNG and SVG version
+
 2011-03-16  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/qt/qtdensity.h: Small rearrangements and
-	simplifications 
+	simplifications
 
 2011-03-15  Dirk Eddelbuettel  <edd@debian.org>
 

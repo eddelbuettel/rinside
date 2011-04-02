@@ -38,11 +38,15 @@ private:
 
     QSvgWidget *m_svg;		// the SVG device
 
+    QLabel *m_imageLabel;	// image display in non-SVG case
+    QImage *m_image;
+
     RInside & m_R;		// reference to the R instance passed to constructor
     QString m_tempfile;		// name of file used by R for plots
     QString m_svgfile;		// another temp file, this time from Qt
     int m_bw, m_kernel;		// parameters used to estimate the density
     QString m_cmd;		// random draw command string
+    bool m_has_svg;		// create SVG if cairoDevice can be loaded
 };
 
 #endif

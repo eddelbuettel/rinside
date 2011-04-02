@@ -15,7 +15,7 @@ const char* hello( std::string who ){
 
 int main(int argc, char *argv[]) {
 
-	// create an embedded R instance
+    // create an embedded R instance
     RInside R(argc, argv);               
 
     // expose the "hello" function in the global environment

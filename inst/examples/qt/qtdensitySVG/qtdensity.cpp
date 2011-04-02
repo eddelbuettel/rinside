@@ -17,8 +17,9 @@ QtDensity::QtDensity(RInside & R) : m_R(R)
     m_R["bw"] = m_bw;		// pass bandwidth to R, and have R compute a temp.file name
     m_tempfile = QString::fromStdString(Rcpp::as<std::string>(m_R.parseEval("tfile <- tempfile()")));
     m_svgfile = QString::fromStdString(Rcpp::as<std::string>(m_R.parseEval("sfile <- tempfile()")));
-    m_R.parseEvalQ("library(cairoDevice)");
-
+    m_has_svg = false; //m_R.parseEval("require(cairoDevice)");
+    if ( ! m_has_svg)
+	std::cerr << "Consider installing the 'cairoDevice' package from CRAN for SVG graphics." << std::endl;
     setupDisplay();
 }
 
@@ -66,7 +67,15 @@ void QtDensity::setupDisplay(void)  {
     kernelGroup->addButton(radio5, 4);
     QObject::connect(kernelGroup, SIGNAL(buttonClicked(int)), this, SLOT(getKernel(int)));
 
-    m_svg = new QSvgWidget();
+    if (m_has_svg) {		// svg case
+	m_svg = new QSvgWidget();
+    } else {			// png default
+	m_imageLabel = new QLabel;
+	m_imageLabel->setBackgroundRole(QPalette::Base);
+	m_imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+	m_imageLabel->setScaledContents(true);
+	m_image = new QImage(m_tempfile);
+    }
     runRandomDataCmd();	   	// also calls plot()
 
     QGroupBox *estimationBox = new QGroupBox("Density estimation bandwidth (scaled by 100)");
@@ -85,27 +94,44 @@ void QtDensity::setupDisplay(void)  {
     upperlayout->addWidget(kernelRadioBox);
     upperlayout->addWidget(estimationBox);
 
-    QHBoxLayout *svglayout = new QHBoxLayout;
-    svglayout->addWidget(m_svg);
+    QHBoxLayout *lowerlayout = new QHBoxLayout;
+    if (m_has_svg) {
+	lowerlayout->addWidget(m_svg);
+    } else {
+	lowerlayout->addWidget(m_imageLabel);
+    }
 
     QVBoxLayout *outer = new QVBoxLayout;
     outer->addLayout(upperlayout);
-    outer->addLayout(svglayout);
+    outer->addLayout(lowerlayout);
     window->setLayout(outer);
     window->show();
+    if (!m_has_svg) {
+	window->resize(650, 750);
+    }
 }
 
 void QtDensity::plot(void) {
     const char *kernelstrings[] = { "gaussian", "epanechnikov", "rectangular", "triangular", "cosine" };
     m_R["bw"] = m_bw;
     m_R["kernel"] = kernelstrings[m_kernel]; // that passes the string to R
-    std::string cmd1 = "Cairo(width=6,height=6,pointsize=10,surface='svg',filename=tfile); "
-                       "plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
+    std::string cmd0;
+    if (m_has_svg) {	     // select device based on whether cairoDevice is available or not
+	cmd0 = "Cairo(width=6,height=6,pointsize=10,surface='svg',filename=tfile); ";
+    } else {
+	cmd0 = "png(filename=tfile,width=600,height=600);";
+    }
+    std::string cmd1 = "plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
     std::string cmd2 = "\"); points(y, rep(0, length(y)), pch=16, col=rgb(0,0,0,1/4));  dev.off()";
-    std::string cmd = cmd1 + kernelstrings[m_kernel] + cmd2; // stick the selected kernel in the middle
+    std::string cmd = cmd0 + cmd1 + kernelstrings[m_kernel] + cmd2; // stick the selected kernel in the middle
     m_R.parseEvalQ(cmd);
-    filterFile();		// we need to simplify the svg file for display by Qt 
-    m_svg->load(m_svgfile);
+    if (m_has_svg) {
+	filterFile();		// we need to simplify the svg file for display by Qt 
+	m_svg->load(m_svgfile);
+    } else {
+	m_image->load(m_tempfile);
+	m_imageLabel->setPixmap(QPixmap::fromImage(*m_image));
+    }
 }
 
 void QtDensity::getBandwidth(int bw) {
