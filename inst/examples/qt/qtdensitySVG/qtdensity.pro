@@ -5,10 +5,12 @@
 ##
 ## Copyright (C) 2011  Dirk Eddelbuettel and Romain Francois
 
+## build an app based on the one headers and two source files
 TEMPLATE = 		app
 HEADERS =		qtdensity.h 
 SOURCES = 		qtdensity.cpp main.cpp
 
+## beyond the default configuration, also use SVG graphics
 QT += 			svg
 
 ## comment this out if you need a different version of R, 
@@ -32,7 +34,9 @@ RCPPLIBS = 		$$system($$R_HOME/bin/Rscript -e \'Rcpp:::LdFlags\(\)\')
 ## for some reason when building with Qt we get this each time
 ##   /usr/local/lib/R/site-library/Rcpp/include/Rcpp/module/Module_generated_ctor_signature.h:25: warning: unused parameter ‘classname
 ## so we turn unused parameter warnings off
-RCPPWARNING =		-Wno-unused-parameter 
+## no longer needed with Rcpp 0.9.3 or later
+#RCPPWARNING =		-Wno-unused-parameter 
+
 ## include headers and libraries for RInside embedding classes
 RINSIDEINCL = 		$$system($$R_HOME/bin/Rscript -e \'RInside:::CxxFlags\(\)\')
 RINSIDELIBS = 		$$system($$R_HOME/bin/Rscript -e \'RInside:::LdFlags\(\)\')

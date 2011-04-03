@@ -1,6 +1,12 @@
+2011-04-03  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/qt/qtdensitySVG/qtdensity.pro: No longer need to set
+	-Wno-unused-parameter as Rcpp 0.9.3 has a fix
+
 2011-04-01  Dirk Eddelbuettel  <edd@debian.org>
 
-	* inst/examples/qt/qtdensity.cpp: Merged PNG and SVG version
+	* inst/examples/qt/qtdensitySVG/qtdensity.cpp: Merged the PNG and SVG
+	version by using a boolean based on whether cairoDevice loaded or not
 
 2011-03-25  Dirk Eddelbuettel  <edd@debian.org>
 
