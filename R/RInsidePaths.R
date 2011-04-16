@@ -40,8 +40,8 @@ RInsideCxxFlags <- function() {
     # if (.Platform$OS.type=="windows") {
     #     path <- shQuote(path)
     # }
-    sprintf('-I"%s"', path)
-}     
+    sprintf('-I%s', path)
+}
 
 ## Shorter names, and call cat() directly
 CxxFlags <- function() {
