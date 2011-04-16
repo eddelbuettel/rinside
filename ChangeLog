@@ -1,5 +1,8 @@
 2011-04-16  Dirk Eddelbuettel  <edd@debian.org>
 
+	* inst/examples/standard/rinside_sample12.cpp: Another rcpp-devel
+	post leading to another simple and self-contained example
+
 	* inst/NEWS: Added, at long last, with backfills based on the
 	ChangeLog and blog postings
 
