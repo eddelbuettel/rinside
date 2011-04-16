@@ -1,5 +1,8 @@
 2011-04-16  Dirk Eddelbuettel  <edd@debian.org>
 
+	* inst/NEWS: Added, at long last, with backfills based on the
+	ChangeLog and blog postings
+
 	* R/RInsidePaths.R (RInsideCxxFlags): Do not use quotes around path
 
 2011-04-03  Dirk Eddelbuettel  <edd@debian.org>
@@ -123,7 +126,7 @@
 	* DESCRIPTION: Increase Version: to 0.2.2
 
 	* .Rbuildignore: Added to exclude volatile Doxygen-generated docs
-	   from, zip-archives will be made available as for Rcpp
+	  from tarball, zip-archives will be made available as for Rcpp
 
 2010-03-20  Dirk Eddelbuettel  <edd@debian.org>
 
@@ -327,6 +330,8 @@
  	  vars with prior values (to e.g. allow non-standard R_HOME)
 
 2009-07-19  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Release 0.0.2
 
 	* src/MemBuf.cpp: Added one-line patch by Miguel Lechón in add()
 	  method to correctly re-set pointer---with a bug Thanks! to Miguel

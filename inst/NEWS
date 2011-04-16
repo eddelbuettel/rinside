@@ -1,0 +1,108 @@
+0.2.4   2011-04-xx
+
+   o    New example embedding R inside a Qt application, along with pro file
+        for Qt's qmake providing a complete simple C++ GUI application
+
+   o    New rinside_sample11.cpp based on another r-help question,
+        rinside_sample10.cpp based on a r-devel question
+
+   o    Minor code cleanup in initialization code 
+
+   o    Added this NEWS files -- with entries below summarised from ChangeLog
+        and the corresponding blog posts
+
+0.2.3   2010-08-06
+
+   o    New example rinside_sample9 on how to expose C++ to embedded R
+
+   o    New example rinside_module_sample0 to show module access from RInside
+
+   o    Simplified rinside_sample3 and rinside_sample4
+
+   o    Some code cleanup to help Solaris builds
+
+   o    Implicit use of new Proxy class with operator T(), see rinside_sample8
+
+0.2.2   2010-03-22
+
+   o    New operator[](string) lets RInside act as proxy to R's global
+        environment so that we can R["x"] = 10 to assign; all the actual
+ 	work is done by Rcpp::Environment
+
+   o    No longer ship doxygen-generated docs in build
+
+   o    Use std::string for all arguments inside throw() to help Windows build
+
+   o    Default to static linking on OS X and Windows just like Rcpp does
+  
+   o    parseEval() now returns SEXP and has just a string argument for more
+        functional use; it and void sibbling parseEvalQ() now throw exections
+
+   o    rinside_sample{2,4,5} updated accordingly
+
+   o    Two new 'R inside an MPI app' examples contributed by Jianping Hua
+
+   o    Also added two C++ variants of the C examples for RInside and MPI
+
+   o    rinside_sample8 updated with parseEval changes   
+
+   o    Internal MemBuf class simplified via STL std::string
+
+   o    Autoload simplied via the new Rcpp API
+
+   o    Added default constructor for RInside
+
+   o    Retire assign(vector<vector<double> >) via template specialisation
+
+   o    Include Rcpp.h; switch to Rf_ prefixed R API to avoid Redefine macros
+
+   o    Windows version currently segfaults on startup
+
+0.2.1	2010-01-06
+
+   o    Startup mpw defaults to FALSE, no longer call Rf_KillAllDevices
+
+   o    Some minor build anc code fixes for Windows
+
+0.2.0   2009-12-20
+
+   o    Initial Windows support, with thanks to Richard Holbrey for both the
+        initial push and a setenv() implementation
+
+   o    Added Makefile.win for build with the MinGW toolchain to src/ and examples/
+
+   o    Some improvements to destructor per example in Writing R Extensions
+
+   o    New rinside_sample5 based on r-devel post
+
+0.1.1   2009-02-19
+
+   o    The examples/ Makefile now sets $R_HOME via 'R RHOME', and also employs
+        $R_ARCH for arch-dependent headers -- with thanks for Jeff, Jan and Simon
+
+   o 	Added THANKS file to give recognition to those who helped RInside along
+
+   o 	Added rinside_sample4 as another example based on an r-devel question
+
+0.1.0   2009-02-19
+
+   o 	Initial CRAN release
+
+   o 	Improved build process
+
+   o 	Added doxygen generated documentation
+
+   o 	Added two more example
+
+0.0.1   2009-07-19
+
+   o 	Corrected error in memory buffer class with thanks to Miguel Lechón for
+        a finding the issue and sending a patch
+
+   o 	Added two regression test examples to demonstrate bug and fix
+
+   o 	Minor code cleanups
+
+0.0.1   2009-02-10
+
+   o 	Initial version in SVN at R-Forge
