@@ -4,7 +4,7 @@
 //
 // This file was contributed by Jianping Hua 
 //
-// Copyright (C) 2010 Jianping Hua, Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2011  Jianping Hua, Dirk Eddelbuettel and Romain Francois
 //
 // GPL'ed 
 
@@ -23,11 +23,11 @@ int main(int argc, char *argv[]) {
 
     std::stringstream txt;
     txt << "Hello from node " << myrank         // node information
-        << " of " << nodesize << " nodes!" << std::endl;
-    R.assign( txt.str(), "txt");                // assign string var to R variable 'txt'
+	<< " of " << nodesize << " nodes!" << std::endl;
 
-    std::string evalstr = "cat(txt)";           // show node information
-    R.parseEvalQ(evalstr);                      // eval the init string, ignoring any returns
+    R["txt"] = txt.str();	                // assign string var to R variable 'txt'
+
+    R.parseEvalQ("cat(txt)");                   // eval init string, ignoring any returns
 
     MPI_Finalize();                             // mpi finalization
 

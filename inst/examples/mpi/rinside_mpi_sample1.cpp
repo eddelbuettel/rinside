@@ -4,7 +4,7 @@
 //
 // This file was contributed by Jianping Hua 
 //
-// Copyright (C) 2010 Jianping Hua, Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2011  Jianping Hua, Dirk Eddelbuettel and Romain Francois
 //
 // GPL'ed 
 
@@ -29,10 +29,9 @@ int main(int argc, char *argv[]) {
 
     try {
         RInside R(argc, argv);              // create an embedded R instance
-        SEXP ans;                           // return value
 
         std::stringstream txt;
-        txt << "x <- " << rangeMin << std::endl;
+	txt << "x <- " << rangeMin << std::endl;
         R.parseEvalQ( txt.str() );      // assign x with lower range of uniform distribution
 
         txt << "y <- " << rangeMax << std::endl;
@@ -41,10 +40,8 @@ int main(int argc, char *argv[]) {
         txt << "n <- " << sampleSize << std::endl;
         R.parseEvalQ( txt.str() );      // assign n with the size of sample
 
-        std::string evalstr = " mean(runif(n,x,y))";  // sampling, compute the mean
-        ans = R.parseEval(evalstr);     // eval the evalstr string, return results
-        Rcpp::NumericVector m(ans);     // convert SEXP variable to an Rcpp::NumericVector
-
+        std::string evalstr = "mean(runif(n,x,y))";	// sampling, compute the mean
+        Rcpp::NumericVector m = R.parseEval(evalstr);	// eval str, convert result to NumericVector
         sendValue = m( 0 );             // assign the return value to the variable to be gathered
 
         //gather together values from all processes to allvalues

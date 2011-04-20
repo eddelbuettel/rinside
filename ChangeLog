@@ -1,3 +1,7 @@
+2011-04-20  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/mpi/*cpp: Minor updates and simplifications
+
 2011-04-19  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Updated Description, also state current Windows

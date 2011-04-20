@@ -9,6 +9,7 @@
         r-help and r-devel mailing list
 
    o    Some improvements and simplifications throughout examples/standard 
+        as well as examples/mpi/
 
    o    Added this NEWS files -- with entries below summarised from ChangeLog
         and the corresponding blog posts
