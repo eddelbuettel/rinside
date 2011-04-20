@@ -19,9 +19,9 @@ int main(int argc, char *argv[]) {
     R.parseEvalQ(txt);                  // eval command, no return
 
     // evaluate R expressions, and assign directly into Rcpp types
-    Rcpp::NumericMatrix     M( (SEXP) R.parseEval("swcoef <- coef(swisssum)") );  	        
-    Rcpp::StringVector cnames( (SEXP) R.parseEval("colnames(swcoef)") );
-    Rcpp::StringVector rnames( (SEXP) R.parseEval("rownames(swcoef)") ); 
+    Rcpp::NumericMatrix     M( (SEXP) R.parseEval("swcoef <- coef(swisssum)"));  	        
+    Rcpp::StringVector cnames( (SEXP) R.parseEval("colnames(swcoef)"));
+    Rcpp::StringVector rnames( (SEXP) R.parseEval("rownames(swcoef)")); 
 
     std::cout << "\n\nAnd now from C++\n\n\t\t\t";
     for (int i=0; i<cnames.size(); i++) {

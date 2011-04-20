@@ -2,8 +2,8 @@
 //
 // Another simple example inspired by an r-devel mail by Martin Becker
 //
-// Copyright (C) 2009 Dirk Eddelbuettel 
-// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2009         Dirk Eddelbuettel 
+// Copyright (C) 2010 - 2011  Dirk Eddelbuettel and Romain Francois
 
 #include <RInside.h>                    // for the embedded R via RInside
 
@@ -11,14 +11,12 @@ int main(int argc, char *argv[]) {
 
     try {
         RInside R(argc, argv);          // create an embedded R instance 
-        SEXP ans;
 
         std::string txt = "myenv <- new.env(hash=TRUE, size=NA)";
         R.parseEvalQ(txt);              // eval string quietly, no result
 
-        txt = "as.integer(is.environment(myenv))";
-        ans = R.parseEval(txt);         // eval string, result in ans
-        Rcpp::LogicalVector V(ans);     // convert SEXP variable to vector
+        txt = "is.environment(myenv)";  // logical value assigned
+        Rcpp::LogicalVector V = R.parseEval(txt);  // to logical vector
 
         std::cout << "We "
                   << (V(0) ? "do" : "do not")

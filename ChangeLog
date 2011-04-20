@@ -3,10 +3,13 @@
 	* DESCRIPTION: Updated Description, also state current Windows
 	run-time issue more prominently
 
-2011-04-16  Dirk Eddelbuettel  <edd@debian.org>
+ 	* inst/examples/standard/rinside_sample1.cpp: Minor simplification
+	* inst/examples/standard/rinside_sample2.cpp: Idem
+	* inst/examples/standard/rinside_sample3.cpp: Idem
+	* inst/examples/standard/rinside_sample5.cpp: Idem
+	* inst/examples/standard/rinside_sample7.cpp: Idem
 
-	* inst/examples/standard/rinside_sample12.cpp: Another rcpp-devel
-	post leading to another simple and self-contained example
+2011-04-16  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/NEWS: Added, at long last, with backfills based on the
 	ChangeLog and blog postings

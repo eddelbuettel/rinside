@@ -1,12 +1,14 @@
 0.2.4   2011-04-xx
 
+   o    Minor code cleanups in initialization code 
+
    o    New example embedding R inside a Qt application, along with pro file
         for Qt's qmake providing a complete simple C++ GUI application
 
-   o    New rinside_sample11.cpp based on another r-help question,
-        rinside_sample10.cpp based on a r-devel question
+   o    New examples rinside_sample{10,11} based on questions on the
+        r-help and r-devel mailing list
 
-   o    Minor code cleanup in initialization code 
+   o    Some improvements and simplifications throughout examples/standard 
 
    o    Added this NEWS files -- with entries below summarised from ChangeLog
         and the corresponding blog posts
