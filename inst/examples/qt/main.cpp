@@ -7,7 +7,6 @@
 
 
 #include <QApplication>
-
 #include "qtdensity.h"
 
 int main(int argc, char *argv[])
@@ -15,6 +14,6 @@ int main(int argc, char *argv[])
     RInside R(argc, argv);  		// create an embedded R instance
 
     QApplication app(argc, argv);
-    QtDensity qtdensity(R);
+    QtDensity qtdensity(R);		// pass R inst. by reference
     return app.exec();
 }

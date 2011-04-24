@@ -1,3 +1,7 @@
+2011-04-24  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Release 0.2.4
+
 2011-04-20  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/mpi/*cpp: Minor updates and simplifications

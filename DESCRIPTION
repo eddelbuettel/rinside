@@ -1,6 +1,6 @@
 Package: RInside
 Title: C++ classes to embed R in C++ applications
-Version: 0.2.3.2
+Version: 0.2.4
 Date: $Date$
 Author: Dirk Eddelbuettel and Romain Francois
 Maintainer: Dirk Eddelbuettel and Romain Francois <RomainAndDirk@r-enthusiasts.com>
@@ -14,7 +14,6 @@ Description: C++ classes to embed R in C++ applications
  seg.fault and debugging help would be appreciated. An older version worked
  fine, but there may have been some Rcpp changes which caused this.)
  .
-
  Numerous examples are provided in the three subdirectories the examples/
  directory of the installed package: standard, mpi (for parallel computing)
  and qt (showing how to embed RInside inside a Qt application).
