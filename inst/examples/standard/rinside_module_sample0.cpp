@@ -8,19 +8,19 @@
 
 // a c++ function we wish to expose to R
 const char* hello( std::string who ){
-        std::string result( "hello " ) ;
-        result += who ;
-        return result.c_str() ;
+    std::string result( "hello " ) ;
+    result += who ;
+    return result.c_str() ;
 } 
 
 RCPP_MODULE(bling){
-	using namespace Rcpp ;
-	function( "hello", &hello );
+    using namespace Rcpp ;
+    function( "hello", &hello );
 }
 
 int main(int argc, char *argv[]) {
 
-	// create an embedded R instance -- and load Rcpp so that modules work
+    // create an embedded R instance -- and load Rcpp so that modules work
     RInside R(argc, argv, true);               
         
     // load the bling module

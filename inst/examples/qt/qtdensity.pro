@@ -25,7 +25,7 @@ RBLAS = 		$$system($$R_HOME/bin/R CMD config BLAS_LIBS)
 RLAPACK = 		$$system($$R_HOME/bin/R CMD config LAPACK_LIBS)
 
 ## if you need to set an rpath to R itself, also uncomment
-#RRPATH =		-Wl,-rpath,$$R_HOME/lib
+RRPATH =		-Wl,-rpath,$$R_HOME/lib
 
 ## include headers and libraries for Rcpp interface classes
 RCPPINCL = 		$$system($$R_HOME/bin/Rscript -e \'Rcpp:::CxxFlags\(\)\')
@@ -43,7 +43,7 @@ RINSIDELIBS = 		$$system($$R_HOME/bin/Rscript -e \'RInside:::LdFlags\(\)\')
 
 ## compiler etc settings used in default make rules
 QMAKE_CXXFLAGS +=	$$RCPPWARNING $$RCPPFLAGS $$RCPPINCL $$RINSIDEINCL
-QMAKE_LFLAGS +=         $$RLDFLAGS $$RBLAS $$RLAPACK $$RCPPLIBS $$RINSIDELIBS
+QMAKE_LIBS +=           $$RLDFLAGS $$RBLAS $$RLAPACK $$RCPPLIBS $$RINSIDELIBS
 
 ## addition clean targets
 QMAKE_CLEAN +=		qtdensity Makefile
