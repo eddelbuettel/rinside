@@ -1,3 +1,10 @@
+2011-11-24  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/wt: New example directory 'wt' providing a Webtoolkit
+	(aka 'witty') based density slider application
+	* inst/examples/wt/wtdensity.cpp: Application in less than 200 lines
+	* inst/examples/wt/Makefile: Makefile to build and launch (on Ubuntu)
+
 2011-11-20  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/qt/qtdensity.pro: Use QMAKE_LIBS, not QMAKE_LFLAGS
