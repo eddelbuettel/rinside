@@ -61,9 +61,9 @@ private:
 // It must be passed to the WApplication // constructor so it is typically also an argument
 // for your custom application constructor.
 DensityApp::DensityApp(const WEnvironment& env, RInside & R) : WApplication(env), R_(R) {
-//DensityApp::DensityApp(const WEnvironment& env) : WApplication(env) {
 
     setTitle("Witty WebApp With RInside");			// application title
+
     std::string tfcmd = "tfile <- tempfile(pattern=\"img\", tmpdir=\"/tmp\", fileext=\".png\")";	
     tempfile_ = Rcpp::as<std::string>(R_.parseEval(tfcmd));  	// assign to 'tfile' in R, and report back
     bw_ = 100; 
@@ -122,7 +122,6 @@ DensityApp::DensityApp(const WEnvironment& env, RInside & R) : WApplication(env)
     group_->setCheckedButton(group_->button(kernel_));
     group_->checkedChanged().connect(this, &DensityApp::reportButton);
 
-    // --- image below
     Wt::WGroupBox *botbox = new Wt::WGroupBox("Resulting chart", root());
     imgfile_ = new Wt::WFileResource("image/png", tempfile_);
     imgfile_->suggestFileName("density.png");  // name the clients sees of datafile
@@ -161,17 +160,21 @@ void DensityApp::plot() {
     R_["bw"]     = bw_;
     R_["kernel"] = kernelstr[kernel_]; 			// passes the string to R
     R_["y"]      = Yvec_;
-    std::string cmd0 = "png(filename=tfile,width=500,height=500); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
+    std::string cmd0 = "png(filename=tfile,width=600,height=400); plot(density(y, bw=bw/100, kernel=kernel), xlim=range(y)+c(-2,2), main=\"Kernel: ";
     std::string cmd1 = "\"); points(y, rep(0, length(y)), pch=16, col=rgb(0,0,0,1/4));  dev.off()";
     std::string cmd = cmd0 + kernelstr[kernel_] + cmd1; // stick the selected kernel in the middle
     R_.parseEvalQ(cmd);				     	// evaluate command -- generates new density plot
     imgfile_->setChanged();				// important: tells consumer that image has changed, forces refresh
-    greeting_->setText("Finished R call for request from " + this->environment().clientAddress());
+    greeting_->setText("Finished request from " + this->environment().clientAddress() + " using " + this->environment().userAgent()) ;
 }
 
 WApplication *createApplication(const WEnvironment& env) {
     // You could read information from the environment to decide whether
     // the user has permission to start a new application
+    //
+    // We grab an instance of the embedded R. Note we can start only one,
+    // so resource conflicts have to be managed (eg add mutexes etc)
+    //
     return new DensityApp(env, RInside::instance());
 }
 
