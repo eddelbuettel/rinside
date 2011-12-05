@@ -1,3 +1,12 @@
+2011-12-04  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/qt/qtdensity.cpp: Default to svg creation via the
+	svg() now in base R, ie remove both the test for cairoDevice and the
+	fallback use of png graphics code; we still need to filter the svg file
+	* inst/examples/qt/qtdensity.h: adjust accordingly
+
+	* cleanup: Clean qt and wt example directories too
+
 2011-11-24  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/wt: New example directory 'wt' providing a Webtoolkit

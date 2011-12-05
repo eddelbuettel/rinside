@@ -3,6 +3,9 @@
    o    New example embedding R inside a Wt (aka Webtoolkit, pronounced 
         'witty') application, mirroring the previous Qt application
 
+   o    Qt example qtdensity now uses the new svg() device in base R; removed
+        test for cairoDevice package as well as fallback png code
+
    o    Very minor fix to qmake.pro file for Qt app correcting link order
 
 0.2.4   2011-04-24
@@ -70,9 +73,9 @@
 
 0.2.1	2010-01-06
 
-   o    Startup mpw defaults to FALSE, no longer call Rf_KillAllDevices
+   o    Startup now defaults to FALSE, no longer call Rf_KillAllDevices
 
-   o    Some minor build anc code fixes for Windows
+   o    Some minor build and code fixes for Windows
 
 0.2.0   2009-12-20
 
