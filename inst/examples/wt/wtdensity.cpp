@@ -83,7 +83,7 @@ DensityApp::DensityApp(const WEnvironment& env, RInside & R) : WApplication(env)
     midbox->addWidget(new WText("Density estimation scale factor (div. by 100)"));
     midbox->addWidget(new WBreak());                       	// insert a line break
     spin_ = new WSpinBox(midbox);
-    spin_->setRange(1, 150);
+    spin_->setRange(5, 200);
     spin_->setValue(bw_);
     spin_->valueChanged().connect(this, &DensityApp::reportSpinner);
 

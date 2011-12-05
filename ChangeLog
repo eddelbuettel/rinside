@@ -1,5 +1,7 @@
 2011-12-04  Dirk Eddelbuettel  <edd@debian.org>
 
+	* inst/examples/wt/wtdensity.cpp: bandwidth value capped at 200 like qt
+
 	* inst/examples/qt/qtdensity.cpp: Default to svg creation via the
 	svg() now in base R, ie remove both the test for cairoDevice and the
 	fallback use of png graphics code; we still need to filter the svg file
