@@ -6,9 +6,10 @@
 ##  proper configure for non-Debian file locations,   [ Done ]
 ##  allow RHOME to be set for non-default R etc
 
-## comment this out if you need a different version of R,
-## and set set R_HOME accordingly as an environment variable
-#R_HOME := 		$(shell R RHOME)
+## This version is fairly directly derived from the Unix versions
+## You may have to set R_HOME manually if this does not work
+## It requires Rtools in the path -- as does all R package building
+R_HOME := 		$(shell R RHOME | sed -e "s|\\\\|\/|g")
 
 sources := 		$(wildcard *.cpp)
 programs := 		$(sources:.cpp=)
@@ -44,3 +45,6 @@ all : 			$(programs)
 clean:
 			rm -vf $(programs)
 
+
+checkR:
+			echo "R is at $(R_HOME)"
