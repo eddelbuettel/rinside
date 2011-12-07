@@ -8,3 +8,4 @@ Simon Urbanek           for OS X (and general) build tips
 Richard Holbrey         for initial help with the the Windows build 
 Jianping Hua            for contributing two MPI-based examples
 Murray Stokely		for a patch regarding timing of Rcpp autoloads
+James Bates		for a patch restoring RInside on Windows

@@ -52,4 +52,4 @@ run:
 			./wtdensity --docroot ".;/resources,/tmp" --http-addr 127.0.0.1 --http-port 8080
 
 clean:
-			rm wtdensity
+			rm -f wtdensity resources

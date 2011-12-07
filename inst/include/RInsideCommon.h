@@ -1,6 +1,8 @@
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
+//
 // RInsideCommon.h: R/C++ interface class library -- Easier R embedding into C++
 //
-// Copyright (C) 2010        Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2011 Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -28,6 +30,13 @@
 
 #include <Rcpp.h>
 
+#ifdef WIN32
+  #ifndef Win32
+    // needed for parts of Rembedded.h
+    #define Win32
+  #endif
+#endif
+
 #include <Rembedded.h>
 #ifndef WIN32
 #define R_INTERFACE_PTRS
@@ -40,7 +49,7 @@
 // simple logging help
 inline void logTxtFunction(const char* file, const int line, const char* expression, const bool verbose) {
     if (verbose) {
-	std::cout << file << ":" << line << " expression: " << expression << std::endl;
+        std::cout << file << ":" << line << " expression: " << expression << std::endl;
     }
 }
 

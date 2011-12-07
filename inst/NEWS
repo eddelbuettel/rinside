@@ -1,5 +1,10 @@
 0.2.5   20xx-yy-zz
 
+   o    Applied (somewhat simplified) patch by James Bates which restores
+        RInside to working on Windows -- with a big Thank You! to James for
+        fixing a long-standing bug we inadvertendly introduced right after
+        0.2.0 almost two years ago
+
    o    New example embedding R inside a Wt (aka Webtoolkit, pronounced 
         'witty') application, mirroring the previous Qt application
 
