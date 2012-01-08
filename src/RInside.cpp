@@ -2,8 +2,8 @@
 //
 // RInside.cpp: R/C++ interface class library -- Easier R embedding into C++
 //
-// Copyright (C) 2009        Dirk Eddelbuettel
-// Copyright (C) 2010 - 2011 Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2009         Dirk Eddelbuettel
+// Copyright (C) 2010 - 2012  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -26,6 +26,7 @@
 RInside* RInside::instance_ = 0 ;
 
 #include <sys/time.h>           // gettimeofday
+#include <stdint.h>		// uint64_t
 
 bool verbose = false;
 const char *programName = "RInside";
@@ -50,8 +51,8 @@ RInside::~RInside() {           // now empty as MemBuf is internal
     instance_ = 0 ;
 }
 
-RInside::RInside() 
-#ifdef RINSIDE_CALLBACKS 
+RInside::RInside()
+#ifdef RINSIDE_CALLBACKS
     : callbacks(0)
 #endif
 {
@@ -62,53 +63,54 @@ RInside::RInside()
 static int myReadConsole(const char *prompt, char *buf, int len, int addtohistory) {
     fputs(prompt, stdout);
     fflush(stdout);
-    if (fgets(buf, len, stdin)) 
+    if (fgets(buf, len, stdin))
         return 1;
-    else 
+    else
         return 0;
 }
- 
+
 static void myWriteConsole(const char *buf, int len) {
-     Rprintf("%s", buf);
+    fwrite(buf, sizeof(char), len, stdout);
+    fflush(stdout);
 }
- 
+
 static void myCallBack() {
     /* called during i/o, eval, graphics in ProcessEvents */
 }
- 
+
 static void myBusy(int which) {
     /* set a busy cursor ... if which = 1, unset if which = 0 */
 }
- 
+
 void myAskOk(const char *info) {
- 
+
 }
 
 int myAskYesNoCancel(const char *question) {
     const int yes = 1;
     return yes;
 }
- 
+
 #endif
 
 RInside::RInside(const int argc, const char* const argv[], const bool loadRcpp)
-#ifdef RINSIDE_CALLBACKS 
+#ifdef RINSIDE_CALLBACKS
 : callbacks(0)
-#endif 
+#endif
 {
-    initialize( argc, argv, loadRcpp ); 
+    initialize( argc, argv, loadRcpp );
 }
 
-// TODO: use a vector<string> would make all this a bit more readable 
+// TODO: use a vector<string> would make all this a bit more readable
 void RInside::initialize(const int argc, const char* const argv[], const bool loadRcpp) {
     logTxt("RInside::ctor BEGIN", verbose);
 
     if (instance_) {
         throw std::runtime_error( "can only have one RInside instance" ) ;
     } else {
-        instance_ = this ;      
+        instance_ = this ;
     }
-    
+
     verbose_m = false;          // Default is false
 
     // generated as littler.h via from svn/littler/littler.R
@@ -120,7 +122,7 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
                 //perror("ERROR: couldn't set/replace an R environment variable");
                 //exit(1);
                 throw std::runtime_error(std::string("Could not set R environment variable ") +
-                                         std::string(R_VARS[i]) + std::string(" to ") +  
+                                         std::string(R_VARS[i]) + std::string(" to ") +
                                          std::string(R_VARS[i+1]));
             }
         }
@@ -131,7 +133,7 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     #endif
 
     #ifdef CSTACK_DEFNS
-    R_CStackLimit = (uintptr_t)-1;      // Don't do any stack checking, see R Exts, '8.1.5 Threading issues' 
+    R_CStackLimit = (uintptr_t)-1;      // Don't do any stack checking, see R Exts, '8.1.5 Threading issues'
     #endif
 
     init_tempdir();
@@ -141,13 +143,13 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     int R_argc = (sizeof(R_argv) - sizeof(R_argv_opt) ) / sizeof(R_argv[0]);
     Rf_initEmbeddedR(R_argc, (char**)R_argv);
 
-    R_ReplDLLinit();                    // this is to populate the repl console buffers 
+    R_ReplDLLinit();                    // this is to populate the repl console buffers
 
     structRstart Rst;
     R_DefParams(&Rst);
-    Rst.R_Interactive = (Rboolean) FALSE;       // sets interactive() to eval to false 
+    Rst.R_Interactive = (Rboolean) FALSE;       // sets interactive() to eval to false
     #ifdef WIN32
-    Rst.rhome = getenv("R_HOME");       // which is set above as part of R_VARS 
+    Rst.rhome = getenv("R_HOME");       // which is set above as part of R_VARS
     Rst.home = getRUser();
     Rst.CharacterMode = LinkDLL;
     Rst.ReadConsole = myReadConsole;
@@ -160,10 +162,10 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     R_SetParams(&Rst);
 
     global_env = R_GlobalEnv ;
-    
+
     if (loadRcpp) {                     // if asked for, load Rcpp (before the autoloads)
-        // Rf_install is used best by first assigning like this so that symbols get into the symbol table 
-        // where they cannot be garbage collected; doing it on the fly does expose a minuscule risk of garbage  
+        // Rf_install is used best by first assigning like this so that symbols get into the symbol table
+        // where they cannot be garbage collected; doing it on the fly does expose a minuscule risk of garbage
         // collection -- with thanks to Doug Bates for the explanation and Luke Tierney for the heads-up
         SEXP suppressMessagesSymbol = Rf_install("suppressMessages");
         SEXP requireSymbol = Rf_install("require");
@@ -178,7 +180,7 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     } else {
         assign(R_NilValue, "argv") ;
     }
-  
+
     init_rand();                        // for tempfile() to work correctly */
     logTxt("RInside::ctor END", verbose);
 }
@@ -189,9 +191,9 @@ void RInside::init_tempdir(void) {
     tmp = getenv("TMPDIR");
     if (tmp == NULL) {
         tmp = getenv("TMP");
-        if (tmp == NULL) { 
+        if (tmp == NULL) {
             tmp = getenv("TEMP");
-            if (tmp == NULL) 
+            if (tmp == NULL)
                 tmp = "/tmp";
             }
     }
@@ -203,19 +205,19 @@ void RInside::init_tempdir(void) {
     }
 }
 
-void RInside::init_rand(void) { /* set seed for tempfile()  */
-    unsigned int seed;
-    struct timeval tv;
+void RInside::init_rand(void) { 		// code borrows from R's TimeToSeed() in datetime.c
+    unsigned int pid = getpid();
+    struct timeval tv;          		// this is ifdef'ed by R, we just assume we have it 
     gettimeofday (&tv, NULL);
-    // changed uint64_t to unsigned int. Need to figure out why BDR used that instead. 
-    seed = ((unsigned int) tv.tv_usec << 16) ^ tv.tv_sec;
+    unsigned int seed = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
+    seed ^= (pid << 16);         		// R 2.14.0 started to also use pid to support parallel 
     srand(seed);
 }
 
 void RInside::autoloads() {
 
-    #include <RInsideAutoloads.h>  
- 
+    #include <RInsideAutoloads.h>
+
     // Autoload default packages and names from autoloads.h
     //
     // This function behaves in almost every way like
@@ -236,66 +238,66 @@ void RInside::autoloads() {
     //     invisible()
     // }
     //
-    // What's missing is the updating of the string vector .Autoloaded with 
-    // the list of packages, which by my code analysis is useless and only 
+    // What's missing is the updating of the string vector .Autoloaded with
+    // the list of packages, which by my code analysis is useless and only
     // for informational purposes.
     //
     //
-    
-    // we build the call : 
+
+    // we build the call :
     //
-    //  delayedAssign( NAME, 
-    //          autoloader( name = NAME, package = PACKAGE), 
-    //          .GlobalEnv, 
+    //  delayedAssign( NAME,
+    //          autoloader( name = NAME, package = PACKAGE),
+    //          .GlobalEnv,
     //          .AutoloadEnv )
-    //          
-    //  where : 
+    //
+    //  where :
     //  - PACKAGE is updated in a loop
     //  - NAME is updated in a loop
-    //  
     //
-     
+    //
+
     int i,j, idx=0, nobj ;
-    Rcpp::Language delayed_assign_call(Rcpp::Function("delayedAssign"), 
-                                       R_NilValue,     // arg1: assigned in loop 
-                                       R_NilValue,     // arg2: assigned in loop 
+    Rcpp::Language delayed_assign_call(Rcpp::Function("delayedAssign"),
+                                       R_NilValue,     // arg1: assigned in loop
+                                       R_NilValue,     // arg2: assigned in loop
                                        global_env,
                                        global_env.find(".AutoloadEnv")
                                        );
     Rcpp::Language::Proxy delayed_assign_name  = delayed_assign_call[1];
 
     Rcpp::Language autoloader_call(Rcpp::Function("autoloader"),
-                                   Rcpp::Named( "name", R_NilValue) ,  // arg1 : assigned in loop 
-                                   Rcpp::Named( "package", R_NilValue) // arg2 : assigned in loop 
+                                   Rcpp::Named( "name", R_NilValue) ,  // arg1 : assigned in loop
+                                   Rcpp::Named( "package", R_NilValue) // arg2 : assigned in loop
                                    );
     Rcpp::Language::Proxy autoloader_name = autoloader_call[1];
     Rcpp::Language::Proxy autoloader_pack = autoloader_call[2];
     delayed_assign_call[2] = autoloader_call;
-    
-    try { 
+
+    try {
         for( i=0; i<packc; i++){
-                
+
             // set the 'package' argument of the autoloader call */
             autoloader_pack = pack[i] ;
-                
-            nobj = packobjc[i] ; 
+
+            nobj = packobjc[i] ;
             for (j = 0; j < nobj ; j++){
-                
-                // set the 'name' argument of the autoloader call */ 
+
+                // set the 'name' argument of the autoloader call */
                 autoloader_name = packobj[idx+j] ;
-                   
+
                 // Set the 'name' argument of the delayedAssign call */
                 delayed_assign_name = packobj[idx+j] ;
-                    
+
                 // evaluate the call */
                 delayed_assign_call.eval() ;
-                    
+
             }
             idx += packobjc[i] ;
         }
     } catch( std::exception& ex){
         // fprintf(stderr,"%s: Error calling delayedAssign:\n %s", programName, ex.what() );
-        // exit(1);         
+        // exit(1);
         throw std::runtime_error(std::string("Error calling delayedAssign: ") + std::string(ex.what()));
     }
 }
@@ -307,7 +309,7 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
     int i, errorOccurred;
 
     mb_m.add((char*)line.c_str());
-    
+
     PROTECT(cmdSexp = Rf_allocVector(STRSXP, 1));
     SET_STRING_ELT(cmdSexp, 0, Rf_mkChar(mb_m.getBufPtr()));
 
@@ -315,7 +317,7 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
 
     switch (status){
     case PARSE_OK:
-        // Loop is needed here as EXPSEXP might be of length > 1 
+        // Loop is needed here as EXPSEXP might be of length > 1
         for(i = 0; i < Rf_length(cmdexpr); i++){
             ans = R_tryEval(VECTOR_ELT(cmdexpr, i),NULL,&errorOccurred);
             if (errorOccurred) {
@@ -330,7 +332,7 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
         mb_m.rewind();
         break;
     case PARSE_INCOMPLETE:
-        // need to read another line 
+        // need to read another line
         break;
     case PARSE_NULL:
         fprintf(stderr, "%s: ParseStatus is null (%d)\n", programName, status);
@@ -373,7 +375,7 @@ RInside::Proxy RInside::parseEval(const std::string & line) {
 }
 
 Rcpp::Environment::Binding RInside::operator[]( const std::string& name ){
-    return global_env[name]; 
+    return global_env[name];
 }
 
 RInside& RInside::instance(){
@@ -386,23 +388,23 @@ RInside& RInside::instance(){
 
 void Callbacks::Busy_( int which ){
     R_is_busy = static_cast<bool>( which ) ;
-    Busy( R_is_busy ) ; 
+    Busy( R_is_busy ) ;
 }
 
 int Callbacks::ReadConsole_( const char* prompt, unsigned char* buf, int len, int addtohistory ){
     try {
         std::string res( ReadConsole( prompt, static_cast<bool>(addtohistory) ) ) ;
-                
+
         /* At some point we need to figure out what to do if the result is
          * longer than "len"... For now, just truncate. */
-                 
+
         int l = res.size() ;
         int last = (l>len-1)?len-1:l ;
         strncpy( (char*)buf, res.c_str(), last ) ;
         buf[last] = 0 ;
         return 1 ;
     } catch( const std::exception& ex){
-        return -1 ;     
+        return -1 ;
     }
 }
 
@@ -415,11 +417,11 @@ void Callbacks::WriteConsole_( const char* buf, int len, int oType ){
 }
 
 void RInside_ShowMessage( const char* message ){
-    RInside::instance().callbacks->ShowMessage( message ) ;     
+    RInside::instance().callbacks->ShowMessage( message ) ;
 }
 
 void RInside_WriteConsoleEx( const char* message, int len, int oType ){
-    RInside::instance().callbacks->WriteConsole_( message, len, oType ) ;               
+    RInside::instance().callbacks->WriteConsole_( message, len, oType ) ;
 }
 
 int RInside_ReadConsole(const char *prompt, unsigned char *buf, int len, int addtohistory){
@@ -430,7 +432,7 @@ void RInside_ResetConsole(){
     RInside::instance().callbacks->ResetConsole() ;
 }
 
-void RInside_FlushConsole(){                                       
+void RInside_FlushConsole(){
     RInside::instance().callbacks->FlushConsole() ;
 }
 
@@ -444,7 +446,7 @@ void RInside_Busy( int which ){
 
 void RInside::set_callbacks(Callbacks* callbacks_){
     callbacks = callbacks_ ;
-        
+
 #ifdef WIN32
     // do something to tell user that he doesn't get this
 #else
@@ -472,10 +474,10 @@ void RInside::set_callbacks(Callbacks* callbacks_){
     if( callbacks->has_Busy() ){
         ptr_R_Busy = RInside_Busy;
     }
-    
+
     R_Outputfile = NULL;
-    R_Consolefile = NULL;    
-#endif    
+    R_Consolefile = NULL;
+#endif
 }
 
 void RInside::repl(){

@@ -1,3 +1,14 @@
+2012-01-08  Dirk Eddelbuettel  <edd@dexter>
+
+	* src/RInside.cpp: Correct console writer on Windows to not use
+	Rprintf (with thanks to both James Bates and John Brzustowski)
+
+	* src/RInside.cpp: Update RNG seeding to same scheme now used by
+	R which blends both (millisecond) time and process id
+
+	* inst/examples/standard/Makefile.win: Allow for an R_ARCH variable
+	to be set to enforce either i386 or x64 builds
+
 2011-12-06  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp: Applied (a slightly simpler versions of) a patch
@@ -7,11 +18,11 @@
 	that we get some symbols from Rembedded.h
 
 	* inst/THANKS: Add James Bates for help with RInside on Windows
-	
+
 	* doxyfile: Add inst/examples/wt to example path
 
 	* cleanup: Some fixes ensuring qt and wt example can be cleaned
-	
+
 	* .Rbuildignore: Add some local files from qt and wt examples
 
 2011-12-04  Dirk Eddelbuettel  <edd@debian.org>

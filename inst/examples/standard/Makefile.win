@@ -1,43 +1,43 @@
-## -*- mode: makefile; tab-width: 8; -*-
+n## -*- mode: makefile; tab-width: 8; -*-
 ##
-## Simple Makefile
-##
-## TODO:
-##  proper configure for non-Debian file locations,   [ Done ]
-##  allow RHOME to be set for non-default R etc
+## Simple Makefile for Windows
 
 ## This version is fairly directly derived from the Unix versions
 ## You may have to set R_HOME manually if this does not work
 ## It requires Rtools in the path -- as does all R package building
 R_HOME := 		$(shell R RHOME | sed -e "s|\\\\|\/|g")
 
+## You may have to set this to one of the two values to enforce a particular architecture
+#R_ARCH :=		--arch i386
+#R_ARCH :=		--arch x64
+
 sources := 		$(wildcard *.cpp)
 programs := 		$(sources:.cpp=)
 
-
 ## include headers and libraries for R
-RCPPFLAGS := 		$(shell $(R_HOME)/bin/R CMD config --cppflags)
-RLDFLAGS := 		$(shell $(R_HOME)/bin/R CMD config --ldflags)
-RBLAS := 		$(shell $(R_HOME)/bin/R CMD config BLAS_LIBS)
-RLAPACK := 		$(shell $(R_HOME)/bin/R CMD config LAPACK_LIBS)
+RCPPFLAGS := 		$(shell $(R_HOME)/bin/R $(R_ARCH) CMD config --cppflags)
+RLDFLAGS := 		$(shell $(R_HOME)/bin/R $(R_ARCH) CMD config --ldflags)
+RBLAS := 		$(shell $(R_HOME)/bin/R $(R_ARCH) CMD config BLAS_LIBS)
+RLAPACK := 		$(shell $(R_HOME)/bin/R $(R_ARCH) CMD config LAPACK_LIBS)
 
 
 ## include headers and libraries for Rcpp interface classes
-RCPPINCL := 		$(shell echo 'Rcpp:::CxxFlags()' | $(R_HOME)/bin/R --vanilla --slave)
-RCPPLIBS := 		$(shell echo 'Rcpp:::LdFlags()'  | $(R_HOME)/bin/R --vanilla --slave)
+RCPPINCL := 		$(shell echo 'Rcpp:::CxxFlags()' | $(R_HOME)/bin/R $(R_ARCH) --vanilla --slave)
+RCPPLIBS := 		$(shell echo 'Rcpp:::LdFlags()'  | $(R_HOME)/bin/R $(R_ARCH) --vanilla --slave)
 
 
 ## include headers and libraries for RInside embedding classes
-RINSIDEINCL := 		$(shell echo 'RInside:::CxxFlags()' | $(R_HOME)/bin/R --vanilla --slave)
-RINSIDELIBS := 		$(shell echo 'RInside:::LdFlags()'  | $(R_HOME)/bin/R --vanilla --slave)
+RINSIDEINCL := 		$(shell echo 'RInside:::CxxFlags()' | $(R_HOME)/bin/R $(R_ARCH) --vanilla --slave)
+RINSIDELIBS := 		$(shell echo 'RInside:::LdFlags()'  | $(R_HOME)/bin/R $(R_ARCH) --vanilla --slave)
+
 
 ## compiler etc settings used in default make rules
-CXX := 			$(shell $(R_HOME)/bin/R CMD config CXX)
-CPPFLAGS := 		-Wall $(shell $(R_HOME)/bin/R CMD config CPPFLAGS)
-CXXFLAGS := 		$(RCPPFLAGS) $(RCPPINCL) $(RINSIDEINCL) $(shell $(R_HOME)/bin/R CMD config CXXFLAGS)
+CXX := 			$(shell $(R_HOME)/bin/R $(R_ARCH) CMD config CXX)
+CPPFLAGS := 		-Wall $(shell $(R_HOME)/bin/R $(R_ARCH) CMD config CPPFLAGS)
+CXXFLAGS := 		$(RCPPFLAGS) $(RCPPINCL) $(RINSIDEINCL) $(shell $(R_HOME)/bin/R $(R_ARCH) CMD config CXXFLAGS)
 LDFLAGS	= 		-s
-LDLIBS := 		$(RLDFLAGS) $(RBLAS) $(RLAPACK) $(RINSIDELIBS) $(RCPPLIBS) 
-CC := 			$(shell $(R_HOME)/bin/R CMD config CXX)
+LDLIBS := 		$(RLDFLAGS) $(RBLAS) $(RLAPACK) $(RINSIDELIBS) $(RCPPLIBS)
+CC := 			$(shell $(R_HOME)/bin/R $(R_ARCH) CMD config CXX)
 
 
 all : 			$(programs)

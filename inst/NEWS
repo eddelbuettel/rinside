@@ -1,4 +1,15 @@
-0.2.5   20xx-yy-zz
+0.2.6   2012-01-xx
+
+   o    Correct Windows initialization by not using Rprintf in internasl
+        console writer, with thanks to both James Bates and John Brzustowski
+
+   o    Update RNG seeding (used by tmpnam et al) to same scheme used by
+        R since 2.14.0: blending both millisecond time and process id
+
+   o    Small update to standard examples Makefile for Windows permitting 
+        to explicitly set i386 or x64 as a build architecture
+
+0.2.5   2011-12-06
 
    o    Applied (somewhat simplified) patch by James Bates which restores
         RInside to working on Windows -- with a big Thank You! to James for
