@@ -1,10 +1,14 @@
-2012-01-08  Dirk Eddelbuettel  <edd@dexter>
+2012-01-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp: Correct console writer on Windows to not use
 	Rprintf (with thanks to both James Bates and John Brzustowski)
 
 	* src/RInside.cpp: Update RNG seeding to same scheme now used by
 	R which blends both (millisecond) time and process id
+
+	* inst/examples/*: Added CMake build support for all example
+	directories kindly provided by Peter Aberline; this helps when coding
+	inside of IDEs such as Eclipse, KDevelop or Code::Blocks
 
 	* inst/examples/standard/Makefile.win: Allow for an R_ARCH variable
 	to be set to enforce either i386 or x64 builds

@@ -1,15 +1,19 @@
 0.2.6   2012-01-xx
 
-   o    Correct Windows initialization by not using Rprintf in internasl
+   o    Correct Windows initialization by not using Rprintf in internal
         console writer, with thanks to both James Bates and John Brzustowski
 
    o    Update RNG seeding (used by tmpnam et al) to same scheme used by
         R since 2.14.0: blending both millisecond time and process id
 
+   o    Added CMake build support for all four example directories as kindly 
+   	provided by Peter Aberline; this helps when writing RInside code
+	inside of IDEs such as Eclipse, KDevelop or Code::Blocks
+
    o    Small update to standard examples Makefile for Windows permitting 
         to explicitly set i386 or x64 as a build architecture
 
-0.2.5   2011-12-06
+0.2.5   2011-12-07
 
    o    Applied (somewhat simplified) patch by James Bates which restores
         RInside to working on Windows -- with a big Thank You! to James for

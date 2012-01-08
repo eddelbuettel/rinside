@@ -10,3 +10,4 @@ Jianping Hua            for contributing two MPI-based examples
 Murray Stokely		for a patch regarding timing of Rcpp autoloads
 James Bates		for a patch restoring RInside on Windows
 John Brzustowski	for a correction to the Windows initialization
+Peter Aberline		for contributing CMake support for all examples
