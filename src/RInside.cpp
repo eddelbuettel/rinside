@@ -119,8 +119,6 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     for (int i = 0; R_VARS[i] != NULL; i+= 2) {
         if (getenv(R_VARS[i]) == NULL) { // if env variable is not yet set
             if (setenv(R_VARS[i],R_VARS[i+1],1) != 0){
-                //perror("ERROR: couldn't set/replace an R environment variable");
-                //exit(1);
                 throw std::runtime_error(std::string("Could not set R environment variable ") +
                                          std::string(R_VARS[i]) + std::string(" to ") +
                                          std::string(R_VARS[i+1]));
@@ -199,8 +197,6 @@ void RInside::init_tempdir(void) {
     }
     R_TempDir = (char*) tmp;
     if (setenv("R_SESSION_TMPDIR",tmp,1) != 0){
-        //perror("Fatal Error: couldn't set/replace R_SESSION_TMPDIR!");
-        //exit(1);
         throw std::runtime_error(std::string("Could not set / replace R_SESSION_TMPDIR to ") + std::string(tmp));
     }
 }
@@ -296,8 +292,6 @@ void RInside::autoloads() {
             idx += packobjc[i] ;
         }
     } catch( std::exception& ex){
-        // fprintf(stderr,"%s: Error calling delayedAssign:\n %s", programName, ex.what() );
-        // exit(1);
         throw std::runtime_error(std::string("Error calling delayedAssign: ") + std::string(ex.what()));
     }
 }
@@ -321,7 +315,7 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
         for(i = 0; i < Rf_length(cmdexpr); i++){
             ans = R_tryEval(VECTOR_ELT(cmdexpr, i),NULL,&errorOccurred);
             if (errorOccurred) {
-                fprintf(stderr, "%s: Error in evaluating R code (%d)\n", programName, status);
+                Rf_error("%s: Error in evaluating R code (%d)\n", programName, status);
                 UNPROTECT(2);
                 return 1;
             }
@@ -335,20 +329,20 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
         // need to read another line
         break;
     case PARSE_NULL:
-        fprintf(stderr, "%s: ParseStatus is null (%d)\n", programName, status);
+        Rf_error("%s: ParseStatus is null (%d)\n", programName, status);
         UNPROTECT(2);
         return 1;
         break;
     case PARSE_ERROR:
-        fprintf(stderr,"Parse Error: \"%s\"\n", line.c_str());
+        Rf_error("Parse Error: \"%s\"\n", line.c_str());
         UNPROTECT(2);
         return 1;
         break;
     case PARSE_EOF:
-        fprintf(stderr, "%s: ParseStatus is eof (%d)\n", programName, status);
+        Rf_error("%s: ParseStatus is eof (%d)\n", programName, status);
         break;
     default:
-        fprintf(stderr, "%s: ParseStatus is not documented %d\n", programName, status);
+        Rf_error("%s: ParseStatus is not documented %d\n", programName, status);
         UNPROTECT(2);
         return 1;
         break;

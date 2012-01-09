@@ -1,8 +1,9 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; tab-width: 8 -*-
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
 //
 // MemBuf.cpp: R/C++ interface class library -- Easier R embedding into C++
 //
-// Copyright (C) 2009 - 2010 Dirk Eddelbuettel
+// Copyright (C) 2009         Dirk Eddelbuettel
+// Copyright (C) 2010 - 2012  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -31,9 +32,7 @@ extern const char *programName;
 MemBuf::~MemBuf() {}
 
 MemBuf::MemBuf(int sizebytes) : buffer() {
-    if (verbose) std::cout << "MemBuf::ctor BEGIN" << std::endl;
     buffer.reserve(sizebytes) ;
-    if (verbose) std::cout << "MemBuf::ctor END" << std::endl;
 }
 
 void MemBuf::resize() {		// Use power of 2 resizing 
