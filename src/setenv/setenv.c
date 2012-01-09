@@ -1,8 +1,9 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; tab-width: 8 -*-
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
 //
 // RInside.cpp: R/C++ interface class library -- Easier R embedding into C++
 //
 // Copyright (C) 2009 - 2010 Dirk Eddelbuettel and Richard Holbrey
+// Copyright (C) 2012        Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -32,16 +33,14 @@ extern "C" int setenv(const char *env_var, const char *env_val, int dummy) {
     a = (char *) malloc((strlen(env_var) + 1) * sizeof(char));
     b = (char *) malloc((strlen(env_val) + 1) * sizeof(char));
     if (!a || !b) {
-	fprintf(stderr, "memory allocation failure in setenv");
-        exit(1);
+	Rf_error("memory allocation failure in setenv");
     }
     strcpy(a, env_var);
     strcpy(b, env_val);
 
     buf = (char *) malloc((strlen(a) + strlen(b) + 2) * sizeof(char));
-    if (!buf) {
-	fprintf(stderr, "memory allocation failure in setenv");
-        exit(1);
+    if (!buf) {	
+	Rf_error("memory allocation failure in setenv");
     }
     strcpy(buf, a); strcat(buf, "=");
     value = buf+strlen(buf);
