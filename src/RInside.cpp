@@ -25,8 +25,12 @@
 
 RInside* RInside::instance_ = 0 ;
 
-#include <sys/time.h>           // gettimeofday
+#include <sys/time.h>           // gettimeofday()
 #include <stdint.h>		// uint64_t
+#include <sys/types.h>		// pid_t
+#include <unistd.h>		// getpid()
+
+
 
 bool verbose = false;
 const char *programName = "RInside";
