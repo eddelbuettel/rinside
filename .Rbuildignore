@@ -1,3 +1,4 @@
+libRInside.a
 inst/doc/html
 inst/doc/latex
 inst/doc/man
@@ -6,6 +7,4 @@ inst/lib
 inst/examples/qt/Makefile
 inst/examples/qt/link.sh
 inst/examples/qt/moc_qtdensity.cpp
-inst/examples/standard/rinside_sample11
 inst/examples/wt/extkitchen.css
-inst/examples/wt/resources -> /usr/share/Wt/resources/
