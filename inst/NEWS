@@ -1,4 +1,4 @@
-0.2.6   2012-01-xx
+0.2.6   2012-01-11
 
    o    Correct Windows initialization by not using Rprintf in internal
         console writer, with thanks to both James Bates and John Brzustowski

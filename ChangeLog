@@ -1,3 +1,9 @@
+2012-01-11  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Release 0.2.6
+
+	* DESCRIPTION: Updated Description: text 
+
 2012-01-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp: Correct console writer on Windows to not use
@@ -18,6 +24,8 @@
 
 2011-12-06  Dirk Eddelbuettel  <edd@debian.org>
 
+	* DESCRIPTION: Release 0.2.5
+	
 	* src/RInside.cpp: Applied (a slightly simpler versions of) a patch
 	by James Bates which restores RInside on Windows -- at long last!
 
