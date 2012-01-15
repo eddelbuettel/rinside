@@ -1,8 +1,13 @@
+2012-01-15  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/cmake/CMakeLists.txt: Added patch by Peter
+	which add CMake build support on Windows
+
 2012-01-11  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Release 0.2.6
 
-	* DESCRIPTION: Updated Description: text 
+	* DESCRIPTION: Updated Description: text
 
 2012-01-08  Dirk Eddelbuettel  <edd@debian.org>
 
@@ -14,7 +19,7 @@
 
 	* src/RInside.cpp: Replace fprintf(stderr,...) with Rf_error(...)
 	* src/setenv/setenv.c: Idem
-	
+
 	* inst/examples/*: Added CMake build support for all example
 	directories kindly provided by Peter Aberline; this helps when coding
 	inside of IDEs such as Eclipse, KDevelop or Code::Blocks
@@ -25,7 +30,7 @@
 2011-12-06  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Release 0.2.5
-	
+
 	* src/RInside.cpp: Applied (a slightly simpler versions of) a patch
 	by James Bates which restores RInside on Windows -- at long last!
 
