@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8.4) 
 
+set (VERBOSE 1)
 set (SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 execute_process(COMMAND R RHOME
@@ -11,6 +12,13 @@ set(NUM_TRUNC_CHARS 2)
 
 execute_process(COMMAND R CMD config --cppflags
                 OUTPUT_VARIABLE RCPPFLAGS)
+
+if (CMAKE_HOST_WIN32)
+    if (${RCPPFLAGS} MATCHES "[-][I]([^ ;])+")
+	set (RCPPFLAGS ${CMAKE_MATCH_0})
+    endif()
+endif()
+
 string(SUBSTRING ${RCPPFLAGS} ${NUM_TRUNC_CHARS} -1 RCPPFLAGS)
 include_directories(${RCPPFLAGS})
 
@@ -36,14 +44,6 @@ include_directories(${RCPPINCL})
 
 execute_process(COMMAND Rscript -e "Rcpp:::LdFlags()"
                 OUTPUT_VARIABLE RCPPLIBS)
-if (${RCPPLIBS} MATCHES "[-][L]([^ ;])+")
-    string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RCPPLIBS_L)
-    link_directories(${RCPPLIBS_L} )
-endif()
-
-if (${RCPPLIBS} MATCHES "[-][l][R]([^;])+")
-    string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RCPPLIBS_l)
-endif()
 
 execute_process(COMMAND Rscript -e "RInside:::CxxFlags()"
                 OUTPUT_VARIABLE RINSIDEINCL)
@@ -52,13 +52,52 @@ include_directories(${RINSIDEINCL})
 
 execute_process(COMMAND Rscript -e "RInside:::LdFlags()"
                 OUTPUT_VARIABLE RINSIDELIBS)
-if (${RINSIDELIBS} MATCHES "[-][L]([^ ;])+")
-    string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RINSIDELIBS_L)
-    link_directories(${RINSIDELIBS_L})
-endif()
 
-if (${RINSIDELIBS} MATCHES "[-][l][R]([^;])+")
-    string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RINSIDELIBS_l)
+if (CMAKE_HOST_WIN32)
+    string(LENGTH "libRcpp.a" lenRcppName)
+    string(LENGTH ${RCPPLIBS} lenRcppFQName)
+	
+    math(EXPR RLibPathLen ${lenRcppFQName}-${lenRcppName}-1)
+    string(SUBSTRING ${RCPPLIBS} 0 ${RLibPathLen} RCPPLIBS_L)
+    link_directories(${RCPPLIBS_L})
+	
+    math(EXPR RLibPathLen ${RLibPathLen}+1)
+    string(SUBSTRING ${RCPPLIBS} ${RLibPathLen} -1 RCPPLIBS_l)
+	
+	#Remove the quotes
+    string(SUBSTRING ${RINSIDELIBS} 1 -1 RINSIDELIBS)
+    string(LENGTH ${RINSIDELIBS} lenRInsideFQNameLen)
+    math(EXPR lenRInsideFQNameLen ${lenRInsideFQNameLen}-1)
+    string(SUBSTRING ${RINSIDELIBS} 0 ${lenRInsideFQNameLen} RINSIDELIBS)
+
+    string(LENGTH "libRInside.a" lenRInsideName)
+    string(LENGTH ${RINSIDELIBS} lenRInsideFQName)
+
+    math(EXPR RLibPathLen ${lenRInsideFQName}-${lenRInsideName}-1)
+    string(SUBSTRING ${RINSIDELIBS} 0 ${RLibPathLen} RINSIDELIBS_L)
+
+    math(EXPR RLibPathLen ${RLibPathLen}+1)
+    string(SUBSTRING ${RINSIDELIBS} ${RLibPathLen} -1 RINSIDELIBS_l)
+
+    link_directories(${RINSIDELIBS_L})
+else()	
+    if (${RCPPLIBS} MATCHES "[-][L]([^ ;])+")
+        string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RCPPLIBS_L)
+        link_directories(${RCPPLIBS_L} )
+    endif()
+
+    if (${RCPPLIBS} MATCHES "[-][l][R]([^;])+")
+        string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RCPPLIBS_l)
+    endif()
+
+    if (${RINSIDELIBS} MATCHES "[-][L]([^ ;])+")
+        string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RINSIDELIBS_L)
+        link_directories(${RINSIDELIBS_L})
+    endif()
+
+    if (${RINSIDELIBS} MATCHES "[-][l][R]([^;])+")
+        string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RINSIDELIBS_l)
+    endif()
 endif()
 
 execute_process(COMMAND R CMD config CXXFLAGS
@@ -82,11 +121,11 @@ endif()
 foreach (next_SOURCE ${sources})
    get_filename_component(source_name ${next_SOURCE} NAME_WE)
    add_executable( ${source_name} ${next_SOURCE} )
-
-   target_link_libraries(${source_name} ${RCPPLIBS_l})
-   target_link_libraries(${source_name} ${RINSIDELIBS_l})
+   
    target_link_libraries(${source_name} ${RLDFLAGS_l})
    target_link_libraries(${source_name} ${BLAS_LIBS})
    target_link_libraries(${source_name} ${LAPACK_LIBS})
+   target_link_libraries(${source_name} ${RINSIDELIBS_l})
+   target_link_libraries(${source_name} ${RCPPLIBS_l})
+      
 endforeach (next_SOURCE ${sources})
-
