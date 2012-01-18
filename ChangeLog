@@ -1,3 +1,7 @@
+2012-01-18  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Added BugReports: and MailingList: fields 
+
 2012-01-15  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/cmake/CMakeLists.txt: Added patch by Peter

@@ -23,3 +23,5 @@ Depends: R (>= 2.10.0), Rcpp (>= 0.8.5)
 LinkingTo: Rcpp
 URL: http://dirk.eddelbuettel.com/code/rinside.html
 License: GPL (>= 2)
+BugReports: http://r-forge.r-project.org/tracker/?atid=637&group_id=155&func=browse
+MailingList: Please send questions and comments regarding RInside to rcpp-devel@lists.r-forge.r-project.org

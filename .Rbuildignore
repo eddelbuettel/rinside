@@ -8,3 +8,4 @@ inst/examples/qt/Makefile
 inst/examples/qt/link.sh
 inst/examples/qt/moc_qtdensity.cpp
 inst/examples/wt/extkitchen.css
+inst/examples/wt/run.sh
