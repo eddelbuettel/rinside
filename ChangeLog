@@ -1,6 +1,15 @@
+2012-03-30  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/wt/wtdensity.cpp: Extended / prettyfied Wt example to
+	use CSS styling as well as some simple headers and descriptions
+	* inst/examples/wt/wtdensity.css: Added simple CSS markup
+	* inst/examples/wt/wtdensity.xml: Added text and headers
+
+	* inst/examples/wt/wtdensityPlain.cpp: Renamed old version
+
 2012-01-18  Dirk Eddelbuettel  <edd@debian.org>
 
-	* DESCRIPTION: Added BugReports: and MailingList: fields 
+	* DESCRIPTION: Added BugReports: and MailingList: fields
 
 2012-01-15  Dirk Eddelbuettel  <edd@debian.org>
 

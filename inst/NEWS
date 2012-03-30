@@ -1,3 +1,8 @@
+0.2.7   2012-xx-yy
+
+   o    Prettified the Wt example 'web application' with CSS use, also added
+        and XML file with simple headers and description text
+
 0.2.6   2012-01-11
 
    o    Correct Windows initialization by not using Rprintf in internal

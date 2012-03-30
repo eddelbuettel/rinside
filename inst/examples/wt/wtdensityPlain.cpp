@@ -64,20 +64,13 @@ DensityApp::DensityApp(const WEnvironment& env, RInside & R) : WApplication(env)
 
     setTitle("Witty WebApp With RInside");			// application title
 
-    setCssTheme("polished");
-    messageResourceBundle().use(appRoot() + "wtdensity");
-
-    new WText(WString::tr("overview"), root());
-
     std::string tfcmd = "tfile <- tempfile(pattern=\"img\", tmpdir=\"/tmp\", fileext=\".png\")";	
     tempfile_ = Rcpp::as<std::string>(R_.parseEval(tfcmd));  	// assign to 'tfile' in R, and report back
     bw_ = 100; 
     kernel_ = 0;						// parameters used to estimate the density
     cmd_ = "c(rnorm(100,0,1), rnorm(50,5,1))";			// random draw command string
    
-    new WText(WString::tr("user input"), root());
-    Wt::WContainerWidget *wc = new Wt::WContainerWidget(root());
-    wc->setStyleClass("box");
+    Wt::WGroupBox *wc = new Wt::WGroupBox("Density Estimation", root());
 
     Wt::WHBoxLayout *layout = new Wt::WHBoxLayout();
     Wt::WContainerWidget *midbox = new Wt::WContainerWidget(root());
@@ -129,20 +122,14 @@ DensityApp::DensityApp(const WEnvironment& env, RInside & R) : WApplication(env)
     group_->setCheckedButton(group_->button(kernel_));
     group_->checkedChanged().connect(this, &DensityApp::reportButton);
 
-    new WText(WString::tr("r result"), root());
-    Wt::WContainerWidget *botbox = new Wt::WContainerWidget(root());
-    botbox->setStyleClass("box");
+    Wt::WGroupBox *botbox = new Wt::WGroupBox("Resulting chart", root());
     imgfile_ = new Wt::WFileResource("image/png", tempfile_);
     imgfile_->suggestFileName("density.png");  // name the clients sees of datafile
     img_ = new Wt::WImage(imgfile_, "PNG version", botbox);
 
-    new WText(WString::tr("browser info"), root());
-    Wt::WContainerWidget *stbox = new Wt::WContainerWidget(root());
-    stbox->setStyleClass("box");
+    Wt::WGroupBox *stbox = new Wt::WGroupBox("Status", root());
     greeting_ = new WText(stbox);                         	// empty text
     greeting_->setText("Setting up...");
-
-    useStyleSheet("wtdensity.css");    				// set our style sheet last
   
     reportEdit();						// create a new RNG draw in Yvec_
     plot();							// and draw a new density plot

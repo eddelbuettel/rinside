@@ -38,18 +38,25 @@ LDLIBS := 		$(RLDFLAGS) $(RRPATH) $(RBLAS) $(RLAPACK) $(RCPPLIBS) $(RINSIDELIBS)
 
 
 
-all:			wtdensity
+all:			wtdensity wtdensityPlain
+
+wtdensityPlain:		wtdensityPlain.cpp
+			$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ $(LDLIBS) 
+			strip $@
 
 wtdensity:		wtdensity.cpp
-			$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o wtdensity wtdensity.cpp $(LDLIBS) 
-                        ## optionally strip the binary
-			strip wtdensity
+			$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ $(LDLIBS) 
+			strip $@
 
-run:
+run:			wtdensity
                         ## Wt resources location on Debian/Ubuntu; adjust as needed
 			test -L resources || ln -s /usr/lib/Wt/resources .
-                        ## launch, pointing to resources linked and /tmp dir
-			./wtdensity --docroot ".;/resources,/tmp" --http-addr 127.0.0.1 --http-port 8080
+			./$< --docroot "." --http-addr 127.0.0.1 --http-port 8080
+
+runPlain:		wtdensityPlain
+                        ## Wt resources location on Debian/Ubuntu; adjust as needed
+			test -L resources || ln -s /usr/lib/Wt/resources .
+			./$< --docroot "." --http-addr 127.0.0.1 --http-port 8081
 
 clean:
 			rm -f wtdensity resources
