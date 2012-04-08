@@ -1,3 +1,7 @@
+2012-04-08  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/rinside_sample12.cpp: New example
+
 2012-03-30  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/wt/wtdensity.cpp: Extended / prettyfied Wt example to
