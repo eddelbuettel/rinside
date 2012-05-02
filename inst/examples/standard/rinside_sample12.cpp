@@ -14,9 +14,13 @@ int main(int argc, char *argv[]) {
 
     Rcpp::CharacterVector res = R.parseEval(cmd); // parse, eval + return result
 
-    for (int i=0; i<res.size(); i++) {
-	std::cout << res[i] << " ";
+    for (int i=0; i<res.size(); i++) {  // loop over vector and output
+	std::cout << res[i];
     }
+    std::cout << std::endl;
+
+    std::copy(res.begin(), res.end(), 	// or use STL iterators 
+	      std::ostream_iterator<char*>(std::cout));
     std::cout << std::endl;
     
     exit(0);
