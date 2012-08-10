@@ -1,3 +1,9 @@
+2012-08-10  Dirk Eddelbuettel  <edd@dexter>
+
+	* inst/examples/armadillo/: New example directory for Armadillo
+	* inst/examples/armadillo/rinside_arma0.cpp: simple first example
+	* inst/examples/armadillo/rinside_arma1.cpp: second example
+
 2012-04-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/rinside_sample12.cpp: New example
