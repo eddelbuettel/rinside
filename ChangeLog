@@ -24,7 +24,7 @@
 2012-01-15  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/cmake/CMakeLists.txt: Added patch by Peter
-	which add CMake build support on Windows
+	which adds CMake build support on Windows
 
 2012-01-11  Dirk Eddelbuettel  <edd@debian.org>
 

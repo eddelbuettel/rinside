@@ -59,4 +59,4 @@ runPlain:		wtdensityPlain
 			./$< --docroot "." --http-addr 127.0.0.1 --http-port 8081
 
 clean:
-			rm -f wtdensity resources
+			rm -f wtdensity wtdensityPlain resources
