@@ -1,5 +1,7 @@
 2012-08-12  Dirk Eddelbuettel  <edd@debian.org>
 
+	* DESCRIPTION: Release 0.2.7
+
 	* inst/examples/eigen/: New example directory for Eigen
 	* inst/examples/eigen/rinside_eigen0.cpp: simple first example
 	* inst/examples/eigen/rinside_eigen1.cpp: second example
