@@ -18,8 +18,8 @@ int main(int argc, char *argv[]) {
     double nacc = arma::accu(n);
     double nrnk = arma::rank(n);
 
-    m.print("Initial Matrix n"); 			// initial random matrix
-    n.print("Product n' * n");			 	// product of m' * m
+    m.print("Initial Matrix m"); 			// initial random matrix
+    n.print("Product n = m' * m");		 	// product of m' * m
     std::cout << "accu(n) " << nacc << " " 
 	      << "rank(n) " << nrnk << std::endl; 	// accu() and rank()
 

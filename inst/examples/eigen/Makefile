@@ -28,13 +28,13 @@ RCPPLIBS := 		$(shell echo 'Rcpp:::LdFlags()'  | $(R_HOME)/bin/R --vanilla --sla
 RINSIDEINCL := 		$(shell echo 'RInside:::CxxFlags()' | $(R_HOME)/bin/R --vanilla --slave)
 RINSIDELIBS := 		$(shell echo 'RInside:::LdFlags()'  | $(R_HOME)/bin/R --vanilla --slave)
 
-## RcppArmadillo headers
-RCPPARMAINCL :=		$(shell echo 'RcppArmadillo:::CxxFlags()' | $(R_HOME)/bin/R --vanilla --slave)	
+## RcppEigen headers
+RCPPEIGENINCL :=	$(shell echo 'cat(paste("-I", system.file("include", package = "RcppEigen"), sep = ""))' | $(R_HOME)/bin/R --vanilla --slave)	
 
 ## compiler etc settings used in default make rules
 CXX := 			$(shell $(R_HOME)/bin/R CMD config CXX)
 CPPFLAGS := 		-Wall $(shell $(R_HOME)/bin/R CMD config CPPFLAGS)
-CXXFLAGS := 		$(RCPPFLAGS) $(RCPPINCL) $(RCPPARMAINCL) $(RINSIDEINCL) $(shell $(R_HOME)/bin/R CMD config CXXFLAGS)
+CXXFLAGS := 		$(RCPPFLAGS) $(RCPPINCL) $(RCPPEIGENINCL) $(RINSIDEINCL) $(shell $(R_HOME)/bin/R CMD config CXXFLAGS)
 LDLIBS := 		$(RLDFLAGS) $(RRPATH) $(RBLAS) $(RLAPACK) $(RCPPLIBS) $(RINSIDELIBS) 
 
 all: 			$(programs)
