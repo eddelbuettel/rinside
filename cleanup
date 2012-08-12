@@ -8,4 +8,5 @@ cd inst/examples/mpi && make clean && cd -
 cd inst/examples/qt && qmake && make clean && cd -
 cd inst/examples/wt && make clean && cd -
 cd inst/examples/armadillo && make clean && cd -
+cd inst/examples/eigen && make clean && cd -
 
