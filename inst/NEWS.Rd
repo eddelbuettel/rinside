@@ -6,7 +6,7 @@
   \itemize{
     \item New fifth examples subdirectory 'armadillo' with two new
     examples showing how to combine \cpkg{RInside} with \cpkg{RcppArmadillo}
-    \item New sixth examples subdirectory 'eigen with two new examples
+    \item New sixth examples subdirectory 'eigen' with two new examples
     showing how to combine \cpkg{RInside} with \cpkg{RcppEigen} 
     \item Prettified the Wt example 'web application' with CSS use, also added
     and XML file with simple headers and description text
