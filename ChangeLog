@@ -1,3 +1,8 @@
+2012-08-13  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/eigen/cmake/CMakeLists.txt: Added Peter's patch
+	* inst/examples/armadillo/cmake/CMakeLists.txt: idem
+
 2012-08-12  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Release 0.2.7
