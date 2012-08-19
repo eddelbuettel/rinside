@@ -85,6 +85,10 @@ if (CMAKE_HOST_WIN32)
     string(SUBSTRING ${RINSIDELIBS} ${RLibPathLen} -1 RINSIDELIBS_l)
 
     link_directories(${RINSIDELIBS_L})
+	
+	set ( BLAS_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/libblas.lib)
+	set ( LAPACK_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/liblapack.lib)
+	link_directories(${CMAKE_CURRENT_SOURCE_DIR})
 else()	
     if (${RCPPLIBS} MATCHES "[-][L]([^ ;])+")
         string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RCPPLIBS_L)

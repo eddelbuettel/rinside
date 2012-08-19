@@ -90,6 +90,11 @@ if (CMAKE_HOST_WIN32)
     string(SUBSTRING ${RINSIDELIBS} ${RLibPathLen} -1 RINSIDELIBS_l)
 
     link_directories(${RINSIDELIBS_L})
+	
+	set ( BLAS_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/libblas.lib)
+	set ( LAPACK_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/liblapack.lib)
+	link_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
 else()	
     if (${RCPPLIBS} MATCHES "[-][L]([^ ;])+")
         string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RCPPLIBS_L)
@@ -115,6 +120,8 @@ else()
     FIND_LIBRARY(BLAS_LIBRARY blas)
     SET(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAVED}) # Restore
     LIST(APPEND EXTRA_LIBRARIES ${BLAS_LIBRARY})
+
+    FIND_LIBRARY(LAPACK_LIBRARY lapack)
 endif()
 
 execute_process(COMMAND R CMD config CXXFLAGS
@@ -126,9 +133,6 @@ execute_process(COMMAND R CMD config BLAS_LIBS
 execute_process(COMMAND R CMD config LAPACK_LIBS
                 OUTPUT_VARIABLE RLAPACK)
 
-
-FIND_LIBRARY(LAPACK_LIBRARY lapack)
-
 set(CMAKE_CXX_FLAGS "-W -Wall -pedantic -Wextra ${CMAKE_CXX_FLAGS}")
 
 if (CMAKE_BUILD_TYPE STREQUAL "DEBUG" OR
@@ -137,6 +141,8 @@ if (CMAKE_BUILD_TYPE STREQUAL "DEBUG" OR
 elseif ( CMAKE_BUILD_TYPE STREQUAL "RELEASE" )
     add_definitions("-O3")
 endif()
+
+message ("cmake_cxx_flags" ${CMAKE_CXX_FLAGS})
 
 foreach (next_SOURCE ${sources})
    get_filename_component(source_name ${next_SOURCE} NAME_WE)
@@ -148,5 +154,7 @@ foreach (next_SOURCE ${sources})
    target_link_libraries(${source_name} ${RINSIDELIBS_l})
    target_link_libraries(${source_name} ${RCPPLIBS_l})
    target_link_libraries(${source_name} ${EXTRA_LIBRARIES})
+
    target_link_libraries(${source_name} ${LAPACK_LIBRARY})
+   
 endforeach (next_SOURCE ${sources})
