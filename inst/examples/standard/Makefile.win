@@ -8,8 +8,10 @@
 R_HOME := 		$(shell R RHOME | sed -e "s|\\\\|\/|g")
 
 ## You may have to set this to one of the two values to enforce a particular architecture
-#R_ARCH :=		--arch i386
-#R_ARCH :=		--arch x64
+## in case the autodetection in the next line does not work
+R_ARCH :=		--arch $(shell echo 'cat(.Platform$$r_arch)'  | R --vanilla --slave)
+##R_ARCH :=		--arch i386
+##R_ARCH :=		--arch x64
 
 ## You may need to set R_LIBS_USER if Rcpp or RInside are installed where R does not see them by default
 #R_LIBS_USER :=		"C:/myRstuff/library"

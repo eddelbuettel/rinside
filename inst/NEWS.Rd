@@ -6,7 +6,11 @@
   \itemize{
     \item Added CMake build support for armadillo and eigen examples,
     once again kindly contributed by Peter Aberline
-   }
+    \item Corrected Windows package build to always generated a 64 bit
+    static library too
+    \item Updated package build to no longer require configure{.win} to
+    update the two header file supplying compile-time information
+  }
 }
 \section{Changes in RInside version 0.2.7 (2012-08-12)}{
   \itemize{

@@ -1,3 +1,16 @@
+2012-09-05  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/Makevars: Updating required headers here now
+	* src/Makevars.win: Updating required headers here now
+	* configure: Deprecated, no longer used or installed
+	* configure.win: Deprecated, no longer used or installed
+	* inst/examples/standard/Makefile.win: R_ARCH autodetection
+
+2012-09-04  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/Makevars.win: Ensure static library is copied to target on both
+	architectures
+
 2012-08-19  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/eigen/cmake/CMakeLists.txt: Added a second patch by
