@@ -7,9 +7,9 @@
 ## It requires Rtools in the path -- as does all R package building
 R_HOME := 		$(shell R RHOME | sed -e "s|\\\\|\/|g")
 
-## You may have to set this to one of the two values to enforce a particular architecture
-## in case the autodetection in the next line does not work
-R_ARCH :=		--arch $(shell echo 'cat(.Platform$$r_arch)'  | R --vanilla --slave)
+## You may have to set this to one of the two values below to enforce a  particular
+## architecture in case the autodetection in the next line does not work correctly
+R_ARCH :=		--arch $(shell echo 'cat(.Platform$$r_arch)' | R --vanilla --slave)
 ##R_ARCH :=		--arch i386
 ##R_ARCH :=		--arch x64
 
@@ -49,7 +49,6 @@ all : 			$(programs)
 
 clean:
 			rm -vf $(programs)
-
 
 checkR:
 			echo "R is at $(R_HOME)"
