@@ -1,5 +1,0 @@
-#!/bin/bash
-
-${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe src/tools/RInsideAutoloads.r > inst/include/RInsideAutoloads.h
-${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe src/tools/RInsideEnvVars.r > inst/include/RInsideEnvVars.h
-
