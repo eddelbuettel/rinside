@@ -21,14 +21,20 @@ USERLIB=libRInside$(DYLIB_EXT)
 USERLIBST=libRInside.a
 USERDIR=../inst/lib
 
-PKG_CPPFLAGS += -I../inst/include/
+PKG_CPPFLAGS += -I. -I../inst/include/
 PKG_LIBS = `$(R_HOME)/bin/Rscript -e "Rcpp:::LdFlags()"`
 
 all:	headers $(SHLIB) userLibrary
 
-headers:
-	${R_HOME}/bin/Rscript tools/RInsideAutoloads.r > ../inst/include/RInsideAutoloads.h
-	${R_HOME}/bin/Rscript tools/RInsideEnvVars.r   > ../inst/include/RInsideEnvVars.h
+headers: RInsideAutoloads.h RInsideEnvVars.h
+
+RInsideAutoloads.h:
+	${R_HOME}/bin/Rscript tools/RInsideAutoloads.r > RInsideAutoloads.h
+
+RInsideEnvVars.h:
+	${R_HOME}/bin/Rscript tools/RInsideEnvVars.r   > RInsideEnvVars.h
+
+RInside.cpp: headers
 
 userLibrary: $(USERLIB) $(USERLIBST)
 	-@if test ! -e $(USERDIR)$(R_ARCH); then mkdir -p $(USERDIR)$(R_ARCH); fi

@@ -26,9 +26,15 @@ PKG_LIBS = $(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e "Rcpp:::LdFlags()
 
 all:	headers $(SHLIB) userLibrary
 
-headers:
-	${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe tools/RInsideAutoloads.r > ../inst/include/RInsideAutoloads.h
-	${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe tools/RInsideEnvVars.r   > ../inst/include/RInsideEnvVars.h
+headers: RInsideAutoloads.h RInsideEnvVars.h
+
+RInsideAutoloads.h:
+	${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe tools/RInsideAutoloads.r > RInsideAutoloads.h
+
+RInsideEnvVars.h:
+	${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe tools/RInsideEnvVars.r   > RInsideEnvVars.h
+
+RInside.cpp: headers
 
 userLibrary: $(USERLIBST) $(USERLIB)
 	-@if test ! -e $(USERDIR)$(R_ARCH); then mkdir -p $(USERDIR)$(R_ARCH); fi

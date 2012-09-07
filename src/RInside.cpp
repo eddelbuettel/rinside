@@ -117,8 +117,8 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
 
     verbose_m = false;          // Default is false
 
-    // generated as littler.h via from svn/littler/littler.R
-    #include <RInsideEnvVars.h>
+    // generated from Makevars{.win}
+    #include "RInsideEnvVars.h"
 
     for (int i = 0; R_VARS[i] != NULL; i+= 2) {
         if (getenv(R_VARS[i]) == NULL) { // if env variable is not yet set
@@ -216,7 +216,7 @@ void RInside::init_rand(void) { 		// code borrows from R's TimeToSeed() in datet
 
 void RInside::autoloads() {
 
-    #include <RInsideAutoloads.h>
+    #include "RInsideAutoloads.h"
 
     // Autoload default packages and names from autoloads.h
     //

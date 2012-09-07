@@ -9,7 +9,8 @@
     \item Corrected Windows package build to always generate a 64 bit
     static library too
     \item Updated package build to no longer require configure{.win} to
-    update the two header file supplying compile-time information
+    update the two header file supplying compile-time information;
+    tightened build dependencies on headers in Makevars
     \item Improved examples/standard/Makefile.win by detecting architecture
   }
 }

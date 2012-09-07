@@ -2,6 +2,10 @@
 
 	* DESCRIPTION: Release 0.2.8
 
+	* src/RInside.cpp: Include local headers from src/
+	* src/Makevars{.win}: Declare explicit dependency on headers for
+	RInside.cpp
+
 2012-09-05  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/Makevars: Updating required headers here now

@@ -11,3 +11,7 @@ inst/examples/wt/extkitchen.css
 inst/examples/wt/run.sh
 configure
 configure.win
+src/RInsideAutoloads.h
+src/RInsideEnvVars.h
+inst/include/RInsideAutoloads.h
+inst/include/RInsideEnvVars.h
