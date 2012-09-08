@@ -2,7 +2,7 @@
 \title{News for Package 'RInside'}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in RInside version 0.2.8 (2012-09-06)}{
+\section{Changes in RInside version 0.2.8 (2012-09-07)}{
   \itemize{
     \item Added CMake build support for armadillo and eigen examples,
     once again kindly contributed by Peter Aberline

@@ -1,6 +1,8 @@
-2012-09-06  Dirk Eddelbuettel  <edd@debian.org>
+2012-09-07  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Release 0.2.8
+
+2012-09-06  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp: Include local headers from src/
 	* src/Makevars{.win}: Declare explicit dependency on headers for

@@ -14,7 +14,7 @@ Description: C++ classes to embed R in C++ applications
  .
  Numerous examples are provided in the six subdirectories of the examples/
  directory of the installed package: standard, mpi (for parallel computing)
- qt (showing how to embed RInside inside a Qt application), wt (showing
+ qt (showing how to embed RInside inside a Qt GUI application), wt (showing
  how to build a 'web-application' using the Wt toolkit), armadillo (for
  RInside use with RcppArmadillo) and eigen (for RInside use with RcppEigen).
  .
