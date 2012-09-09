@@ -17,40 +17,43 @@
 ## You should have received a copy of the GNU General Public License
 ## along with RInside.  If not, see <http://www.gnu.org/licenses/>.
 
-USERLIBST=libRInside.a
-USERLIB=libRInside.dll
-USERDIR=../inst/lib
+USERLIBST =	libRInside.a
+USERLIB =	libRInside.dll
+USERDIR =	$(R_PACKAGE_DIR)/inst/lib$(R_ARCH)
 
-PKG_CPPFLAGS += -I../inst/include/
-PKG_LIBS = $(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e "Rcpp:::LdFlags()")
+PKG_CPPFLAGS += -I. -I../inst/include/
+PKG_LIBS = 	$(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e "Rcpp:::LdFlags()")
 
-all:	headers $(SHLIB) userLibrary
+RSCRIPT =	${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe
 
-headers: RInsideAutoloads.h RInsideEnvVars.h
+all:		headers $(SHLIB) userLibrary
+
+headers: 	RInsideAutoloads.h RInsideEnvVars.h
 
 RInsideAutoloads.h:
-	${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe tools/RInsideAutoloads.r > RInsideAutoloads.h
+		$(RSCRIPT) tools/RInsideAutoloads.r > RInsideAutoloads.h
 
 RInsideEnvVars.h:
-	${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe tools/RInsideEnvVars.r   > RInsideEnvVars.h
+		$(RSCRIPT) tools/RInsideEnvVars.r   > RInsideEnvVars.h
 
-RInside.cpp: headers
+RInside.cpp: 	headers
 
-userLibrary: $(USERLIBST) $(USERLIB)
-	-@if test ! -e $(USERDIR)$(R_ARCH); then mkdir -p $(USERDIR)$(R_ARCH); fi
-	cp $(USERLIB) $(USERDIR)$(R_ARCH)
+userLibrary: 	$(USERLIBST) $(USERLIB)
+		-@if test ! -e $(USERDIR); then mkdir -p $(USERDIR); fi
+		cp $(USERLIB) $(USERDIR)
 
-$(USERLIBST): $(OBJECTS)
-	-@if test ! -e $(USERDIR)$(R_ARCH); then mkdir -p $(USERDIR)$(R_ARCH); fi
-	$(AR) qc $(USERLIBST) $^
-	@if test -n "$(RANLIB)"; then $(RANLIB) $(USERLIBST); fi
-	cp $(USERLIBST) $(USERDIR)$(R_ARCH)
+$(USERLIBST): 	$(OBJECTS)
+		-@if test ! -e $(USERDIR); then mkdir -p $(USERDIR); fi
+		$(AR) qc $(USERLIBST) $^
+		@if test -n "$(RANLIB)"; then $(RANLIB) $(USERLIBST); fi
+		cp $(USERLIBST) $(USERDIR)
+		ls -lR $(USERDIR)
 
-$(USERLIB): $(OBJECTS)
-	$(CXX) -Wl,--export-all-symbols -shared -o $(USERLIB) $^ $(ALL_LIBS) -lws2_32
+$(USERLIB): 	$(OBJECTS)
+		$(CXX) -Wl,--export-all-symbols -shared -o $(USERLIB) $^ $(ALL_LIBS) -lws2_32
 
-.PHONY: all clean userLibrary headers
+.PHONY: 	all clean userLibrary headers
 
 clean:
-	rm -f $(OBJECTS) $(SHLIB) $(USERLIBST) $(USERLIB)
+		rm -f $(OBJECTS) $(SHLIB) $(USERLIBST) $(USERLIB)
 
