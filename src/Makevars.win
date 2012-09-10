@@ -19,7 +19,8 @@
 
 USERLIBST =	libRInside.a
 USERLIB =	libRInside.dll
-USERDIR =	$(R_PACKAGE_DIR)/inst/lib$(R_ARCH)
+#USERDIR =	$(R_PACKAGE_DIR)/inst/lib$(R_ARCH)
+USERDIR =	../inst/lib$(R_ARCH)
 
 PKG_CPPFLAGS += -I. -I../inst/include/
 PKG_LIBS = 	$(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e "Rcpp:::LdFlags()")
