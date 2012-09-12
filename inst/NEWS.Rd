@@ -2,9 +2,9 @@
 \title{News for Package 'RInside'}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in RInside version 0.2.9 (2012-09-12)}{
+\section{Changes in RInside version 0.2.9 (2012-12-31)}{
   \itemize{
-    \item On more set of of src/Makevars.win changes
+    \item ...
   }
 }
 \section{Changes in RInside version 0.2.8 (2012-09-07)}{
