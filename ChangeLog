@@ -1,3 +1,9 @@
+2012-09-13  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/Makefile.win: Added more explicit statement
+	about the need to set R_HOME on Windows to run the binaries, or to
+	install RInside from sources on Windows so that R_HOME is set that way
+
 2012-09-07  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Release 0.2.8

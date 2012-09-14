@@ -4,7 +4,10 @@
 
 \section{Changes in RInside version 0.2.9 (2012-12-31)}{
   \itemize{
-    \item ...
+    \item Added note to examples/standard/Makefile.win that R_HOME may
+    need to be set to run the executables -- so either export your local
+    value, or re-install RInside from source to have it reflected in the
+    library build of libRinside
   }
 }
 \section{Changes in RInside version 0.2.8 (2012-09-07)}{

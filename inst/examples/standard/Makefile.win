@@ -1,6 +1,16 @@
 ## -*- mode: makefile; tab-width: 8; -*-
 ##
 ## Simple Makefile for Windows
+##
+## Note that the libRInside library encodes the value of R_HOME found
+## at compilation. So if you use the CRAN package of RInside, its value
+## may not correspond to where you have R installed.  One quick fix is 
+## export the appropriate value of R_HOME, eg ony my work machine
+##           set R_HOME=C:\opt\R-current
+## The other is to re-install RInside from source on your machine.
+## Either one should allow you to actually run the binaries created
+## with this Makefile
+
 
 ## This version is fairly directly derived from the Unix versions
 ## You may have to set R_HOME manually if this does not work
