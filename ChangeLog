@@ -1,3 +1,8 @@
+2012-09-15  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.cpp (initialize): On Windows, if R_HOME is not set as
+	an environment variable, use R's get_R_HOME() to get it from registry
+
 2012-09-13  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/Makefile.win: Added more explicit statement

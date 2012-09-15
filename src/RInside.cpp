@@ -31,7 +31,6 @@ RInside* RInside::instance_ = 0 ;
 #include <unistd.h>		// getpid()
 
 
-
 bool verbose = false;
 const char *programName = "RInside";
 
@@ -120,6 +119,18 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     // generated from Makevars{.win}
     #include "RInsideEnvVars.h"
 
+    #ifdef WIN32
+    // we need a special case for Windows where users may deploy an RInside binary from CRAN
+    // which will have R_HOME set at compile time to CRAN's value -- so let's try to correct
+    // this here: a) allow user's setting of R_HOME and b) use R's get_R_HOME() function
+    if (getenv("R_HOME") == NULL) { 		// if on Windows and not set
+        char *rhome = get_R_HOME();		// query it, including registry
+        if (rhome != NULL) {                    // if something was found
+            setenv("R_HOME", get_R_HOME(), 1);  // store what we got as R_HOME
+        }					// this will now be used in next blocks 
+    }                                           
+    #endif
+
     for (int i = 0; R_VARS[i] != NULL; i+= 2) {
         if (getenv(R_VARS[i]) == NULL) { // if env variable is not yet set
             if (setenv(R_VARS[i],R_VARS[i+1],1) != 0){
@@ -163,7 +174,7 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     #endif
     R_SetParams(&Rst);
 
-    global_env = R_GlobalEnv ;
+    global_env_m = R_GlobalEnv ;
 
     if (loadRcpp) {                     // if asked for, load Rcpp (before the autoloads)
         // Rf_install is used best by first assigning like this so that symbols get into the symbol table
@@ -261,8 +272,8 @@ void RInside::autoloads() {
     Rcpp::Language delayed_assign_call(Rcpp::Function("delayedAssign"),
                                        R_NilValue,     // arg1: assigned in loop
                                        R_NilValue,     // arg2: assigned in loop
-                                       global_env,
-                                       global_env.find(".AutoloadEnv")
+                                       global_env_m,
+                                       global_env_m.find(".AutoloadEnv")
                                        );
     Rcpp::Language::Proxy delayed_assign_name  = delayed_assign_call[1];
 
@@ -317,7 +328,8 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
     case PARSE_OK:
         // Loop is needed here as EXPSEXP might be of length > 1
         for(i = 0; i < Rf_length(cmdexpr); i++){
-            ans = R_tryEval(VECTOR_ELT(cmdexpr, i),NULL,&errorOccurred);
+            ans = R_tryEval(VECTOR_ELT(cmdexpr, i), global_env_m, &errorOccurred);
+            // NB: we never actually get here if interactice is set to FALSE as it is above
             if (errorOccurred) {
                 Rf_error("%s: Error in evaluating R code (%d)\n", programName, status);
                 UNPROTECT(2);
@@ -373,7 +385,7 @@ RInside::Proxy RInside::parseEval(const std::string & line) {
 }
 
 Rcpp::Environment::Binding RInside::operator[]( const std::string& name ){
-    return global_env[name];
+    return global_env_m[name];
 }
 
 RInside& RInside::instance(){

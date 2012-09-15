@@ -8,6 +8,8 @@
     need to be set to run the executables -- so either export your local
     value, or re-install RInside from source to have it reflected in the
     library build of libRinside
+    \item On Windows, have RInside use R's get_R_HOME() function to get
+    R_HOME value from registry if not set by user
   }
 }
 \section{Changes in RInside version 0.2.8 (2012-09-07)}{

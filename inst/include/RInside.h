@@ -2,8 +2,8 @@
 //
 // RInside.h: R/C++ interface class library -- Easier R embedding into C++
 //
-// Copyright (C) 2009        Dirk Eddelbuettel
-// Copyright (C) 2010        Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2009         Dirk Eddelbuettel
+// Copyright (C) 2010 - 2012  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -29,7 +29,7 @@
 class RInside {
 private:
     MemBuf mb_m;
-    Rcpp::Environment global_env ;
+    Rcpp::Environment global_env_m;
     
     bool verbose_m;				// private switch
 
@@ -72,7 +72,7 @@ public:
 
     template <typename T> 
     void assign(const T& object, const std::string& nam) {
-		global_env.assign( nam, object ) ;
+		global_env_m.assign( nam, object ) ;
     }
     
     RInside() ;
