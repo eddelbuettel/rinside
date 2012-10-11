@@ -329,10 +329,10 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
         // Loop is needed here as EXPSEXP might be of length > 1
         for(i = 0; i < Rf_length(cmdexpr); i++){
             ans = R_tryEval(VECTOR_ELT(cmdexpr, i), global_env_m, &errorOccurred);
-            // NB: we never actually get here if interactice is set to FALSE as it is above
             if (errorOccurred) {
-                Rf_error("%s: Error in evaluating R code (%d)\n", programName, status);
+                Rf_warning("%s: Error in evaluating R code (%d)\n", programName, status);
                 UNPROTECT(2);
+                mb_m.rewind();
                 return 1;
             }
             if (verbose_m) {
@@ -345,21 +345,24 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
         // need to read another line
         break;
     case PARSE_NULL:
-        Rf_error("%s: ParseStatus is null (%d)\n", programName, status);
+        Rf_warning("%s: ParseStatus is null (%d)\n", programName, status);
         UNPROTECT(2);
+        mb_m.rewind();
         return 1;
         break;
     case PARSE_ERROR:
-        Rf_error("Parse Error: \"%s\"\n", line.c_str());
+        Rf_warning("Parse Error: \"%s\"\n", line.c_str());
         UNPROTECT(2);
+        mb_m.rewind();
         return 1;
         break;
     case PARSE_EOF:
-        Rf_error("%s: ParseStatus is eof (%d)\n", programName, status);
+        Rf_warning("%s: ParseStatus is eof (%d)\n", programName, status);
         break;
     default:
-        Rf_error("%s: ParseStatus is not documented %d\n", programName, status);
+        Rf_warning("%s: ParseStatus is not documented %d\n", programName, status);
         UNPROTECT(2);
+        mb_m.rewind();
         return 1;
         break;
     }

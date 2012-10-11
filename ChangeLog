@@ -1,3 +1,8 @@
+2012-10-10  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.cpp: Applied (modified) patch by Theodore Lytras which
+	lets us recover from parsing errors on erroneous input lines
+
 2012-09-15  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp (initialize): On Windows, if R_HOME is not set as

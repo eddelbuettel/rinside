@@ -10,6 +10,9 @@
     library build of libRinside
     \item On Windows, have RInside use R's get_R_HOME() function to get
     R_HOME value from registry if not set by user
+    \item Applied (modified) patch by Theodore Lytras which lets RInside
+    recover from some parsing errors and makes RInside applications more
+    tolerant of errors
   }
 }
 \section{Changes in RInside version 0.2.8 (2012-09-07)}{
