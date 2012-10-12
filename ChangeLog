@@ -1,3 +1,14 @@
+2012-10-11  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/include/RInside.h: Added non-throwing variants of parseEval()
+	and parseEvalQ() (which add 'NT' to the function name)
+	* src/RInside.cpp: Implementation of non-throwing parseEval() variants
+
+	* inst/examples/qt/qtdensity.cpp: Made more tolerant of bad user
+	input by evaluating via non-calling function, and assigning to a
+	temporary variable first.
+	* inst/examples/wt/wtdensity.cpp: Dito
+
 2012-10-10  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp: Applied (modified) patch by Theodore Lytras which

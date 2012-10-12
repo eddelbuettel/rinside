@@ -378,12 +378,23 @@ void RInside::parseEvalQ(const std::string & line) {
     }
 }
 
+void RInside::parseEvalQNT(const std::string & line) {
+    SEXP ans;
+    parseEval(line, ans);
+}
+
 RInside::Proxy RInside::parseEval(const std::string & line) {
     SEXP ans;
     int rc = parseEval(line, ans);
     if (rc != 0) {
         throw std::runtime_error(std::string("Error evaluating: ") + line);
     }
+    return Proxy( ans );
+}
+
+RInside::Proxy RInside::parseEvalNT(const std::string & line) {
+    SEXP ans;
+    parseEval(line, ans);
     return Proxy( ans );
 }
 

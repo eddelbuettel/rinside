@@ -155,8 +155,8 @@ void DensityApp::reportButton() {
 
 void DensityApp::reportEdit() {
     cmd_ = codeEdit_->text().toUTF8();	// get text written in box, as UTF-8, assigned to string
-    std::string rng = "y <- " + cmd_ + ";";
-    R_.parseEvalQ(rng);			// evaluates expression, assigns to 'y'
+    std::string rng = "y2 <- " + cmd_ + "; y <- y2";
+    R_.parseEvalQNT(rng);			// evaluates expression, assigns to 'y'
     Yvec_ = R_["y"];			// cache the y vector
     plot();
 }

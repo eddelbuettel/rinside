@@ -13,6 +13,9 @@
     \item Applied (modified) patch by Theodore Lytras which lets RInside
     recover from some parsing errors and makes RInside applications more
     tolerant of errors
+    \item Added non-throwing variants of parseEval() and parseEvalQ()
+    \item Modified Qt and Wt examples of density estimation applications
+    to be much more resilient to bad user input
   }
 }
 \section{Changes in RInside version 0.2.8 (2012-09-07)}{

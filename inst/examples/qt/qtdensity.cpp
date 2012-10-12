@@ -125,8 +125,8 @@ void QtDensity::getRandomDataCmd(QString txt) {
 }
 
 void QtDensity::runRandomDataCmd(void) {
-    std::string cmd = "y <- " + m_cmd.toStdString();
-    m_R.parseEvalQ(cmd);
+    std::string cmd = "y2 <- " + m_cmd.toStdString() + "; y <- y2";
+    m_R.parseEvalQNT(cmd);
     plot();                     // after each random draw, update plot with estimate
 }
 

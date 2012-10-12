@@ -54,7 +54,8 @@ private:
 
 public:
     int  parseEval(const std::string & line, SEXP &ans); // parse line, return in ans; error code rc
-    void parseEvalQ(const std::string & line);		 // parse line, no return (throws on error)
+    void parseEvalQ(const std::string & line);		  	// parse line, no return (throws on error)
+    void parseEvalQNT(const std::string & line);		// parse line, no return (no throw)
 
     class Proxy {
 	public:
@@ -68,7 +69,8 @@ public:
 	    Rcpp::RObject x;
 	};
 
-    Proxy parseEval(const std::string & line);		 // parse line, return SEXP (throws on error)
+    Proxy parseEval(const std::string & line);		 	// parse line, return SEXP (throws on error)
+    Proxy parseEvalNT(const std::string & line);		// parse line, return SEXP (no throw)
 
     template <typename T> 
     void assign(const T& object, const std::string& nam) {
