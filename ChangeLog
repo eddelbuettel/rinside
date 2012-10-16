@@ -8,6 +8,9 @@
 	* inst/examples/standard/rinside_sample13.cpp: New example
 	illustrating the new more fault-tolerant modes
 
+	* inst/examples/standard/rinside_sample14.cpp: New example
+	illustrating the new more fault-tolerant modes with interactive mode 
+
 2012-10-11  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/include/RInside.h: Added non-throwing variants of parseEval()
