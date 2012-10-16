@@ -1,3 +1,13 @@
+2012-10-15  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/include/RInside.h: Added two new boolean arguments to
+	constructor to set verbose and/or interactive mode; verbose mode can
+	also be changed via a setter function.
+	* src/RInside.cpp: Corresponding implementation
+
+	* inst/examples/standard/rinside_sample13.cpp: New example
+	illustrating the new more fault-tolerant modes
+
 2012-10-11  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/include/RInside.h: Added non-throwing variants of parseEval()
@@ -13,6 +23,11 @@
 
 	* src/RInside.cpp: Applied (modified) patch by Theodore Lytras which
 	lets us recover from parsing errors on erroneous input lines
+
+2012-10-05  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/rinside_test2.cpp: Simple new test to check
+	the search path
 
 2012-09-15  Dirk Eddelbuettel  <edd@debian.org>
 
