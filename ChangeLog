@@ -1,3 +1,13 @@
+2012-10-28  Peter Aberline  <peter.aberline@gmail.com>
+
+	* inst/examples/standard/cmake/CMakeLists.txt: R_ARCH autodetection 
+	* inst/examples/armadillo/cmake/CMakeLists.txt: Dito
+	* inst/examples/eigen/cmake/CMakeLists.txt: Dito
+
+	* inst/examples/armadillo/cmake/WIN.readme.txt: Added instructions
+	for running windows binaries.
+	* inst/examples/eigen/cmake/WIN.readme.txt: Dito
+
 2012-10-15  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/include/RInside.h: Added two new boolean arguments to

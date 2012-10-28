@@ -10,7 +10,24 @@ file(GLOB sources ${SRC_DIR}/*.cpp)
 
 set(NUM_TRUNC_CHARS 2)
 
-execute_process(COMMAND R CMD config --cppflags
+set (RPATH "R")
+set (RSCRIPT_PATH "Rscript")
+
+if (CMAKE_HOST_WIN32)
+    execute_process(COMMAND ${RSCRIPT_PATH} -e "cat(.Platform$r_arch)"
+                    OUTPUT_VARIABLE R_ARCH)
+		
+	execute_process(COMMAND ${RPATH} --arch ${R_ARCH} RHOME
+                    OUTPUT_VARIABLE R_HOME)
+	
+    string(REPLACE "\\" "/" R_HOME ${R_HOME})	
+	
+	set (RPATH ${R_HOME}/bin/R)
+endif()
+
+set (RCPPFLAGS_CMD " ${RPATH} " " CMD " " config " " --cppflags ") 
+
+execute_process(COMMAND ${RPATH} CMD config --cppflags
                 OUTPUT_VARIABLE RCPPFLAGS)
 
 if (CMAKE_HOST_WIN32)
@@ -149,3 +166,4 @@ foreach (next_SOURCE ${sources})
    target_link_libraries(${source_name} ${EXTRA_LIBRARIES})
    target_link_libraries(${source_name} ${LAPACK_LIBRARY})
 endforeach (next_SOURCE ${sources})
+

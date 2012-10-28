@@ -16,6 +16,9 @@
     \item Added non-throwing variants of parseEval() and parseEvalQ()
     \item Modified Qt and Wt examples of density estimation applications
     to be much more resilient to bad user input
+    \item Updated CMake build support for standard, armadillo and eigen
+    \item Improved CMake builds of examples/standard, examples/eigen and
+    examples/armadillo by detecting architecture
   }
 }
 \section{Changes in RInside version 0.2.8 (2012-09-07)}{
