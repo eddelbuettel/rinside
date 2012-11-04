@@ -1,6 +1,10 @@
+2012-11-04  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Release 0.2.9
+
 2012-10-28  Peter Aberline  <peter.aberline@gmail.com>
 
-	* inst/examples/standard/cmake/CMakeLists.txt: R_ARCH autodetection 
+	* inst/examples/standard/cmake/CMakeLists.txt: R_ARCH autodetection
 	* inst/examples/armadillo/cmake/CMakeLists.txt: Dito
 	* inst/examples/eigen/cmake/CMakeLists.txt: Dito
 

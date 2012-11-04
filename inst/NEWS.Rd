@@ -2,20 +2,20 @@
 \title{News for Package 'RInside'}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in RInside version 0.2.9 (2012-12-31)}{
+\section{Changes in RInside version 0.2.9 (2012-11-04)}{
   \itemize{
-    \item Added note to examples/standard/Makefile.win that R_HOME may
-    need to be set to run the executables -- so either export your local
-    value, or re-install RInside from source to have it reflected in the
-    library build of libRinside
-    \item On Windows, have RInside use R's get_R_HOME() function to get
-    R_HOME value from registry if not set by user
     \item Applied (modified) patch by Theodore Lytras which lets RInside
     recover from some parsing errors and makes RInside applications more
     tolerant of errors
     \item Added non-throwing variants of parseEval() and parseEvalQ()
     \item Modified Qt and Wt examples of density estimation applications
     to be much more resilient to bad user input
+    \item On Windows, have RInside use R's get_R_HOME() function to get
+    R_HOME value from registry if not set by user
+    \item Added note to examples/standard/Makefile.win that R_HOME may
+    need to be set to run the executables -- so either export your local
+    value, or re-install RInside from source to have it reflected in the
+    library build of libRinside
     \item Updated CMake build support for standard, armadillo and eigen
     \item Improved CMake builds of examples/standard, examples/eigen and
     examples/armadillo by detecting architecture
