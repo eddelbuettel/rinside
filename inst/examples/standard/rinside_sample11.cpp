@@ -1,9 +1,10 @@
 // Simple example motivated by post from Paul Smith <phhs80@gmail.com>
 // to r-help on 06 Mar 2011
 //
-// Copyright (C) 2011  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2011 - 2012  Dirk Eddelbuettel and Romain Francois
 
 #include <RInside.h>                    // for the embedded R via RInside
+#include <unistd.h>
 
 int main(int argc, char *argv[]) {
 

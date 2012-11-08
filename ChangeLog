@@ -1,3 +1,8 @@
+2012-11-08  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/rinside_sample11.cpp: added include for
+	unistd so that unlink() is declared as needed for g++ (>= 4.7)
+
 2012-11-04  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Release 0.2.9
