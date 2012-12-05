@@ -1,5 +1,7 @@
 2012-12-05  Dirk Eddelbuettel  <edd@debian.org>
 
+	* DESCRIPTION: Release 0.2.10
+
 	* src/RInside.cpp: Set R_CStackLimit to -1 to block stack checking,
 	place assignment after initialization of embedded R instance (on all
 	platforms but Windows which does not have R_CStackLimit)
