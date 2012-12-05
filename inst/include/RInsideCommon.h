@@ -24,6 +24,13 @@
 
 #include <RInsideConfig.h>
 
+#include <sys/time.h>           // gettimeofday()
+#include <sys/types.h>		// pid_t
+#include <unistd.h>		// getpid()
+
+#include <inttypes.h>		// intptr_t (one day we use cinttypes from C++11)
+#include <stdint.h>		// uint64_t (one day we use cstdint from C++11)
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -37,10 +44,16 @@
   #endif
 #endif
 
+#ifndef WIN32
+  // needed to turn-off stack checking, and we already have uintptr_t
+  #define CSTACK_DEFNS
+  #define HAVE_UINTPTR_T
+#endif
+
 #include <Rembedded.h>
 #ifndef WIN32
-#define R_INTERFACE_PTRS
-#include <Rinterface.h>
+  #define R_INTERFACE_PTRS
+  #include <Rinterface.h>
 #endif
 #include <R_ext/RStartup.h>
 

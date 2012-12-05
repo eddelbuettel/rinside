@@ -25,11 +25,6 @@
 
 RInside* RInside::instance_m = 0 ;
 
-#include <sys/time.h>           // gettimeofday()
-#include <stdint.h>		// uint64_t
-#include <sys/types.h>		// pid_t
-#include <unistd.h>		// getpid()
-
 const char *programName = "RInside";
 
 #ifdef WIN32
@@ -143,16 +138,16 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     R_SignalHandlers = 0;               // Don't let R set up its own signal handlers
     #endif
 
-    #ifdef CSTACK_DEFNS
-    R_CStackLimit = (uintptr_t)-1;      // Don't do any stack checking, see R Exts, '8.1.5 Threading issues'
-    #endif
-
     init_tempdir();
 
     const char *R_argv[] = {(char*)programName, "--gui=none", "--no-save", "--no-readline", "--silent", "", ""};
     const char *R_argv_opt[] = {"--vanilla", "--slave"};
     int R_argc = (sizeof(R_argv) - sizeof(R_argv_opt) ) / sizeof(R_argv[0]);
     Rf_initEmbeddedR(R_argc, (char**)R_argv);
+
+    #ifndef WIN32
+    R_CStackLimit = -1;      		// Don't do any stack checking, see R Exts, '8.1.5 Threading issues'
+    #endif
 
     R_ReplDLLinit();                    // this is to populate the repl console buffers
 
@@ -401,6 +396,10 @@ Rcpp::Environment::Binding RInside::operator[]( const std::string& name ){
 
 RInside& RInside::instance(){
     return *instance_m;
+}
+
+RInside* RInside::instancePtr(){
+    return instance_m;
 }
 
 /* callbacks */

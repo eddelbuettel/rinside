@@ -2,7 +2,7 @@
 //
 // Simple example showing how expose a C++ function
 //
-// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2012  Dirk Eddelbuettel and Romain Francois
 
 #include <RInside.h>                    // for the embedded R via RInside
 
@@ -27,8 +27,11 @@ int main(int argc, char *argv[]) {
     R["bling"] = LOAD_RCPP_MODULE(bling) ;
     
     // call it and display the result
-    std::string result = R.parseEval("bling$hello('world')") ;
-    std::cout << "bling$hello( 'world') =  '" << result << "'" << std::endl ; 
+    Rcpp::Rcout << "** rinside_module_sample0 is currently disabled.\n";
+    if (FALSE) {
+		std::string result = R.parseEval("bling$hello('world')") ;
+		std::cout << "bling$hello( 'world') =  '" << result << "'" << std::endl ; 
+	}
     exit(0);
 }
 

@@ -8,9 +8,9 @@
 
 // a c++ function we wish to expose to R
 const char* hello( std::string who ){
-        std::string result( "hello " ) ;
-        result += who ;
-        return result.c_str() ;
+    std::string result( "hello " ) ;
+    result += who ;
+    return result.c_str() ;
 } 
 
 int main(int argc, char *argv[]) {
@@ -22,8 +22,11 @@ int main(int argc, char *argv[]) {
     R["hello"] = Rcpp::InternalFunction( &hello ) ;
    
     // call it and display the result
-    std::string result = R.parseEval("hello('world')") ;
-    std::cout << "hello( 'world') =  " << result << std::endl ; 
+    Rcpp::Rcout << "** rinside_sample9 is currently disabled.\n";
+    if (FALSE) {
+	std::string result = R.parseEvalNT("hello(\"world\")") ;
+	std::cout << "hello( 'world') =  " << result << std::endl ; 
+    }
 
     exit(0);
 }

@@ -1,3 +1,23 @@
+2012-12-05  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.cpp: Set R_CStackLimit to -1 to block stack checking,
+	place assignment after initialization of embedded R instance (on all
+	platforms but Windows which does not have R_CStackLimit)
+	* inst/include/RInsideCommon.h: Updated to ensure R_CStackLimit is
+	defined, added a few more #include statements here
+
+	* inst/examples/threads/boostEx.cpp: New example directory for simple
+	multi-threaded use demo building on a simple Boost mutex example
+	* cleanup: Also clean new example directory threads/
+	* doxyfile: Added new example directory threads/
+
+	* inst/examples/qt/qtdensity.pro: Corrected link order statement
+	permitting use of example on Windows as well as Linux / OS X
+
+	* inst/examples/standard/rinside_sample9.cpp: Disabled as passing
+	external C/C++ function through simplified interface currently borked
+	* inst/examples/standard/rinside_module_sample0.cpp: Idem
+	
 2012-11-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/rinside_sample11.cpp: added include for

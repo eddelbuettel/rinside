@@ -42,7 +42,7 @@ private:
 					const bool loadRcpp, const bool verbose, const bool interactive);
 
     static RInside* instance_m ;
-    
+
 #ifdef RINSIDE_CALLBACKS
     Callbacks* callbacks ;
     friend void RInside_ShowMessage( const char* message);
@@ -85,10 +85,11 @@ public:
     ~RInside();
 
 	void setVerbose(const bool verbose) 	{ verbose_m = verbose; }
+
+    Rcpp::Environment::Binding operator[]( const std::string& name );
     
-    Rcpp::Environment::Binding operator[]( const std::string& name ) ;
-    
-    static RInside& instance() ;
+    static RInside& instance();
+    static RInside* instancePtr();
     
 #ifdef RINSIDE_CALLBACKS
     void set_callbacks(Callbacks* callbacks_) ;

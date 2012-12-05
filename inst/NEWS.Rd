@@ -2,6 +2,19 @@
 \title{News for Package 'RInside'}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in RInside version 0.2.10 (2012-12-05)}{
+  \itemize{
+    \item Adjusted to change in R which requires turning checking of the
+    stack limit off in order to allow for access from multiple threads
+    as in the Wt examples. As there are have been no side-effects, this
+    is enabled by default on all platforms (with the exception of Windows).
+    \item Added new \sQuote{threads} example directory with a simple
+    example based on a Boost mutex use example.
+    \item Disabled two examples (passing an external function down)
+    which do not currently work; external pointer use should still work.
+  }
+}
+   
 \section{Changes in RInside version 0.2.9 (2012-11-04)}{
   \itemize{
     \item Applied (modified) patch by Theodore Lytras which lets RInside

@@ -3,7 +3,12 @@
 ## Qt usage example for RInside, inspired by the standard 'density
 ## sliders' example for other GUI toolkits
 ##
-## Copyright (C) 2011  Dirk Eddelbuettel and Romain Francois
+## This file can be used across operating systems as qmake selects appropriate 
+## values as needed, as do the R and R-related calls below. See the thread at
+##     http://thread.gmane.org/gmane.comp.lang.r.rcpp/4376/focus=4402
+## for discussion specific to Windows.
+##
+## Copyright (C) 2012  Dirk Eddelbuettel and Romain Francois
 
 ## build an app based on the one headers and two source files
 TEMPLATE = 		app
@@ -28,8 +33,8 @@ RLAPACK = 		$$system($$R_HOME/bin/R CMD config LAPACK_LIBS)
 RRPATH =		-Wl,-rpath,$$R_HOME/lib
 
 ## include headers and libraries for Rcpp interface classes
-RCPPINCL = 		$$system($$R_HOME/bin/Rscript -e \'Rcpp:::CxxFlags\(\)\')
-RCPPLIBS = 		$$system($$R_HOME/bin/Rscript -e \'Rcpp:::LdFlags\(\)\')
+RCPPINCL = 		$$system($$R_HOME/bin/Rscript -e \"Rcpp:::CxxFlags\(\)\")
+RCPPLIBS = 		$$system($$R_HOME/bin/Rscript -e \"Rcpp:::LdFlags\(\)\")
 
 ## for some reason when building with Qt we get this each time
 ##   /usr/local/lib/R/site-library/Rcpp/include/Rcpp/module/Module_generated_ctor_signature.h:25: warning: unused parameter ‘classname
@@ -38,12 +43,12 @@ RCPPLIBS = 		$$system($$R_HOME/bin/Rscript -e \'Rcpp:::LdFlags\(\)\')
 #RCPPWARNING =		-Wno-unused-parameter 
 
 ## include headers and libraries for RInside embedding classes
-RINSIDEINCL = 		$$system($$R_HOME/bin/Rscript -e \'RInside:::CxxFlags\(\)\')
-RINSIDELIBS = 		$$system($$R_HOME/bin/Rscript -e \'RInside:::LdFlags\(\)\')
+RINSIDEINCL = 		$$system($$R_HOME/bin/Rscript -e \"RInside:::CxxFlags\(\)\")
+RINSIDELIBS = 		$$system($$R_HOME/bin/Rscript -e \"RInside:::LdFlags\(\)\")
 
 ## compiler etc settings used in default make rules
 QMAKE_CXXFLAGS +=	$$RCPPWARNING $$RCPPFLAGS $$RCPPINCL $$RINSIDEINCL
-QMAKE_LIBS +=           $$RLDFLAGS $$RBLAS $$RLAPACK $$RCPPLIBS $$RINSIDELIBS
+QMAKE_LIBS +=           $$RLDFLAGS $$RBLAS $$RLAPACK $$RINSIDELIBS $$RCPPLIBS
 
 ## addition clean targets
 QMAKE_CLEAN +=		qtdensity Makefile
