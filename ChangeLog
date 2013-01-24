@@ -1,3 +1,8 @@
+2013-01-23  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/mpi/rinside_mpi_sample4.cpp: Added new example
+	contributed by Nicholas Pezolano and Martin Morgan
+
 2012-12-05  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Release 0.2.10
@@ -19,7 +24,7 @@
 	* inst/examples/standard/rinside_sample9.cpp: Disabled as passing
 	external C/C++ function through simplified interface currently borked
 	* inst/examples/standard/rinside_module_sample0.cpp: Idem
-	
+
 2012-11-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/rinside_sample11.cpp: added include for

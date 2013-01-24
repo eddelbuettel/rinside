@@ -2,6 +2,13 @@
 \title{News for Package 'RInside'}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in RInside version 0.2.11 (2013-12-31)}{
+  \itemize{
+    \item Added new MPI example with worker functions and RInside
+    instance, kindly contributed by Nicholas Pezolano and Martin Morgan
+  }
+}
+
 \section{Changes in RInside version 0.2.10 (2012-12-05)}{
   \itemize{
     \item Adjusted to change in R which requires turning checking of the
@@ -9,7 +16,7 @@
     as in the Wt examples. As there are have been no side-effects, this
     is enabled by default on all platforms (with the exception of Windows).
     \item Added new \sQuote{threads} example directory with a simple
-    example based on a Boost mutex use example.
+    example based on a Boost mutex example.
     \item Disabled two examples (passing an external function down)
     which do not currently work; external pointer use should still work.
   }
