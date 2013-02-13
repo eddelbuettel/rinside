@@ -49,4 +49,4 @@ clean:
 			rm -vrf *.dSYM
 
 runAll:
-			for p in $(programs); do echo "Running $$p"; ./$$p; done
+			for p in $(programs); do echo ""; echo ""; echo "Running $$p"; ./$$p; done

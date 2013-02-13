@@ -3,7 +3,7 @@
 // RInside.h: R/C++ interface class library -- Easier R embedding into C++
 //
 // Copyright (C) 2009         Dirk Eddelbuettel
-// Copyright (C) 2010 - 2012  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2013  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -81,7 +81,8 @@ public:
     
     RInside() ;
     RInside(const int argc, const char* const argv[], 
-			const bool loadRcpp=false, const bool verbose=false, const bool interactive=false);
+			const bool loadRcpp=true, 					// overridden in code, cannot be set to false 
+			const bool verbose=false, const bool interactive=false);
     ~RInside();
 
 	void setVerbose(const bool verbose) 	{ verbose_m = verbose; }

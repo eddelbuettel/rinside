@@ -6,6 +6,9 @@
   \itemize{
     \item Added new MPI example with worker functions and RInside
     instance, kindly contributed by Nicholas Pezolano and Martin Morgan
+    \item Ensure that Rcpp is loaded, and assign the global R environment 
+    only after Rcpp has been loaded
+    \item Minimum Rcpp version is now 0.10.2.4 
   }
 }
 
