@@ -2,10 +2,10 @@
 //
 // Simple example using Armadillo classes
 //
-// Copyright (C) 2012  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2012 - 2013  Dirk Eddelbuettel and Romain Francois
 
+#include <RcppArmadillo.h>      	// for Armadillo as well as Rcpp 
 #include <RInside.h>                    // for the embedded R via RInside
-#include <RcppArmadillo.h>
 
 int main(int argc, char *argv[]) {
 

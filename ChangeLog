@@ -1,3 +1,9 @@
+2013-04-22  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/armadillo/rinside_arma0.cpp: Reverse order of
+	includes so that RcppArmadillo.h is included before RInside
+	* inst/examples/armadillo/rinside_arma1.cpp: Idem
+
 2013-02-12  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/include/RInside.h: Set default value of loadRcpp to true
