@@ -3,9 +3,7 @@
 // Qt usage example for RInside, inspired by the standard 'density
 // sliders' example for other GUI toolkits -- this time with SVG
 //
-// Copyright (C) 2011  Dirk Eddelbuettel and Romain Francois
-
-#include <QtGui>
+// Copyright (C) 2011 - 2013  Dirk Eddelbuettel and Romain Francois
 
 #include "qtdensity.h"
 

@@ -2,6 +2,14 @@
 \title{News for Package 'RInside'}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in RInside version 0.2.12-UNRELEASED (2013-xx-yy)}{
+  \itemize{
+    \item Added a few more explicit #include statements in the \code{qt}
+    example which Qt 5.1 now appears to require -- with thanks to
+    Spencer Behling for the patch
+  }
+}
+
 \section{Changes in RInside version 0.2.11 (2013-12-31)}{
   \itemize{
     \item Added new MPI example with worker functions and RInside

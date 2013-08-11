@@ -1,3 +1,10 @@
+2013-08-11  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/qt/qtdensity.h: Added a few more explicit #include
+	statements which Qt 5.1 now appears to require -- with thanks to
+	Spencer Behling for the patch
+	* inst/examples/qt/qtdensity.h: Moved one #include to header file
+
 2013-04-22  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/armadillo/rinside_arma0.cpp: Reverse order of

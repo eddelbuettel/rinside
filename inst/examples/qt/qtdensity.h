@@ -3,13 +3,20 @@
 // Qt usage example for RInside, inspired by the standard 'density
 // sliders' example for other GUI toolkits
 //
-// Copyright (C) 2011  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2011 - 2013  Dirk Eddelbuettel and Romain Francois
 
 #ifndef QTDENSITY_H
 #define QTDENSITY_H
 
 #include <RInside.h>
 
+#include <QtGui>
+#include <QWidget>
+#include <QLabel>
+#include <QLineEdit>
+#include <QRadioButton>
+#include <QGroupBox>
+#include <QButtonGroup>
 #include <QMainWindow>
 #include <QHBoxLayout>
 #include <QSlider>
