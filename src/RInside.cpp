@@ -43,11 +43,12 @@ RInside::~RInside() {           // now empty as MemBuf is internal
     //#endif
     Rf_endEmbeddedR(0);
     instance_m = 0 ;
+    delete global_env_m;
 }
 
-RInside::RInside()
+RInside::RInside(): global_env_m(NULL)
 #ifdef RINSIDE_CALLBACKS
-    : callbacks(0)
+    , callbacks(0)
 #endif
 {
     initialize(0, 0, false, false, false);
@@ -176,7 +177,7 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
         Rf_eval(Rf_lang2(suppressMessagesSymbol, Rf_lang2(requireSymbol, Rf_mkString("Rcpp"))), R_GlobalEnv);
     }
 
-    global_env_m = R_GlobalEnv;         // member variable for access to R's global environment 
+    global_env_m = new Rcpp::Environment();         // member variable for access to R's global environment 
 
     autoloads();                        // loads all default packages, using code autogenerate from Makevars{,.win}
 
@@ -264,8 +265,8 @@ void RInside::autoloads() {
     Rcpp::Language delayed_assign_call(Rcpp::Function("delayedAssign"),
                                        R_NilValue,     // arg1: assigned in loop
                                        R_NilValue,     // arg2: assigned in loop
-                                       global_env_m,
-                                       global_env_m.find(".AutoloadEnv")
+                                       *global_env_m,
+                                       global_env_m->find(".AutoloadEnv")
                                        );
     Rcpp::Language::Proxy delayed_assign_name  = delayed_assign_call[1];
 
@@ -320,7 +321,7 @@ int RInside::parseEval(const std::string & line, SEXP & ans) {
     case PARSE_OK:
         // Loop is needed here as EXPSEXP might be of length > 1
         for(i = 0; i < Rf_length(cmdexpr); i++){
-            ans = R_tryEval(VECTOR_ELT(cmdexpr, i), global_env_m, &errorOccurred);
+            ans = R_tryEval(VECTOR_ELT(cmdexpr, i), *global_env_m, &errorOccurred);
             if (errorOccurred) {
                 if (verbose_m) Rf_warning("%s: Error in evaluating R code (%d)\n", programName, status);
                 UNPROTECT(2);
@@ -391,7 +392,7 @@ RInside::Proxy RInside::parseEvalNT(const std::string & line) {
 }
 
 Rcpp::Environment::Binding RInside::operator[]( const std::string& name ){
-    return global_env_m[name];
+    return (*global_env_m)[name];
 }
 
 RInside& RInside::instance(){
