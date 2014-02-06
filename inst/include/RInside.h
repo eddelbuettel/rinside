@@ -29,7 +29,7 @@
 class RInside {
 private:
     MemBuf mb_m;
-    Rcpp::Environment* global_env_m = NULL;
+    Rcpp::Environment* global_env_m;
     
     bool verbose_m;							// switch toggled by constructor, or setter
 	bool interactive_m;						// switch set by constructor only

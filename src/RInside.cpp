@@ -46,9 +46,9 @@ RInside::~RInside() {           // now empty as MemBuf is internal
     delete global_env_m;
 }
 
-RInside::RInside()
+RInside::RInside(): global_env_m(NULL)
 #ifdef RINSIDE_CALLBACKS
-    : callbacks(0)
+    , callbacks(0)
 #endif
 {
     initialize(0, 0, false, false, false);
