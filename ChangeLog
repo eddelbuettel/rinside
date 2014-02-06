@@ -1,3 +1,10 @@
+ 2014-02-05  Kevin Ushey  <kevinushey@gmail.com>
+
+	* inst/include/RInside.h: Make global_env_m a pointer to avoid
+	the default constructor initializing it before R has actually
+	been called
+	* src/RInside.cpp: ditto
+
 2013-08-11  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/qt/qtdensity.h: Added a few more explicit #include
