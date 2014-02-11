@@ -20,7 +20,8 @@ Description: C++ classes to embed R in C++ applications
  .
  Doxygen-generated documentation of the C++ classes is available at the
  RInside website as well.
-Depends: R (>= 2.10.0), Rcpp (>= 0.10.2.4)
+Depends: R (>= 2.10.0)
+Imports: Rcpp (>= 0.11.0)
 LinkingTo: Rcpp
 URL: http://dirk.eddelbuettel.com/code/rinside.html
 License: GPL (>= 2)

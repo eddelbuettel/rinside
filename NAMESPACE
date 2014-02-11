@@ -1,3 +1,2 @@
 
-## empty as we export nothing, and have no dynamic library to be loaded or attached
-
+importFrom(Rcpp, evalCpp)

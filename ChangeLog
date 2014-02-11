@@ -1,9 +1,31 @@
- 2014-02-05  Kevin Ushey  <kevinushey@gmail.com>
+2014-02-10  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Move Rcpp (>= 0.11.0) from Depends: to Imports:
+	* NAMESPACE: Added importFrom(Rcpp, evalCpp)
+
+	* .Rbuildignore: Added .travis.yml and doxyfile
+
+	* src/RInside.cpp: Added --vanilla --slave to default arguments
+
+	* src/Makefile: PKG_LIBS no longer points to Rcpp's library
+	* inst/examples/standard/Makefile: Note that Rcpp (>= 0.11.0) no
+	longer requires the RCPPLIBS variable
+
+	* inst/examples/standard/rinside_test0.cpp: Minor tweaks
+	* inst/examples/standard/rinside_sample9.cpp: In this
+	already-disabled example, comment out a data structure no longer
+	provided by Rcpp
+
+2014-02-05  Kevin Ushey  <kevinushey@gmail.com>
 
 	* inst/include/RInside.h: Make global_env_m a pointer to avoid
 	the default constructor initializing it before R has actually
 	been called
 	* src/RInside.cpp: ditto
+
+2013-12-27  Dirk Eddelbuettel  <edd@debian.org>
+
+	* .travis.yml: Added
 
 2013-08-11  Dirk Eddelbuettel  <edd@debian.org>
 

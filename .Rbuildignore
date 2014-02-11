@@ -16,3 +16,4 @@ src/RInsideEnvVars.h
 inst/include/RInsideAutoloads.h
 inst/include/RInsideEnvVars.h
 .travis.yml
+doxyfile

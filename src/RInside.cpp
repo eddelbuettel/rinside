@@ -141,9 +141,9 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
 
     init_tempdir();
 
-    const char *R_argv[] = {(char*)programName, "--gui=none", "--no-save", "--no-readline", "--silent", "", ""};
-    const char *R_argv_opt[] = {"--vanilla", "--slave"};
-    int R_argc = (sizeof(R_argv) - sizeof(R_argv_opt) ) / sizeof(R_argv[0]);
+    const char *R_argv[] = {(char*)programName, "--gui=none", "--no-save", 
+                            "--no-readline", "--silent", "--vanilla", "--slave"};
+    int R_argc = sizeof(R_argv) / sizeof(R_argv[0]);
     Rf_initEmbeddedR(R_argc, (char**)R_argv);
 
     #ifndef WIN32

@@ -1,6 +1,6 @@
 ## -*- mode: Makefile; tab-width: 8 -*- 
 ##
-## Copyright (C) 2010 - 2012  Dirk Eddelbuettel and Romain Francois
+## Copyright (C) 2010 - 2014  Dirk Eddelbuettel and Romain Francois
 ##
 ## This file is part of RInside.
 ##
@@ -22,7 +22,7 @@ USERLIBST=libRInside.a
 USERDIR=../inst/lib
 
 PKG_CPPFLAGS += -I. -I../inst/include/
-PKG_LIBS = `$(R_HOME)/bin/Rscript -e "Rcpp:::LdFlags()"`
+PKG_LIBS = 
 
 all:	headers $(SHLIB) userLibrary
 

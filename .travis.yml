@@ -20,7 +20,11 @@ before_install:
 install:
   - ./travis-tool.sh install_r Rcpp
 
-script: ./travis-tool.sh run_tests
+script: 
+  - ./travis-tool.sh run_tests
+
+after_failure:
+  - ./travis-tool.sh dump_logs
 
 notifications:
   email:

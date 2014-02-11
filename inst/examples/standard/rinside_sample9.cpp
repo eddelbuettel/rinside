@@ -1,6 +1,6 @@
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4;  tab-width: 8; -*-
 //
-// Simple example showing how expose a C++ function
+// Simple example showing how expose a C++ function -- no longer builds
 //
 // Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
 
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     RInside R(argc, argv);               
 
     // expose the "hello" function in the global environment
-    R["hello"] = Rcpp::InternalFunction( &hello ) ;
+    //R["hello"] = Rcpp::InternalFunction( &hello ) ;
    
     // call it and display the result
     Rcpp::Rcout << "** rinside_sample9 is currently disabled.\n";
