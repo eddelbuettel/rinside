@@ -1,7 +1,11 @@
 2014-02-11  Dirk Eddelbuettel  <edd@debian.org>
 
+	* DESCRIPTION: Release 0.2.11
+
 	* inst/examples/*/Makefile: Note that Rcpp (>= 0.11.0) no longer
 	requires the RCPPLIBS variable
+
+	* doxyfile (STRIP_FROM_PATH): Update for git repo
 
 2014-02-10  Dirk Eddelbuettel  <edd@debian.org>
 

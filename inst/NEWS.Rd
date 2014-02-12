@@ -2,7 +2,7 @@
 \title{News for Package 'RInside'}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in RInside version 0.2.11-UNRELEASED (2013-xx-yy)}{
+\section{Changes in RInside version 0.2.11 (2014-02-11)}{
   \itemize{
     \item Updated for \cpkg{Rcpp} 0.11.0:
     \itemize{

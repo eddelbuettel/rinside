@@ -12,3 +12,7 @@ James Bates		for a patch restoring RInside on Windows
 John Brzustowski	for a correction to the Windows initialization
 Peter Aberline		for contributing CMake support for all examples
 Theodore Lytras		for a patch helping to recover from (some) errors
+Spencer Behling         for a patch getting the Qt example ready for Qt 5.1
+Nicholas Pezolano       for a new MPI example
+Martin Morgan           for a new MPI example
+Kevin Ushey             for debugging a seg.fault issue post Rcpp 0.11.0
