@@ -19,7 +19,7 @@
     }
     \item Added \code{--vanilla --slave} to default arguments for R
     initialization 
-    \item Added a few more explicit #include statements in the \code{qt}
+    \item Added a few more explicit \code{#include} statements in the \code{qt}
     example which Qt 5.1 now appears to require -- with thanks to
     Spencer Behling for the patch
     \item Added new MPI example with worker functions and RInside
