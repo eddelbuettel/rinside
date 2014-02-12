@@ -20,6 +20,7 @@ RLAPACK := 		$(shell $(R_HOME)/bin/R CMD config LAPACK_LIBS)
 #RRPATH :=		-Wl,-rpath,$(R_HOME)/lib
 
 ## include headers and libraries for Rcpp interface classes
+## note that RCPPLIBS will be empty with Rcpp (>= 0.11.0) and can be omitted
 RCPPINCL := 		$(shell echo 'Rcpp:::CxxFlags()' | $(R_HOME)/bin/R --vanilla --slave)
 RCPPLIBS := 		$(shell echo 'Rcpp:::LdFlags()'  | $(R_HOME)/bin/R --vanilla --slave)
 
