@@ -1,6 +1,6 @@
 2014-02-11  Dirk Eddelbuettel  <edd@debian.org>
 
-	* inst/examples/*/Makefile: Note that Rcpp (>= 0.11.0) is no longer
+	* inst/examples/*/Makefile: Note that Rcpp (>= 0.11.0) no longer
 	requires the RCPPLIBS variable
 
 2014-02-10  Dirk Eddelbuettel  <edd@debian.org>
@@ -13,7 +13,7 @@
 	* src/RInside.cpp: Added --vanilla --slave to default arguments
 
 	* src/Makefile: PKG_LIBS no longer points to Rcpp's library
-	* inst/examples/standard/Makefile: Note that Rcpp (>= 0.11.0) is no
+	* inst/examples/standard/Makefile: Note that Rcpp (>= 0.11.0) no
 	longer requires the RCPPLIBS variable
 
 	* inst/examples/standard/rinside_test0.cpp: Minor tweaks

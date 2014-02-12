@@ -4,6 +4,21 @@
 
 \section{Changes in RInside version 0.2.12-UNRELEASED (2013-xx-yy)}{
   \itemize{
+    \item Updated for \cpkg{Rcpp} 0.11.0:
+    \itemize{
+      \item Updated initialization by assigning global environment via
+      pointer only after R itself has been initialized -- with special
+      thanks to Kevin Ushey for the fix
+      \item Updated \code{DESCRIPTION} with \code{Imports:} instead of
+      \code{Depends:}
+      \item Added correspondiing \code{importFrom(Rcpp, evalCpp)} to
+      \code{NAMESPACE} 
+      \item Noted in all \code{inst/examples/*/Makefile} that
+      \cpkg{Rcpp} no longer a library argument, but left code for
+      backwards compatibility in case 0.11.0 is not yet installed.
+    }
+    \item Added \code{--vanilla --slave} to default arguments for R
+    initialization 
     \item Added a few more explicit #include statements in the \code{qt}
     example which Qt 5.1 now appears to require -- with thanks to
     Spencer Behling for the patch
