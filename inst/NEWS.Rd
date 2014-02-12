@@ -14,7 +14,7 @@
       \item Added correspondiing \code{importFrom(Rcpp, evalCpp)} to
       \code{NAMESPACE} 
       \item Noted in all \code{inst/examples/*/Makefile} that
-      \cpkg{Rcpp} no longer a library argument, but left code for
+      \cpkg{Rcpp} no longer requires a library argument, but left code for
       backwards compatibility in case 0.11.0 is not yet installed.
     }
     \item Added \code{--vanilla --slave} to default arguments for R
