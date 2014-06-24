@@ -1,3 +1,8 @@
+2014-06-24  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/rinside_sample15.cpp (main): New example
+	showing how to create a lattice plot, in response to a SO question
+
 2014-02-11  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Release 0.2.11
