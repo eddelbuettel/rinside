@@ -1,6 +1,6 @@
 ## -*- mode: Makefile; tab-width: 8 -*- 
 ##
-## Copyright (C) 2010 - 2012  Dirk Eddelbuettel and Romain Francois
+## Copyright (C) 2010 - 2014  Dirk Eddelbuettel and Romain Francois
 ##
 ## This file is part of RInside.
 ##
@@ -22,7 +22,7 @@ USERLIB =	libRInside.dll
 #USERDIR =	$(R_PACKAGE_DIR)/inst/lib$(R_ARCH)
 USERDIR =	../inst/lib$(R_ARCH)
 
-PKG_CPPFLAGS += -I. -I../inst/include/
+PKG_CPPFLAGS =  -I. -I../inst/include/
 PKG_LIBS = 	$(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e "Rcpp:::LdFlags()")
 
 RSCRIPT =	${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe

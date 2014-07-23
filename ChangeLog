@@ -1,7 +1,16 @@
+2014-07-08  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/rinside_module_sample9.cpp: Repaired
+	  following the fix to Rcpp's InternalFunction
+
 2014-06-24  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/rinside_sample15.cpp (main): New example
 	showing how to create a lattice plot, in response to a SO question
+
+2014-03-24  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/Makevars (PKG_CPPFLAGS): Use '=' instead of '+='
 
 2014-02-11  Dirk Eddelbuettel  <edd@debian.org>
 

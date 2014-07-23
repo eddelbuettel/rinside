@@ -21,7 +21,7 @@ USERLIB=libRInside$(DYLIB_EXT)
 USERLIBST=libRInside.a
 USERDIR=../inst/lib
 
-PKG_CPPFLAGS += -I. -I../inst/include/
+PKG_CPPFLAGS = -I. -I../inst/include/
 PKG_LIBS = 
 
 all:	headers $(SHLIB) userLibrary
