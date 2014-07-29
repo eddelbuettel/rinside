@@ -13,10 +13,10 @@ const char* hello( std::string who ){
     return result.c_str() ;
 } 
 
-RCPP_MODULE(bling){
-    using namespace Rcpp ;
-    function( "hello", &hello );
-}
+// RCPP_MODULE(bling){
+//     using namespace Rcpp ;
+//     function( "hello", &hello );
+// }
 
 int main(int argc, char *argv[]) {
 
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     RInside R(argc, argv, true);               
         
     // load the bling module
-    R["bling"] = LOAD_RCPP_MODULE(bling) ;
+    // R["bling"] = LOAD_RCPP_MODULE(bling) ;
     
     // call it and display the result
     Rcpp::Rcout << "** rinside_module_sample0 is currently disabled.\n";

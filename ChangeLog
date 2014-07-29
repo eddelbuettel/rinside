@@ -1,3 +1,8 @@
+2014-07-28  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/rinside_module_sample0.cpp: Commented-out
+	two short segments in already-disabled file which remains defunct
+
 2014-07-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/rinside_module_sample9.cpp: Repaired
