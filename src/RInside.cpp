@@ -432,7 +432,7 @@ int Callbacks::ReadConsole_( const char* prompt, unsigned char* buf, int len, in
 
 void Callbacks::WriteConsole_( const char* buf, int len, int oType ){
     if( len ){
-        buffer.assign( buf, buf + len - 1 ) ;
+        buffer.assign( buf, len ) ;
         WriteConsole( buffer, oType) ;
     }
 }
