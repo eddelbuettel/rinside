@@ -1,3 +1,10 @@
+2014-09-08  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.cpp (WriteConsole_): Applied correction by Christian
+	Authmann in GitHub PR #5
+	* inst/examples/standard/rinside_callbacks1.cpp: New example also
+	supplied by Christian Authmann in PR #5
+
 2014-07-28  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/standard/rinside_module_sample0.cpp: Commented-out
