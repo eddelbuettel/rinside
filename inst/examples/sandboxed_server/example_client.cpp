@@ -1,21 +1,5 @@
 /*
  * Copyright (c) 2014 Christian Authmann
- *
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
- * and associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or
- * substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
- * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #include "datatypes/foo.h"
@@ -121,7 +105,7 @@ static void test_callbacks() {
 	};
 	R.setCallback("calibrate", calibrate);
 
-	auto foo = R.parseEval<Foo>("foo = loadFoo(\"loaded\")");
+	auto foo = R.parseEval<Foo>("foo = loadFoo('loaded')");
 	printf("got Foo(%s, %d, %d) via loadFoo()\n", foo.name.c_str(), foo.a, foo.b);
 
 	auto foo2 = R.parseEval<Foo>("swapFoo(foo)");
@@ -141,12 +125,16 @@ static void test_callbacks() {
 		printf("got Foo(%s, %d, %d) via loadFoo()\n", foo3.name.c_str(), foo3.a, foo3.b);
 	}
 	catch (const std::runtime_error &e) {
-		printf("Calling loadBar() with wrong parameters failed with message:\n%s\n", e.what());
+		printf("Calling loadFoo() with wrong parameters failed with message:\n%s\n", e.what());
 	}
 	catch (...) {
-		printf("Calling loadBar() with wrong parameters lead to an unrecoverable error, ending test\n");
+		printf("Calling loadFoo() with wrong parameters lead to an unrecoverable error, ending test\n");
 		return;
 	}
+
+	// Passing incompatible parameters results in recoverable errors, so we can keep using the connection
+	auto x = R.parseEval<int>("x = 42;");
+	printf("Got x = %d\n", x);
 }
 
 
@@ -158,7 +146,7 @@ static void test_console_output() {
 	 * It's probably useful to capture the output of R's console.
 	 * So here's how you do it.
 	 */
-	R.parseEvalQ("print(\"Hello World\")");
+	R.parseEvalQ("print('Hello World')");
 	auto output = R.getConsoleOutput();
 	printf("Output of the R script:\n%s\n", output.c_str());
 }
@@ -174,12 +162,12 @@ static void test_plot() {
 	 * Of course, we can do that.
 	 */
 	R.initPlot(400,600);
-	R.parseEvalQ("plot(c(0,0), type = \"n\", xlim=c(0,1), ylim=c(-1,1), xlab = \"x\", ylab = \"y\", bty=\"n\")");
+	R.parseEvalQ("plot(c(0,0), type = 'n', xlim=c(0,1), ylim=c(-1,1), xlab = 'x', ylab = 'y', bty='n')");
 
-	R.parseEvalQ("lines(c(0,0), c(-1,1), col=\"red\", add=TRUE)");
-	R.parseEvalQ("curve(-x, 0, 1, 200, col=\"blue\", add=TRUE)");
-	R.parseEvalQ("curve(0.5+sqrt(1-x^2)/2, 0, 1, 200, col=\"#00FF00\", add=TRUE)");
-	R.parseEvalQ("curve(0.5-sqrt(1-x^2)/2, 0, 1, 200, col=\"#33EE33\", add=TRUE)");
+	R.parseEvalQ("lines(c(0,0), c(-1,1), col='red', add=TRUE)");
+	R.parseEvalQ("curve(-x, 0, 1, 200, col='blue', add=TRUE)");
+	R.parseEvalQ("curve(0.5+sqrt(1-x^2)/2, 0, 1, 200, col='#00FF00', add=TRUE)");
+	R.parseEvalQ("curve(0.5-sqrt(1-x^2)/2, 0, 1, 200, col='#33EE33', add=TRUE)");
 	auto png = R.getPlot();
 	printf("Got a png from the plot, saving to plot.png\n");
 

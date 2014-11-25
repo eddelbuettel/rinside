@@ -1,21 +1,5 @@
 /*
  * Copyright (c) 2014 Christian Authmann
- *
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
- * and associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or
- * substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
- * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
@@ -43,9 +27,23 @@ namespace callback_helper {
 	class type_mismatch_exception : std::exception {
 	};
 
+	// An exception when the server failed to transform a parameter, but can still continue
+	class parameter_error_exception : public std::runtime_error {
+		public:
+			explicit parameter_error_exception(const std::string &error) : std::runtime_error(error) {};
+	};
+
 	// read a typeid from the stream, compare it to the expected type, then read the value
 	template<typename T>
 	T read_from_stream_with_typeid(BinaryStream &stream) {
+		auto result = stream.read<char>();
+		if (result == RIS_REPLY_ERROR) {
+			auto error = stream.read<std::string>();
+			throw parameter_error_exception(error);
+		}
+		else if (result != RIS_REPLY_VALUE) {
+			throw std::runtime_error("Invalid reply from server");
+		}
 		auto type = stream.read<int32_t>();
 		if (type != TYPEID<T>()) {
 			printf("trying to read type %d, got type %d\n", (int) TYPEID<T>(), (int) type);

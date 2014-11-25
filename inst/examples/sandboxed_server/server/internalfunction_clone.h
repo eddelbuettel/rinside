@@ -25,8 +25,9 @@ class CppFunctionForRInsideServer: public Rcpp::CppFunctionBase {
 			size_t paramcount = types.size() - 1;
 			for (size_t i=0;i<paramcount;i++) {
 				LOG("Sending parameter %d at %p", (int) i, args[i]);
+				server.allowSendReply();
 				try {
-					server.sexp_to_stream(args[i], types[i+1], false);
+					server.sexp_to_stream(args[i], types[i+1], true);
 				}
 				catch (const std::exception &e) {
 					LOG("Exception sending argument: %s", e.what());
