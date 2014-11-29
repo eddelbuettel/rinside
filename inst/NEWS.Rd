@@ -2,6 +2,24 @@
 \title{News for Package 'RInside'}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in RInside version 0.2.12 (unreleased)}{
+  \itemize{
+    \item Several new examples have been added (with most of the work
+    done by Christian Authmann):
+    \itemize{
+      \item \code{standard/rinside_sample15.cpp} shows how to create a
+      lattice plot (following a StackOverflow question}
+      \item \code{standard/rinside_sample16.cpp} shows object wrapping,
+      and exposing of C++ functions
+      \item \code{standard/rinside_sample17.cpp} does the same via C++11
+      \item \code{sandboxed_servers/} adds an entire framework of
+      client/server communication outside the main process (but using a
+      subset of supported types)
+    }
+    \item \code{standard/rinside_module_sample9.cpp} was repaired
+    following a fix to \code{InternalFunction} in \cpkg{Rcpp}
+}
+
 \section{Changes in RInside version 0.2.11 (2014-02-11)}{
   \itemize{
     \item Updated for \cpkg{Rcpp} 0.11.0:

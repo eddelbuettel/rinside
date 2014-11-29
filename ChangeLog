@@ -1,8 +1,13 @@
+2014-11-25  Christian Authmann  <christian@authmann.de>
+
+	* inst/examples/sandboxed_server/: New example of a 'sandboxed'
+	server for safer communication [of a subset of types] out of process
+
 2014-10-10  Christian Authmann  <christian@authmann.de>
 
-	* inst/examples/standard/rinside_sample16.cpp: new example
+	* inst/examples/standard/rinside_sample16.cpp: New example
 	demonstrating object wrapping and exposing C++ functions
-	* inst/examples/standard/rinside_sample17.cpp: new example
+	* inst/examples/standard/rinside_sample17.cpp: New example
 	demonstrating the same using C++11 features
 
 2014-09-08  Dirk Eddelbuettel  <edd@debian.org>
