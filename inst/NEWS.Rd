@@ -8,7 +8,7 @@
     done by Christian Authmann):
     \itemize{
       \item \code{standard/rinside_sample15.cpp} shows how to create a
-      lattice plot (following a StackOverflow question}
+      lattice plot (following a StackOverflow question)
       \item \code{standard/rinside_sample16.cpp} shows object wrapping,
       and exposing of C++ functions
       \item \code{standard/rinside_sample17.cpp} does the same via C++11
@@ -18,6 +18,7 @@
     }
     \item \code{standard/rinside_module_sample9.cpp} was repaired
     following a fix to \code{InternalFunction} in \cpkg{Rcpp}
+  }
 }
 
 \section{Changes in RInside version 0.2.11 (2014-02-11)}{

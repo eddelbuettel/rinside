@@ -1,3 +1,11 @@
+2015-01-08  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Description): Updated Description: to note that we now
+	have eight examples subdirectories, and that these examples use
+	Makefiles with GNU make extensions
+	* DESCRIPTION (SystemRequirements): Added 'GNU make' for R CMD check
+	* DESCRIPTIION (Version): Bumped Version: and Date:
+
 2014-11-25  Christian Authmann  <christian@authmann.de>
 
 	* inst/examples/sandboxed_server/: New example of a 'sandboxed'
