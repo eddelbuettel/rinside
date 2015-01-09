@@ -1,5 +1,5 @@
 Package: RInside
-Title: C++ classes to embed R in C++ applications
+Title: C++ Classes to Embed R in C++ Applications
 Version: 0.2.11.1
 Date: 2015-01-08
 Author: Dirk Eddelbuettel and Romain Francois
@@ -17,7 +17,8 @@ Description: C++ classes to embed R in C++ applications
  qt (showing how to embed RInside inside a Qt GUI application), wt (showing
  how to build a 'web-application' using the Wt toolkit), armadillo (for
  RInside use with RcppArmadillo) and eigen (for RInside use with RcppEigen).
- The example use Makefiles with GNU extensions, so a GNU make is required.
+ The example use GNUmakefile(s) with GNU extensions, so a GNU make is required
+ (and will use the GNUmakefile automatically).
  .
  Doxygen-generated documentation of the C++ classes is available at the
  RInside website as well.
@@ -28,4 +29,3 @@ URL: http://dirk.eddelbuettel.com/code/rinside.html
 License: GPL (>= 2)
 BugReports: https://github.com/eddelbuettel/rinside/issues
 MailingList: Please send questions and comments regarding RInside to rcpp-devel@lists.r-forge.r-project.org
-SystemRequirements: GNU make

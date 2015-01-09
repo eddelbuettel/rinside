@@ -18,6 +18,9 @@
     }
     \item \code{standard/rinside_module_sample9.cpp} was repaired
     following a fix to \code{InternalFunction} in \cpkg{Rcpp}
+    \item For the seven example directories which contain a
+    \code{Makefile}, the \code{Makefile} was renamed \code{GNUmakefile}
+    to please \code{R CMD check} as well as the CRAN Maintainers.
   }
 }
 
