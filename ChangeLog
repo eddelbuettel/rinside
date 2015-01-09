@@ -1,11 +1,19 @@
 2015-01-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Description): Updated Description: to note that we now
-	have eight examples subdirectories, and that these examples use
-	Makefiles with GNU make extensions
-	* DESCRIPTION (SystemRequirements): Added 'GNU make' for R CMD check
+	have eight examples subdirectories, and that (all but one of) these
+	example directories use Makefiles with GNU make extensions, which
+	have therefore been renamed to GNUmakefile to please R CMD check
 	* DESCRIPTIION (Version): Bumped Version: and Date:
 
+	* inst/examples/armadillo/GNUmakefile: Renamed from Makefile
+	* inst/examples/eigen/GNUmakefile: Ditto
+	* inst/examples/mpi/GNUmakefile: Ditto
+	* inst/examples/sandboxed_server/GNUmakefile: Ditto
+	* inst/examples/standard/GNUmakefile: Ditto
+	* inst/examples/threads/GNUmakefile: Ditto
+	* inst/examples/wt/GNUmakefile: Ditto
+	
 2014-11-25  Christian Authmann  <christian@authmann.de>
 
 	* inst/examples/sandboxed_server/: New example of a 'sandboxed'
