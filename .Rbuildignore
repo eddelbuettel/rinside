@@ -18,3 +18,4 @@ inst/include/RInsideEnvVars.h
 .travis.yml
 doxyfile
 inst/examples/standard/local
+local

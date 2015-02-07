@@ -17,7 +17,7 @@
 	* inst/examples/standard/GNUmakefile: Ditto
 	* inst/examples/threads/GNUmakefile: Ditto
 	* inst/examples/wt/GNUmakefile: Ditto
-	
+
 2014-11-25  Christian Authmann  <christian@authmann.de>
 
 	* inst/examples/sandboxed_server/: New example of a 'sandboxed'
