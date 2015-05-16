@@ -135,9 +135,9 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
         }
     }
 
-    #ifndef WIN32
-    R_SignalHandlers = 0;               // Don't let R set up its own signal handlers
-    #endif
+    // #ifndef WIN32
+    // R_SignalHandlers = 0;               // Don't let R set up its own signal handlers
+    // #endif
 
     init_tempdir();
 
@@ -146,9 +146,9 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     int R_argc = sizeof(R_argv) / sizeof(R_argv[0]);
     Rf_initEmbeddedR(R_argc, (char**)R_argv);
 
-    #ifndef WIN32
-    R_CStackLimit = -1;      		// Don't do any stack checking, see R Exts, '8.1.5 Threading issues'
-    #endif
+    // #ifndef WIN32
+    // R_CStackLimit = -1;      		// Don't do any stack checking, see R Exts, '8.1.5 Threading issues'
+    // #endif
 
     R_ReplDLLinit();                    // this is to populate the repl console buffers
 

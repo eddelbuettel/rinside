@@ -1,3 +1,8 @@
+2015-05-15  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/include/RInsideCommon.h: Do not include RInterface.h
+	* src/RInside.cpp: Do not set R_SignalHandlers and R_CStackLimit
+
 2015-01-27  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Release 0.2.12
