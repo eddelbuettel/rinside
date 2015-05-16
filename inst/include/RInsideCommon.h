@@ -51,10 +51,6 @@
 #endif
 
 #include <Rembedded.h>
-#ifndef WIN32
-  #define R_INTERFACE_PTRS
-  #include <Rinterface.h>
-#endif
 #include <R_ext/RStartup.h>
 
 #include <MemBuf.h>

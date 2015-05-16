@@ -22,6 +22,10 @@
 
 #include <RInside.h>
 #include <Callbacks.h>
+#ifndef WIN32
+  #define R_INTERFACE_PTRS
+  #include <Rinterface.h>
+#endif
 
 RInside* RInside::instance_m = 0 ;
 
