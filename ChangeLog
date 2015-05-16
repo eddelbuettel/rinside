@@ -1,7 +1,9 @@
 2015-05-15  Dirk Eddelbuettel  <edd@debian.org>
 
-	* inst/include/RInsideCommon.h: Do not include RInterface.h
-	* src/RInside.cpp: Do not set R_SignalHandlers and R_CStackLimit
+	* inst/include/RInsideCommon.h: Do not include RInterface.h here as
+	the file gets included from several source files
+
+	* src/RInside.cpp: But rather include RInterface.h here just once
 
 2015-01-27  Dirk Eddelbuettel  <edd@debian.org>
 
