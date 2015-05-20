@@ -21,7 +21,7 @@ Description: C++ classes to embed R in C++ applications
  (and will use the GNUmakefile automatically).
  .
  Doxygen-generated documentation of the C++ classes is available at the
- RInside website as well.
+ 'RInside' website as well.
 Depends: R (>= 2.10.0)
 Imports: Rcpp (>= 0.11.0)
 LinkingTo: Rcpp
