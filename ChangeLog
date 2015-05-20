@@ -1,3 +1,7 @@
+2015-05-19  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Release 0.2.13
+
 2015-05-16  Dirk Eddelbuettel  <edd@debian.org>
 
 	* .travis.yml (install): Use ppa for r-cran-rcpp in .travis.yml
