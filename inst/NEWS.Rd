@@ -2,6 +2,16 @@
 \title{News for Package 'RInside'}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in RInside version 0.2.13 (2015-05-20)}{
+  \itemize{
+    \item Added workaround for a bug in R 3.2.0: by including the file
+    \code{RInterface.h} only once we do not getting linker errors due to
+    multiple definitions of \code{R_running_as_main_program} (which is now
+    addressed in R-patched as well).
+    \item Small improvements to the Travis CI script.
+  }
+}
+
 \section{Changes in RInside version 0.2.12 (2015-01-27)}{
   \itemize{
     \item Several new examples have been added (with most of the work
