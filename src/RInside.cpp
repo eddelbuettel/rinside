@@ -22,7 +22,7 @@
 
 #include <RInside.h>
 #include <Callbacks.h>
-#ifndef WIN32
+#ifndef _WIN32
   #define R_INTERFACE_PTRS
   #include <Rinterface.h>
 #endif
