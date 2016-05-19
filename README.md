@@ -1,4 +1,4 @@
-## RInside [![Build Status](https://travis-ci.org/eddelbuettel/rinside.svg)](https://travis-ci.org/eddelbuettel/rinside) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![Downloads](http://cranlogs.r-pkg.org/badges/RInside?color=brightgreen)](http://cran.rstudio.com/package=RInside)
+## RInside [![Build Status](https://travis-ci.org/eddelbuettel/rinside.svg)](https://travis-ci.org/eddelbuettel/rinside) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/rinside)](http://cran.r-project.org/package=RInside) [![Downloads](http://cranlogs.r-pkg.org/badges/RInside?color=brightgreen)](http://cran.rstudio.com/package=RInside)
 
 Easy embedding of R inside C++
 
