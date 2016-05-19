@@ -28,7 +28,7 @@ RINSIDELIBS := 		$(shell echo 'RInside:::LdFlags()'  | $(R_HOME)/bin/R --vanilla
 
 
 ## minimal Wt libs -- works for me on Ubuntu, may need -L switches elsewhere...
-WITTYLIBS :=		-lwt -lwthttp -lboost_signals 
+WITTYLIBS :=		-lwt -lwthttp -lboost_signals -lboost_system
 
 
 ## compiler etc settings used in default make rules

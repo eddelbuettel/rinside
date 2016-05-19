@@ -1,3 +1,14 @@
+2016-02-08  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/wt/GNUmakefile: Add -lboost_system
+
+2016-02-07  Mattias Ellert <mattias.ellert@fysast.uu.se>
+
+	* src/Makevars: Also use LDFLAGS
+
+	* src/tools/RInsideEnvVars.r: Exclude three more variables containing
+	the build path
+
 2015-05-20  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Release 0.2.13
