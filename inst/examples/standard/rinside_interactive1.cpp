@@ -148,7 +148,6 @@ int main(int argc, char *argv[]) {
     R["$.Solver"] = Rcpp::InternalFunction(& Dollar); // Adding the functions
     R["$<-.Solver"] = Rcpp::InternalFunction(& DollarAssign);
     R["names.Solver"] = Rcpp::InternalFunction(& Names);
-    #if defined(RINSIDE_CALLBACKS)
     char type;
     do {
         std::cout << "Want to go interactive? [y/n]";
@@ -159,12 +158,10 @@ int main(int argc, char *argv[]) {
         std::cout << "[ You can finish the with Ctrl+D ]" << std::endl;
         R.parseEval("options(prompt = 'R console > ')");
         R.parseEval("X11()");
-        R.set_callbacks( new Callbacks() );
         R.repl() ;
         std::cout << "Finishing the interactive mode" << std::endl;
         R.parseEval("dev.off()");
     }
-    #endif
     R.parseEval("X11()");
     for (int i=0;i<2000;i++) { // Running the some 200'000 iterations in non-interactive mode
         S.Iterate(100);
