@@ -1,3 +1,9 @@
+2017-02-08  Dirk Eddelbuettel  <edd@max.eddelbuettel.com>
+
+	* inst/include/RInside.h (R): Move repl() declaration outside #ifdef
+
+	* src/RInside.cpp (repl): Ditto for definition
+
 2016-02-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/wt/GNUmakefile: Add -lboost_system

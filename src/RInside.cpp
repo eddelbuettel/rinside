@@ -3,7 +3,7 @@
 // RInside.cpp: R/C++ interface class library -- Easier R embedding into C++
 //
 // Copyright (C) 2009         Dirk Eddelbuettel
-// Copyright (C) 2010 - 2015  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2017  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -407,6 +407,11 @@ RInside* RInside::instancePtr(){
     return instance_m;
 }
 
+void RInside::repl() {
+    R_ReplDLLinit();
+    while (R_ReplDLLdo1() > 0) {}
+}
+
 /* callbacks */
 
 #ifdef RINSIDE_CALLBACKS
@@ -505,9 +510,6 @@ void RInside::set_callbacks(Callbacks* callbacks_){
 #endif
 }
 
-void RInside::repl(){
-    R_ReplDLLinit();
-    while( R_ReplDLLdo1() > 0 ) {}
-}
-
 #endif
+
+
