@@ -8,6 +8,14 @@
 
 	* cleanup: Call GNUmakefile in examples directories too
 
+2017-02-08  Łukasz Łaniewski-Wołłk  <llaniewski@gmail.com>
+
+	* src/RInside.cpp (initialize): In interactive mode, allow use of
+	readline
+
+	* inst/examples/standard/rinside_interactive0.cpp: New example of
+	a planetary motion solver with console for parameter override
+
 2017-02-08  Dirk Eddelbuettel  <edd@max.eddelbuettel.com>
 
 	* inst/include/RInside.h (R): Move repl() declaration outside #ifdef

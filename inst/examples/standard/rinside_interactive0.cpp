@@ -1,9 +1,10 @@
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4;  tab-width: 8; -*-
 //
-// Simple example showing how to do the standard 'hello, world' using embedded R
+// Example of a planetary motion solver with interactive console
 //
-// Copyright (C) 2009 Dirk Eddelbuettel 
-// Copyright (C) 2010 Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2009         Dirk Eddelbuettel 
+// Copyright (C) 2010 - 2017  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2017         Dirk Eddelbuettel, Romain Francois and Łukasz Łaniewski-Wołłk
 //
 // GPL'ed 
 
@@ -25,8 +26,8 @@ class Solver {
     double dt;
     double G;
     void Iteration() {
-        for(Planets::iterator a=tab.begin(); a != tab.end(); a++) {
-            for(Planets::iterator b=tab.begin(); b != a; b++) {
+        for (Planets::iterator a=tab.begin(); a != tab.end(); a++) {
+            for (Planets::iterator b=tab.begin(); b != a; b++) {
                 double x = a->x - b->x;
                 double y = a->y - b->y;
                 double r = sqrt(x*x + y*y);
@@ -39,7 +40,7 @@ class Solver {
                 b->vy += dt * fy / b->m;
             }
         }
-        for(Planets::iterator a=tab.begin(); a != tab.end(); a++) {
+        for (Planets::iterator a=tab.begin(); a != tab.end(); a++) {
             a->x += dt * a->vx;
             a->y += dt * a->vy;
         }
@@ -47,7 +48,7 @@ class Solver {
 public:
     Solver(int n): tab(n), dt(1.0e-4), G(1.0) {
         double v=0;
-        for(Planets::iterator a=tab.begin(); a != tab.end(); a++) {
+        for (Planets::iterator a=tab.begin(); a != tab.end(); a++) {
             a->x = sin(v);
             a->y = cos(v);
             a->m = 1;
@@ -59,9 +60,6 @@ public:
     }
     friend class Wrapper;
 };
-
-// Exporting _ to make things more readable
-using Rcpp::_;
 
 // A nice wrapper for the solver
 class Wrapper {
@@ -77,7 +75,11 @@ public:
             vx.push_back(a->vx);            
             vy.push_back(a->vy);            
         }
-        return Rcpp::DataFrame::create(_["x"] = x,_["y"] = y,_["mass"] = m,_["Vx"] = vx,_["Vy"] = vy);
+        return Rcpp::DataFrame::create(Rcpp::Named("x") = x,
+                                       Rcpp::Named("y") = y,
+                                       Rcpp::Named("mass") = m,
+                                       Rcpp::Named("Vx") = vx,
+                                       Rcpp::Named("Vy") = vy);
     }
     void setData(Rcpp::DataFrame tab) {
         if ((size_t)tab.nrows() != s->tab.size()) {
