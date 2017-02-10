@@ -146,8 +146,9 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     init_tempdir();
 
     const char *R_argv[] = {(char*)programName, "--gui=none", "--no-save", 
-                            "--no-readline", "--silent", "--vanilla", "--slave"};
+                            "--silent", "--vanilla", "--slave", "--no-readline"};
     int R_argc = sizeof(R_argv) / sizeof(R_argv[0]);
+    if (interactive_m) R_argc--; //Deleting the --no-readline option in interactive mode
     Rf_initEmbeddedR(R_argc, (char**)R_argv);
 
     #ifndef _WIN32
