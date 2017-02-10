@@ -7,7 +7,9 @@ rm -vf  src/*.o src/*.so inst/lib/*.h \
 for d in standard mpi qt wt armadillo eigen threads
 do
     cd inst/examples/${d} 
-    test -f Makefile && make clean && rm -f *~
+    test -f Makefile && make clean
+    test -f GNUmakefile && make -f GNUmakefile clean
+    rm -f *~
     cd ../../..
 done
 
