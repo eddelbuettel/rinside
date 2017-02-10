@@ -1,6 +1,5 @@
 \name{NEWS}
-\title{News for Package 'RInside'}
-\newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\title{News for Package \pkg{RInside}}
 
 \section{Changes in RInside version 0.2.13 (2015-05-20)}{
   \itemize{
@@ -27,7 +26,7 @@
       subset of supported types)
     }
     \item \code{standard/rinside_module_sample9.cpp} was repaired
-    following a fix to \code{InternalFunction} in \cpkg{Rcpp}
+    following a fix to \code{InternalFunction} in \CRANpkg{Rcpp}
     \item For the seven example directories which contain a
     \code{Makefile}, the \code{Makefile} was renamed \code{GNUmakefile}
     to please \code{R CMD check} as well as the CRAN Maintainers.
@@ -36,7 +35,7 @@
 
 \section{Changes in RInside version 0.2.11 (2014-02-11)}{
   \itemize{
-    \item Updated for \cpkg{Rcpp} 0.11.0:
+    \item Updated for \CRANpkg{Rcpp} 0.11.0:
     \itemize{
       \item Updated initialization by assigning global environment via
       pointer only after R itself has been initialized -- with special
@@ -46,7 +45,7 @@
       \item Added correspondiing \code{importFrom(Rcpp, evalCpp)} to
       \code{NAMESPACE} 
       \item Noted in all \code{inst/examples/*/Makefile} that
-      \cpkg{Rcpp} no longer requires a library argument, but left code for
+      \CRANpkg{Rcpp} no longer requires a library argument, but left code for
       backwards compatibility in case 0.11.0 is not yet installed.
     }
     \item Added \code{--vanilla --slave} to default arguments for R
@@ -106,9 +105,9 @@
 \section{Changes in RInside version 0.2.7 (2012-08-12)}{
   \itemize{
     \item New fifth examples subdirectory 'armadillo' with two new
-    examples showing how to combine \cpkg{RInside} with \cpkg{RcppArmadillo}
+    examples showing how to combine \CRANpkg{RInside} with \CRANpkg{RcppArmadillo}
     \item New sixth examples subdirectory 'eigen' with two new examples
-    showing how to combine \cpkg{RInside} with \cpkg{RcppEigen} 
+    showing how to combine \CRANpkg{RInside} with \CRANpkg{RcppEigen} 
     \item Prettified the Wt example 'web application' with CSS use, also added
     and XML file with simple headers and description text
     \item New example rinside_sample12 motivated by StackOverflow

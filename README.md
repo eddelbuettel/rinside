@@ -1,10 +1,10 @@
-## RInside [![Build Status](https://travis-ci.org/eddelbuettel/rinside.svg)](https://travis-ci.org/eddelbuettel/rinside) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RInside)](http://cran.r-project.org/package=RInside) [![Downloads](http://cranlogs.r-pkg.org/badges/RInside?color=brightgreen)](http://cran.rstudio.com/package=RInside)
+## RInside [![Build Status](https://travis-ci.org/eddelbuettel/rinside.svg)](https://travis-ci.org/eddelbuettel/rinside) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RInside)](https://cran.r-project.org/package=RInside) [![Downloads](http://cranlogs.r-pkg.org/badges/RInside?color=brightgreen)](https://cran.r-project.org/package=RInside)
 
 Easy embedding of R inside C++
 
 ### About
 
-The RInside package provides a few classes for seamless embedding of [R](http://www.r-project.org) inside of
+The RInside package provides a few classes for seamless embedding of [R](https://www.r-project.org) inside of
 C++ applications by relying on [Rcpp](http://www.rcpp.org).
 
 Provided with the package itself are eight subdirectories with examples: from
