@@ -10,7 +10,7 @@
 
 	* README.md: Use canonical URLs
 
-	* inst/NEWS.Rd: Updated to use \CRANpkgP{}
+	* inst/NEWS.Rd: Updated to use \CRANpkg{}
 
 	* cleanup: Call GNUmakefile in examples directories too
 
@@ -27,6 +27,10 @@
 	* inst/include/RInside.h (R): Move repl() declaration outside #ifdef
 
 	* src/RInside.cpp (repl): Ditto for definition
+
+2016-02-11  Kevin Ushey <kevinushey@gmail.com>
+
+	* src/RInside.cpp: Check for _WIN32 instead of WIN32
 
 2016-02-08  Dirk Eddelbuettel  <edd@debian.org>
 

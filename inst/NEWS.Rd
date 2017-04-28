@@ -1,8 +1,17 @@
 \name{NEWS}
 \title{News for Package \pkg{RInside}}
+\newcommand{\ghpr}{\href{https://github.com/eddelbuettel/rinside/pull/#1}{##1}}
+\newcommand{\ghit}{\href{https://github.com/eddelbuettel/rinside/issues/#1}{##1}}
+
 
 \section{Changes in RInside version 0.2.14 (2017-xx-yy)}{
   \itemize{
+    \item Interactive mode can use readline REPL (Łukasz Łaniewski-Wołłk
+    in \ghpr{25}, and Dirk in \ghpr{26})
+    \item Windows macros checks now uses \code{_WIN32} (Kevin Ushey in \ghpr{22})
+    \item The wt example now links with \code{libboost_system}
+    \item The \code{Makevars} file is now more robist (Mattias Ellert in \ghpr{21})
+    \item \code{HAVE_UINTPTR_T} is defined only if not already defined
     \item Travis CI is now driven via \code{run.sh} from our forked r-travis
   }
 }
