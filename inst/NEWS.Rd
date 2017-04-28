@@ -1,6 +1,12 @@
 \name{NEWS}
 \title{News for Package \pkg{RInside}}
 
+\section{Changes in RInside version 0.2.14 (2017-xx-yy)}{
+  \itemize{
+    \item Travis CI is now driven via \code{run.sh} from our forked r-travis
+  }
+}
+
 \section{Changes in RInside version 0.2.13 (2015-05-20)}{
   \itemize{
     \item Added workaround for a bug in R 3.2.0: by including the file
