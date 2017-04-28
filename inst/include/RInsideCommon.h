@@ -47,7 +47,9 @@
 #ifndef WIN32
   // needed to turn-off stack checking, and we already have uintptr_t
   #define CSTACK_DEFNS
-  #define HAVE_UINTPTR_T
+  #ifndef HAVE_UINTPTR_T
+    #define HAVE_UINTPTR_T
+  #endif
 #endif
 
 #include <Rembedded.h>

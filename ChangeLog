@@ -1,3 +1,7 @@
+2017-04-27  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/include/RInsideCommon.h (HAVE_UINTPTR_T): Protect behind #ifndef
+
 2017-02-10  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version, Date): Roll minor version
