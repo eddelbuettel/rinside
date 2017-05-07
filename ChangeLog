@@ -1,3 +1,7 @@
+2017-04-28  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version): Release 0.2.14
+
 2017-04-27  Dirk Eddelbuettel  <edd@debian.org>
 
 	* .travis.yml: Switch to using run.sh for Travis CI
