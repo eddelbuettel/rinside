@@ -35,6 +35,9 @@ const char *programName = "RInside";
     // on Windows, we need to provide setenv which is in the file setenv.c here
     #include "setenv/setenv.c"
     extern int optind;
+    
+    #include <windef.h>
+    char rHome[MAX_PATH];
 #endif
 
 RInside::~RInside() {           // now empty as MemBuf is internal
@@ -161,7 +164,11 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     R_DefParams(&Rst);
     Rst.R_Interactive = (Rboolean) interactive_m;       // sets interactive() to eval to false
     #ifdef _WIN32
-    Rst.rhome = getenv("R_HOME");       // which is set above as part of R_VARS
+    
+    char *temp = getenv("R_HOME");       // which is set above as part of R_VARS
+    strncpy(rHome, temp, MAX_PATH);
+    Rst.rhome = rHome;
+    
     Rst.home = getRUser();
     Rst.CharacterMode = LinkDLL;
     Rst.ReadConsole = myReadConsole;
