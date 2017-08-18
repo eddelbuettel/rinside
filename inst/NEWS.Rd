@@ -3,6 +3,14 @@
 \newcommand{\ghpr}{\href{https://github.com/eddelbuettel/rinside/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/eddelbuettel/rinside/issues/#1}{##1}}
 
+\section{Changes in RInside version 0.2.15 (2017-xx-yy)}{
+  \itemize{
+    \item Improved Windows build support by copying
+    \code{getenv("R_HOME")} result and improving backslash handling in
+    environemt variable setting (Jonathon Love in \ghpr{27} and
+    \ghpr{28})
+  }
+}
 
 \section{Changes in RInside version 0.2.14 (2017-04-28)}{
   \itemize{

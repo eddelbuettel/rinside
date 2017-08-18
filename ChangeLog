@@ -1,3 +1,11 @@
+2017-08-17  Jonathon Love  <jon@thon.cc>
+
+	* src/setenv/setenv.c: Extend backslash handling on Windows
+
+2017-08-16  Jonathon Love  <jon@thon.cc>
+
+	* src/RInside.cpp: On Windows, copy getenv("R_HOME") result
+
 2017-04-28  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version): Release 0.2.14
