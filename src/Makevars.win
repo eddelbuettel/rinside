@@ -25,7 +25,7 @@ USERDIR =	../inst/lib$(R_ARCH)
 PKG_CPPFLAGS =  -I. -I../inst/include/
 PKG_LIBS = 	$(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e "Rcpp:::LdFlags()")
 
-RSCRIPT =	${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe
+RSCRIPT =	"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe"
 
 all:		headers $(SHLIB) userLibrary
 
