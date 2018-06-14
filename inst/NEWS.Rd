@@ -9,6 +9,9 @@
     \code{getenv("R_HOME")} result and improving backslash handling in
     environemt variable setting (Jonathon Love in \ghpr{27} and
     \ghpr{28})
+    \item Improved Windows build support by quote-protecting
+    \code{Rscript} path in \code{Makevars.win} (François-David Collin in
+    \ghpr{33}) 
   }
 }
 

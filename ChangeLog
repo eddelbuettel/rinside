@@ -1,3 +1,7 @@
+2018-06-14  François-David Collin  <fradav@gmail.com>
+
+	* src/Makevars.win: Quote-protect path for Rscript
+
 2017-08-17  Jonathon Love  <jon@thon.cc>
 
 	* src/setenv/setenv.c: Extend backslash handling on Windows
