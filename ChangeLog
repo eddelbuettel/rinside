@@ -1,3 +1,7 @@
+2018-09-02  Dirk Eddelbuettel  <edd@debian.org>
+
+	* .travis.yml: Minor update to commented-out PPA for R 3.5
+
 2018-06-14  François-David Collin  <fradav@gmail.com>
 
 	* src/Makevars.win: Quote-protect path for Rscript
