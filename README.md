@@ -39,7 +39,7 @@ this application for showing how to use R (to estimate densities) inside a C++ e
 ![](https://github.com/eddelbuettel/rinside/blob/master/local/qtdensitySVG.png)
 
 The code is portable across operating systems.  Similar, the 
-[Wt example directory](https://github.com/eddelbuettel/rinside/tree/master/inst/examples/qt)
+[Wt example directory](https://github.com/eddelbuettel/rinside/tree/master/inst/examples/wt)
 contains this C++-based web application doing the same:
 
 ![](https://github.com/eddelbuettel/rinside/blob/master/local/wtdensity.png)
