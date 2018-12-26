@@ -21,4 +21,4 @@ inst/examples/standard/local
 local
 ^.*\.Rproj$
 ^\.Rproj\.user$
-*.*\.tar\.gz
+^.*\.tar\.gz
