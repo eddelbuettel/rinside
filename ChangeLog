@@ -1,3 +1,7 @@
+2018-12-26  Zé Vinícius  <jvmirca@gmail.com>
+	
+	* README.md: Correct typo in URL for Qt example
+
 2018-09-02  Dirk Eddelbuettel  <edd@debian.org>
 
 	* .travis.yml: Minor update to commented-out PPA for R 3.5

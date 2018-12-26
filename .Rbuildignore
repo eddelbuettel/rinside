@@ -19,3 +19,6 @@ inst/include/RInsideEnvVars.h
 doxyfile
 inst/examples/standard/local
 local
+^.*\.Rproj$
+^\.Rproj\.user$
+*.*\.tar\.gz

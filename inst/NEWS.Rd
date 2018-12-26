@@ -11,7 +11,8 @@
     \ghpr{28})
     \item Improved Windows build support by quote-protecting
     \code{Rscript} path in \code{Makevars.win} (François-David Collin in
-    \ghpr{33}) 
+    \ghpr{33})
+    \item A URL was corrected in the README.md (Zé Vinícius in \ghpr{34}).
   }
 }
 
