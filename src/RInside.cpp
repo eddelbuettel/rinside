@@ -3,7 +3,7 @@
 // RInside.cpp: R/C++ interface class library -- Easier R embedding into C++
 //
 // Copyright (C) 2009         Dirk Eddelbuettel
-// Copyright (C) 2010 - 2017  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2019  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -35,7 +35,7 @@ const char *programName = "RInside";
     // on Windows, we need to provide setenv which is in the file setenv.c here
     #include "setenv/setenv.c"
     extern int optind;
-    
+
     #include <windef.h>
     char rHome[MAX_PATH];
 #endif
@@ -105,7 +105,7 @@ RInside::RInside(const int argc, const char* const argv[], const bool loadRcpp,
 }
 
 // TODO: use a vector<string> would make all this a bit more readable
-void RInside::initialize(const int argc, const char* const argv[], const bool loadRcpp, 
+void RInside::initialize(const int argc, const char* const argv[], const bool loadRcpp,
                          const bool verbose, const bool interactive) {
 
     if (instance_m) {
@@ -128,8 +128,8 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
         char *rhome = get_R_HOME();		// query it, including registry
         if (rhome != NULL) {                    // if something was found
             setenv("R_HOME", get_R_HOME(), 1);  // store what we got as R_HOME
-        }					// this will now be used in next blocks 
-    }                                           
+        }					// this will now be used in next blocks
+    }
     #endif
 
     for (int i = 0; R_VARS[i] != NULL; i+= 2) {
@@ -148,7 +148,7 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
 
     init_tempdir();
 
-    const char *R_argv[] = {(char*)programName, "--gui=none", "--no-save", 
+    const char *R_argv[] = {(char*)programName, "--gui=none", "--no-save",
                             "--silent", "--vanilla", "--slave", "--no-readline"};
     int R_argc = sizeof(R_argv) / sizeof(R_argv[0]);
     if (interactive_m) R_argc--; //Deleting the --no-readline option in interactive mode
@@ -164,11 +164,11 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     R_DefParams(&Rst);
     Rst.R_Interactive = (Rboolean) interactive_m;       // sets interactive() to eval to false
     #ifdef _WIN32
-    
+
     char *temp = getenv("R_HOME");       // which is set above as part of R_VARS
     strncpy(rHome, temp, MAX_PATH);
     Rst.rhome = rHome;
-    
+
     Rst.home = getRUser();
     Rst.CharacterMode = LinkDLL;
     Rst.ReadConsole = myReadConsole;
@@ -181,15 +181,21 @@ void RInside::initialize(const int argc, const char* const argv[], const bool lo
     R_SetParams(&Rst);
 
     if (true || loadRcpp) {             // we always need Rcpp, so load it anyway
-        // Rf_install is used best by first assigning like this so that symbols get into the symbol table
-        // where they cannot be garbage collected; doing it on the fly does expose a minuscule risk of garbage
-        // collection -- with thanks to Doug Bates for the explanation and Luke Tierney for the heads-up
+        // Rf_install is used best by first assigning like this so that symbols get into
+        // the symbol table where they cannot be garbage collected; doing it on the fly
+        // does expose a minuscule risk of garbage collection -- with thanks to Doug Bates
+        // for the explanation and Luke Tierney for the heads-up
         SEXP suppressMessagesSymbol = Rf_install("suppressMessages");
         SEXP requireSymbol = Rf_install("require");
-        Rf_eval(Rf_lang2(suppressMessagesSymbol, Rf_lang2(requireSymbol, Rf_mkString("Rcpp"))), R_GlobalEnv);
+        SEXP reqsymlang, langobj;
+        // Protect temporaries as suggested by 'rchk', with thanks to Tomas Kalibera
+        PROTECT(reqsymlang = Rf_lang2(requireSymbol, Rf_mkString("Rcpp")));
+        PROTECT(langobj = Rf_lang2(suppressMessagesSymbol, reqsymlang));
+        Rf_eval(langobj, R_GlobalEnv);
+        UNPROTECT(2);
     }
 
-    global_env_m = new Rcpp::Environment();         // member variable for access to R's global environment 
+    global_env_m = new Rcpp::Environment();         // member variable for access to R's global environment
 
     autoloads();                        // loads all default packages, using code autogenerate from Makevars{,.win}
 
@@ -223,10 +229,10 @@ void RInside::init_tempdir(void) {
 
 void RInside::init_rand(void) { 		// code borrows from R's TimeToSeed() in datetime.c
     unsigned int pid = getpid();
-    struct timeval tv;          		// this is ifdef'ed by R, we just assume we have it 
+    struct timeval tv;          		// this is ifdef'ed by R, we just assume we have it
     gettimeofday (&tv, NULL);
     unsigned int seed = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
-    seed ^= (pid << 16);         		// R 2.14.0 started to also use pid to support parallel 
+    seed ^= (pid << 16);         		// R 2.14.0 started to also use pid to support parallel
     srand(seed);
 }
 
@@ -519,5 +525,3 @@ void RInside::set_callbacks(Callbacks* callbacks_){
 }
 
 #endif
-
-

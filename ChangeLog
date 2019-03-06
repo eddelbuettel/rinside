@@ -1,5 +1,14 @@
+2019-03-05  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version, Date): New minor version
+
+	* src/RInside.cpp (initialize): Rewritten to use two (protected)
+	temporary variable to avoid any chance of allocation races [rchk]
+
+	* DESCRIPTION (Description): Edited linebreaks and wording
+
 2018-12-26  Zé Vinícius  <jvmirca@gmail.com>
-	
+
 	* README.md: Correct typo in URL for Qt example
 
 2018-09-02  Dirk Eddelbuettel  <edd@debian.org>
