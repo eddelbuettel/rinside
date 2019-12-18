@@ -1,6 +1,7 @@
 2019-12-18  Dirk Eddelbuettel  <edd@debian.org>
 
-	* src/tools/RInsideEnvVars.r: Quote environment variable values
+	* src/tools/RInsideEnvVars.r: Add R_SESSION_INITIALIZED to excluded
+	variables
 
 2019-03-06  Dirk Eddelbuettel  <edd@debian.org>
 
