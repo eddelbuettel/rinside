@@ -322,6 +322,74 @@ void RInside::autoloads() {
     }
 }
 
+int RInside::parseEvalStatus(const std::string &line, SEXP &ans, int &parse_status)
+{
+    ParseStatus status;
+    SEXP cmdSexp, cmdexpr = R_NilValue;
+    int i, errorOccurred;
+
+    mb_m.add((char*)line.c_str());
+
+    PROTECT(cmdSexp = Rf_allocVector(STRSXP, 1));
+    SET_STRING_ELT(cmdSexp, 0, Rf_mkChar(mb_m.getBufPtr()));
+
+    cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
+
+    parse_status = status;
+    switch (status){
+    case PARSE_OK:
+	    //printf("PARSE OK\n");
+        // Loop is needed here as EXPSEXP might be of length > 1
+        for(i = 0; i < Rf_length(cmdexpr); i++){
+            ans = R_tryEval(VECTOR_ELT(cmdexpr, i), *global_env_m, &errorOccurred);
+            if (errorOccurred) {
+                if (verbose_m) Rf_warning("%s: Error in evaluating R code (%d)\n", programName, status);
+                UNPROTECT(2);
+                mb_m.rewind();
+                return 1;
+            }
+            if (verbose_m) {
+                Rf_PrintValue(ans);
+            }
+        }
+        mb_m.rewind();
+        break;
+    case PARSE_INCOMPLETE:
+	//printf("PARSE INCOMPLETE\n");
+	return 1;
+        // need to read another line
+        break;
+    case PARSE_NULL:
+	//printf("PARSE NULL\n");
+        if (verbose_m) Rf_warning("%s: ParseStatus is null (%d)\n", programName, status);
+        UNPROTECT(2);
+        mb_m.rewind();
+        return 1;
+        break;
+    case PARSE_ERROR:
+	//printf("PARSE ERROR\n");
+        if (verbose_m) Rf_warning("Parse Error: \"%s\"\n", line.c_str());
+        UNPROTECT(2);
+        mb_m.rewind();
+        return 1;
+        break;
+    case PARSE_EOF:
+	//printf("PARSE EOF\n");
+	return 1;
+        if (verbose_m) Rf_warning("%s: ParseStatus is eof (%d)\n", programName, status);
+        break;
+    default:
+	//printf("PARSE DEFAULT\n");
+        if (verbose_m) Rf_warning("%s: ParseStatus is not documented %d\n", programName, status);
+        UNPROTECT(2);
+        mb_m.rewind();
+        return 1;
+        break;
+    }
+    UNPROTECT(2);
+    return 0;
+}
+
 // this is a non-throwing version returning an error code
 int RInside::parseEval(const std::string & line, SEXP & ans) {
     ParseStatus status;

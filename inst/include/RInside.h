@@ -69,6 +69,7 @@ public:
 	};
 
     int  parseEval(const std::string &line, SEXP &ans); // parse line, return in ans; error code rc
+    int parseEvalStatus(const std::string &line, SEXP &ans, int &parse_status);
     void parseEvalQ(const std::string &line);			// parse line, no return (throws on error)
     void parseEvalQNT(const std::string &line);			// parse line, no return (no throw)
     Proxy parseEval(const std::string &line);		 	// parse line, return SEXP (throws on error)
