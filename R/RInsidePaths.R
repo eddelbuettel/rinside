@@ -48,6 +48,22 @@ CxxFlags <- function() {
     cat(RInsideCxxFlags())
 }
 
+
+## Provide compiler flags -- i.e. -I/path/to/RInsideC.h
+RInsideCFlags <- function() {
+    path <- system.file( "include", package = "RInside" )
+    # if (.Platform$OS.type=="windows") {
+    #     path <- shQuote(path)
+    # }
+    sprintf('-I%s', path)
+}
+
+## Shorter names, and call cat() directly
+CFlags <- function() {
+    cat(RInsideCFlags())
+}
+
+
 ## LdFlags defaults to static linking on the non-Linux platforms Windows and OS X
 LdFlags <- function(static=ifelse(length(grep("^linux",R.version$os))==0, TRUE, FALSE)) {
     cat(RInsideLdFlags(static=static))
@@ -78,4 +94,3 @@ LdFlags <- function(static=ifelse(length(grep("^linux",R.version$os))==0, TRUE, 
 ## Shorter names, and call cat() directly
 # CxxFlags <- function() cat(RInsideCxxFlags())
 # LdFlags <- function(static=Rcpp:::staticLinking()) cat(RInsideLdFlags(static))
-
