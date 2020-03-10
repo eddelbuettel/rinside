@@ -2,6 +2,6 @@
 
 int main() {
     setupRinC();
-	evalQuietlyInR("print('Hello, World')");
+    evalQuietlyInR("print('Hello, World')");
     teardownRinC();
 }
