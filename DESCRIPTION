@@ -20,7 +20,6 @@ Description: C++ classes to embed R in C++ (and C) applications
  with GNU extensions, so a GNU make is required (and will use the
  'GNUmakefile' automatically). 'Doxygen'-generated documentation of
  the C++ classes is available at the 'RInside' website as well.
-Depends: R 
 Imports: Rcpp
 LinkingTo: Rcpp
 URL: http://dirk.eddelbuettel.com/code/rinside.html
