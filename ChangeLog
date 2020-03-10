@@ -1,3 +1,18 @@
+2020-03-10  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version, Date): Roll minor version
+
+	* DESCRIPTION (Author): Add Lance
+	* DESCRIPTION (Description): Update Description
+
+	[ all based on an initial contribution by Lance Bachmeier ]
+	* src/RInside_C.cpp: New C-only embedding with five simple functions
+	* inst/include/RInside_C.h: Interface to new C-only embedding
+	* R/RInsidePaths.R (RInsideCFlags,CFlags): C flags
+	* inst/examples/c_interface/: New example directory
+
+	* .editorconfig: Added for standard editor behaviour
+
 2019-12-18  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/tools/RInsideEnvVars.r: Add R_SESSION_INITIALIZED to excluded

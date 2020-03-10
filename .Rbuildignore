@@ -22,3 +22,4 @@ local
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*\.tar\.gz
+.editorconfig
