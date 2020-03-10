@@ -3,6 +3,13 @@
 \newcommand{\ghpr}{\href{https://github.com/eddelbuettel/rinside/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/eddelbuettel/rinside/issues/#1}{##1}}
 
+\section{Changes in RInside version 0.2.16 (2020-03-xx)}{
+  \itemize{
+    \item RInside is now also embeddable (with a reduced interface) from
+    C applications thanks to work by Lance Bachmeier (and Dirk)
+  }
+}
+
 \section{Changes in RInside version 0.2.15 (2019-03-06)}{
   \itemize{
     \item Improved Windows build support by copying
@@ -23,7 +30,7 @@
     \item Interactive mode can use readline REPL (Łukasz Łaniewski-Wołłk
     in \ghpr{25}, and Dirk in \ghpr{26})
     \item Windows macros checks now uses \code{_WIN32} (Kevin Ushey in
-    \ghpr{22}) 
+    \ghpr{22})
     \item The wt example now links with \code{libboost_system}
     \item The \code{Makevars} file is now more robist (Mattias Ellert in
     \ghpr{21})
@@ -76,13 +83,13 @@
       \item Updated \code{DESCRIPTION} with \code{Imports:} instead of
       \code{Depends:}
       \item Added correspondiing \code{importFrom(Rcpp, evalCpp)} to
-      \code{NAMESPACE} 
+      \code{NAMESPACE}
       \item Noted in all \code{inst/examples/*/Makefile} that
       \CRANpkg{Rcpp} no longer requires a library argument, but left code for
       backwards compatibility in case 0.11.0 is not yet installed.
     }
     \item Added \code{--vanilla --slave} to default arguments for R
-    initialization 
+    initialization
     \item Added a few more explicit \code{#include} statements in the \code{qt}
     example which Qt 5.1 now appears to require -- with thanks to
     Spencer Behling for the patch
@@ -103,7 +110,7 @@
     which do not currently work; external pointer use should still work.
   }
 }
-   
+
 \section{Changes in RInside version 0.2.9 (2012-11-04)}{
   \itemize{
     \item Applied (modified) patch by Theodore Lytras which lets RInside
@@ -140,7 +147,7 @@
     \item New fifth examples subdirectory 'armadillo' with two new
     examples showing how to combine \CRANpkg{RInside} with \CRANpkg{RcppArmadillo}
     \item New sixth examples subdirectory 'eigen' with two new examples
-    showing how to combine \CRANpkg{RInside} with \CRANpkg{RcppEigen} 
+    showing how to combine \CRANpkg{RInside} with \CRANpkg{RcppEigen}
     \item Prettified the Wt example 'web application' with CSS use, also added
     and XML file with simple headers and description text
     \item New example rinside_sample12 motivated by StackOverflow
@@ -154,10 +161,10 @@
     console writer, with thanks to both James Bates and John Brzustowski
     \item Update RNG seeding (used by tmpnam et al) to same scheme used by
     R since 2.14.0: blending both millisecond time and process id
-    \item Added CMake build support for all four example directories as kindly 
+    \item Added CMake build support for all four example directories as kindly
     provided by Peter Aberline; this helps when writing RInside code
     inside of IDEs such as Eclipse, KDevelop or Code::Blocks
-    \item Small update to standard examples Makefile for Windows permitting 
+    \item Small update to standard examples Makefile for Windows permitting
     to explicitly set i386 or x64 as a build architecture
   }
 }
@@ -167,7 +174,7 @@
     RInside to working on Windows -- with a big Thank You! to James for
     fixing a long-standing bug we inadvertendly introduced right after
     0.2.0 almost two years ago
-    \item New example embedding R inside a Wt (aka Webtoolkit, pronounced 
+    \item New example embedding R inside a Wt (aka Webtoolkit, pronounced
     'witty') application, mirroring the previous Qt application
     \item Qt example qtdensity now uses the new svg() device in base R; removed
     test for cairoDevice package as well as fallback png code
@@ -176,12 +183,12 @@
 }
 \section{Changes in RInside version 0.2.4 (2011-04-24)}{
   \itemize{
-    \item Minor code cleanups in initialization code 
+    \item Minor code cleanups in initialization code
     \item New example embedding R inside a Qt application, along with pro file
     for Qt's qmake providing a complete simple C++ GUI application
     \item New examples rinside_sample\{10,11\} based on questions on the
     r-help and r-devel mailing list
-    \item Some improvements and simplifications throughout examples/standard 
+    \item Some improvements and simplifications throughout examples/standard
     as well as examples/mpi/
     \item Added this NEWS files -- with entries below summarised from ChangeLog
     and the corresponding blog posts
@@ -209,7 +216,7 @@
     \item rinside_sample\{2,4,5\} updated accordingly
     \item Two new 'R inside an MPI app' examples contributed by Jianping Hua
     \item Also added two C++ variants of the C examples for RInside and MPI
-    \item rinside_sample8 updated with parseEval changes   
+    \item rinside_sample8 updated with parseEval changes
     \item Internal MemBuf class simplified via STL std::string
     \item Autoload simplied via the new Rcpp API
     \item Added default constructor for RInside

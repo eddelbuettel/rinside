@@ -1,8 +1,8 @@
 Package: RInside
 Title: C++ Classes to Embed R in C++ Applications
-Version: 0.2.15
-Date: 2019-03-06
-Author: Dirk Eddelbuettel and Romain Francois
+Version: 0.2.15.1
+Date: 2020-03-10
+Author: Dirk Eddelbuettel, Romain Francois, Lance Bachmeier
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
 Description: C++ classes to embed R in C++ applications
  A C++ class providing the R interpreter is offered by this package
