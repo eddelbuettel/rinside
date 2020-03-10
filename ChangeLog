@@ -1,5 +1,10 @@
 2020-03-10  Dirk Eddelbuettel  <edd@debian.org>
 
+	* DESCRIPTION (Version, Date): Roll minor version
+
+	* DESCRIPTION (Author): Add Lance
+	* DESCRIPTION (Description): Update Description
+
 	[ all based on an initial contribution by Lance Bachmeier ]
 	* src/RInside_C.cpp: New C-only embedding with five simple functions
 	* inst/include/RInside_C.h: Interface to new C-only embedding
