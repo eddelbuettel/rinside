@@ -20,35 +20,35 @@
 
 #include <RInside.h>
 
-RInside *rr = nullptr;
+RInside *rr = NULL;
 
 extern "C" {
     void setupRinC() {
-        if (rr == nullptr)
+        if (rr == NULL)
             rr = new RInside;
     }
 
     void passToR(SEXP x, char * name) {
-        if (rr != nullptr)
+        if (rr != NULL)
             rr->assign(x, std::string(name));
     }
 
     SEXP evalInR(char * cmd) {
-        if (rr != nullptr)
+        if (rr != NULL)
             return rr->parseEval(std::string(cmd));
         else
             return R_NilValue;
     }
 
     void evalQuietlyInR(char * cmd) {
-        if (rr != nullptr)
+        if (rr != NULL)
             rr->parseEvalQ(std::string(cmd));
     }
 
     void teardownRinC() {
-        if (rr != nullptr) {
+        if (rr != NULL) {
             delete rr;
-            rr = nullptr;
+            rr = NULL;
         }
     }
 }

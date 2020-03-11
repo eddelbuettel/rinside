@@ -5,8 +5,11 @@
 
 \section{Changes in RInside version 0.2.16 (2020-03-xx)}{
   \itemize{
-    \item RInside is now also embeddable (with a reduced interface) from
-    C applications thanks to work by Lance Bachmeier (and Dirk)
+    \item RInside is now embeddable (with a reduced interface) from C
+    applications thanks to Lance Bachmeier (who is now co-author) plus
+    some polish by Dirk in \ghpr{43})
+    \item Add \code{R_SESSION_INIIALIZED} to list of excluded variables.
+    \item Add simple diagnostics function to have a registered function.
   }
 }
 
