@@ -1,6 +1,12 @@
-## RInside [![Build Status](https://travis-ci.org/eddelbuettel/rinside.svg)](https://travis-ci.org/eddelbuettel/rinside) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RInside)](https://cran.r-project.org/package=RInside) [![Dependencies](https://tinyverse.netlify.com/badge/RInside)](https://cran.r-project.org/package=RInside) [![Downloads](http://cranlogs.r-pkg.org/badges/RInside?color=brightgreen)](https://cran.r-project.org/package=RInside)
+## RInside: Easy embedding of R inside C++ (and C)
 
-Easy embedding of R inside C++
+[![Build Status](https://travis-ci.org/eddelbuettel/rinside.svg)](https://travis-ci.org/eddelbuettel/rinside)
+[![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
+[![CRAN](http://www.r-pkg.org/badges/version/RInside)](https://cran.r-project.org/package=RInside)
+[![Dependencies](https://tinyverse.netlify.com/badge/RInside)](https://cran.r-project.org/package=RInside)
+[![Debian package](https://img.shields.io/debian/v/r-cran-rinside/sid?color=brightgreen)](https://packages.debian.org/sid/r-cran-rinside)
+[![Downloads](http://cranlogs.r-pkg.org/badges/RInside?color=brightgreen)](https://cran.r-project.org/package=RInside)
+
 
 ### About
 
@@ -9,13 +15,10 @@ C++ applications by relying on [Rcpp](http://www.rcpp.org).
 
 ### Examples
 
-Provided with the package itself are eight subdirectories with examples: from
-more than a dozen basic command-line examples (in directory `standard`) to
-graphical user-interfaces (using both [Qt](http://www.qt.io) and
-[Wt](http://www.webtoolkit.eu/wt)), linear algebra with
-[Armadillo](http://arma.sf.net) and
-[Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page), parallel
-computing with MPI to a sandboxed server.
+Provided with the package itself are nine subdirectories with examples: from more than a dozen basic command-line examples (in directory
+`standard`) to graphical user-interfaces (using both [Qt](http://www.qt.io) and [Wt](http://www.webtoolkit.eu/wt)), linear algebra with
+[Armadillo](http://arma.sf.net) and [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page), parallel computing with MPI to a
+sandboxed server, and (since release 0.2.16) a simple (and more limited) interface for embedding insice C applications.
 
 The simplest example (modulo its header) is [examples/standard/rinside_sample0.cpp](inst/examples/standard/rinside_sample0.cpp)
 
@@ -24,7 +27,7 @@ The simplest example (modulo its header) is [examples/standard/rinside_sample0.c
 
 int main(int argc, char *argv[]) {
 
-    RInside R(argc, argv);              // create an embedded R instance 
+    RInside R(argc, argv);              // create an embedded R instance
 
     R["txt"] = "Hello, world!\n";	    // assign a char* (string) to 'txt'
 
@@ -33,12 +36,12 @@ int main(int argc, char *argv[]) {
     exit(0);
 }
 ```
-The [Qt example directory](https://github.com/eddelbuettel/rinside/tree/master/inst/examples/qt) produces 
+The [Qt example directory](https://github.com/eddelbuettel/rinside/tree/master/inst/examples/qt) produces
 this application for showing how to use R (to estimate densities) inside a C++ executable (providing the GUI):
 
 ![](https://github.com/eddelbuettel/rinside/blob/master/local/qtdensitySVG.png)
 
-The code is portable across operating systems.  Similar, the 
+The code is portable across operating systems.  Similar, the
 [Wt example directory](https://github.com/eddelbuettel/rinside/tree/master/inst/examples/wt)
 contains this C++-based web application doing the same:
 
@@ -52,7 +55,7 @@ some more details.
 
 ### Authors
 
-Dirk Eddelbuettel and Romain Francois
+Dirk Eddelbuettel, Romain Francois, and Lance Bachmeier
 
 ### License
 

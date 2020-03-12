@@ -3,13 +3,13 @@
 \newcommand{\ghpr}{\href{https://github.com/eddelbuettel/rinside/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/eddelbuettel/rinside/issues/#1}{##1}}
 
-\section{Changes in RInside version 0.2.16 (2020-03-xx)}{
+\section{Changes in RInside version 0.2.16 (2020-03-12)}{
   \itemize{
     \item RInside is now embeddable (with a reduced interface) from C
     applications thanks to Lance Bachmeier (who is now co-author) plus
     some polish by Dirk in \ghpr{43})
-    \item Add \code{R_SESSION_INIIALIZED} to list of excluded variables.
-    \item Add simple diagnostics function to have a registered function.
+    \item Added \code{R_SESSION_INIIALIZED} to list of excluded variables.
+    \item Added simple diagnostics function to have a registered function.
   }
 }
 

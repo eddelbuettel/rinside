@@ -1,3 +1,11 @@
+2020-03-12  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version, Date): Release 0.2.16
+
+2020-03-11  Dirk Eddelbuettel  <edd@debian.org>
+
+	* README.md: Small edits, added Debian badge
+
 2020-03-10  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version, Date): Roll minor version

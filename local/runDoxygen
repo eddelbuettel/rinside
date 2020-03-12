@@ -50,7 +50,7 @@ if [ -x /usr/bin/doxygen ]; then
         cd inst/doc
         rm -rf html/ latex/ man/
         cd ..
-        rm doc/doxygen_sqlite3.db
+        #rm doc/doxygen_sqlite3.db
         rmdir doc
         cd ${cwd}
     fi
