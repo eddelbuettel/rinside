@@ -6,7 +6,7 @@
 [![Dependencies](https://tinyverse.netlify.com/badge/RInside)](https://cran.r-project.org/package=RInside)
 [![Debian package](https://img.shields.io/debian/v/r-cran-rinside/sid?color=brightgreen)](https://packages.debian.org/sid/r-cran-rinside)
 [![Downloads](http://cranlogs.r-pkg.org/badges/RInside?color=brightgreen)](https://cran.r-project.org/package=RInside)
-
+[![Last Commit](https://img.shields.io/github/last-commit/eddelbuettel/rinside)](https://github.com/eddelbuettel/rinside)
 
 ### About
 
