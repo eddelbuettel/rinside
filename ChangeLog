@@ -1,5 +1,7 @@
 2020-12-03  Dirk Eddelbuettel  <edd@debian.org>
 
+	* .travis.yml: Switch to r-ci using focal and bspm
+
 	* inst/examples/standard/GNUmakefile: Whitespace changes
 
 2020-08-16  Dirk Eddelbuettel  <edd@debian.org>
