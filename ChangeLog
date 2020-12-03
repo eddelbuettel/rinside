@@ -1,3 +1,7 @@
+2020-12-03  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/standard/GNUmakefile: Whitespace changes
+
 2020-08-16  Dirk Eddelbuettel  <edd@debian.org>
 
 	* README.md: Add a 'last commit' badge
