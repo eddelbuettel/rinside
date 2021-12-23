@@ -1,6 +1,5 @@
 ## RInside: Easy embedding of R inside C++ (and C)
 
-[![Build Status](https://travis-ci.org/eddelbuettel/rinside.svg)](https://travis-ci.org/eddelbuettel/rinside)
 [![CI](https://github.com/eddelbuettel/rinside/workflows/ci/badge.svg)](https://github.com/eddelbuettel/rinside/actions?query=workflow%3Aci)
 [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
 [![CRAN](http://www.r-pkg.org/badges/version/RInside)](https://cran.r-project.org/package=RInside)
