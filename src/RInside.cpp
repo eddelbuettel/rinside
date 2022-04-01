@@ -37,7 +37,7 @@ const char *programName = "RInside";
     extern int optind;
 
     #include <windef.h>
-    char rHome[MAX_PATH];
+    char rHome[MAX_PATH+1];
 #endif
 
 RInside::~RInside() {           // now empty as MemBuf is internal
@@ -62,10 +62,14 @@ RInside::RInside(): global_env_m(NULL)
 }
 
 #ifdef _WIN32
+#if R_VERSION >= R_Version(4,2,0)
+static int myReadConsole(const char *prompt, unsigned char *buf, int len, int addtohistory) {
+#else
 static int myReadConsole(const char *prompt, char *buf, int len, int addtohistory) {
+#endif
     fputs(prompt, stdout);
     fflush(stdout);
-    if (fgets(buf, len, stdin))
+    if (fgets((char *)buf, len, stdin))
         return 1;
     else
         return 0;

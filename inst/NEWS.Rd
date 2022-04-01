@@ -3,6 +3,17 @@
 \newcommand{\ghpr}{\href{https://github.com/eddelbuettel/rinside/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/eddelbuettel/rinside/issues/#1}{##1}}
 
+\section{Changes in RInside version 0.2.17 (2022-03-31)}{
+  \itemize{
+    \item A Windows-only patch for R 4.2.0 kindly provided by Tomas
+    Kalibera was applied, and also conditioned on R (>= 4.2.0)
+    \item Continuous Integration setup was updated and now uses
+    \href{https://eddelbuettel.github.io/r-ci/}{r-ci}.
+    \item Several updates were made to README.md (badges etc) and
+    DESCRIPTION
+  }
+}
+
 \section{Changes in RInside version 0.2.16 (2020-03-12)}{
   \itemize{
     \item RInside is now embeddable (with a reduced interface) from C

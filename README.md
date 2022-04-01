@@ -11,13 +11,13 @@
 ### About
 
 The RInside package provides a few classes for seamless embedding of [R](https://www.r-project.org) inside of
-C++ applications by relying on [Rcpp](http://www.rcpp.org).
+C++ applications by relying on [Rcpp](https://www.rcpp.org/).
 
 ### Examples
 
 Provided with the package itself are nine subdirectories with examples: from more than a dozen basic command-line examples (in directory
-`standard`) to graphical user-interfaces (using both [Qt](http://www.qt.io) and [Wt](http://www.webtoolkit.eu/wt)), linear algebra with
-[Armadillo](http://arma.sf.net) and [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page), parallel computing with MPI to a
+`standard`) to graphical user-interfaces (using both [Qt](https://www.qt.io/) and [Wt](https://www.webtoolkit.eu/wt)), linear algebra with
+[Armadillo](http://arma.sourceforge.net/) and [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page), parallel computing with MPI to a
 sandboxed server, and (since release 0.2.16) a simple (and more limited) interface for embedding insice C applications.
 
 The simplest example (modulo its header) is [examples/standard/rinside_sample0.cpp](inst/examples/standard/rinside_sample0.cpp)

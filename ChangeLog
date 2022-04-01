@@ -1,3 +1,14 @@
+2022-03-31  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version, Date): Release 0.2.17
+
+	* README.md: Four more URLs were updated
+
+2022-03-30  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/RInside.cpp (myReadConsole): Windows-only patch provided by
+	Tomas Kalibera for upcoming R 4.2.0, adjusted for R (>= 4.2.0) too
+
 2021-12-23  Dirk Eddelbuettel  <edd@debian.org>
 
 	* README.md: Remove unused continuous integration artifact and badge
