@@ -1,3 +1,7 @@
+2022-11-29  Dirk Eddelbuettel  <edd@debian.org>
+
+	* .github/workflows/ci.yaml (jobs): Update to actions/checkout@v3
+
 2022-04-03  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/RInside.cpp (init_rand): Minor update inspired from the
