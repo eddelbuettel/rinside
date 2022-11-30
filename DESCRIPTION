@@ -22,7 +22,7 @@ Description: C++ classes to embed R in C++ (and C) applications
  the C++ classes is available at the 'RInside' website as well.
 Imports: Rcpp
 LinkingTo: Rcpp
-URL: https://github.com/eddelbuettel/rinside/, http://dirk.eddelbuettel.com/code/rinside.html
+URL: https://github.com/eddelbuettel/rinside/, https://dirk.eddelbuettel.com/code/rinside.html
 License: GPL (>= 2)
 BugReports: https://github.com/eddelbuettel/rinside/issues
 MailingList: Please send questions and comments regarding RInside to rcpp-devel@lists.r-forge.r-project.org
