@@ -3,7 +3,7 @@
 // RInside.cpp: R/C++ interface class library -- Easier R embedding into C++
 //
 // Copyright (C) 2009         Dirk Eddelbuettel
-// Copyright (C) 2010 - 2019  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2022  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -234,8 +234,8 @@ void RInside::init_tempdir(void) {
 void RInside::init_rand(void) { 		// code borrows from R's TimeToSeed() in datetime.c
     unsigned int pid = getpid();
     struct timeval tv;          		// this is ifdef'ed by R, we just assume we have it
-    gettimeofday (&tv, NULL);
-    unsigned int seed = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
+    gettimeofday (&tv, NULL);           // we could borrow autoconf setup from littler to ensure
+    unsigned int seed = (unsigned int)(((uint_least64_t) tv.tv_usec << 16) ^ tv.tv_sec);
     seed ^= (pid << 16);         		// R 2.14.0 started to also use pid to support parallel
     srand(seed);
 }

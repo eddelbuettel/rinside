@@ -1,8 +1,7 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
-//
+
 // RInsideCommon.h: R/C++ interface class library -- Easier R embedding into C++
 //
-// Copyright (C) 2010 - 2011 Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2022  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of RInside.
 //
@@ -25,11 +24,12 @@
 #include <RInsideConfig.h>
 
 #include <sys/time.h>           // gettimeofday()
-#include <sys/types.h>		// pid_t
-#include <unistd.h>		// getpid()
+#include <sys/types.h>          // pid_t
+#include <unistd.h>             // getpid()
+#include <stdint.h>             // uint_least64_t (in init_rand())
 
-#include <inttypes.h>		// intptr_t (one day we use cinttypes from C++11)
-#include <stdint.h>		// uint64_t (one day we use cstdint from C++11)
+#include <inttypes.h> 			// intptr_t (one day we use cinttypes from C++11)
+#include <stdint.h>				// uint64_t (one day we use cstdint from C++11)
 
 #include <string>
 #include <vector>
