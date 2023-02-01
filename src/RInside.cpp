@@ -425,9 +425,17 @@ RInside* RInside::instancePtr(){
     return instance_m;
 }
 
+extern "C" {
+     void run_Rmainloop(void);
+}
+ 
 void RInside::repl() {
-    R_ReplDLLinit();
-    while (R_ReplDLLdo1() > 0) {}
+    run_Rmainloop();
+
+    // Causes problems under Windows.
+    // For example, terminates after plot(0,0)
+    // R_ReplDLLinit();
+    // while (R_ReplDLLdo1() > 0) {}
 }
 
 /* callbacks */
