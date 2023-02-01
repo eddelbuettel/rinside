@@ -3,6 +3,8 @@
 	* src/Makevars ($(USERLIB)): Use relative file location in
 	install_name_tool call, additional checks for when to call
 
+	* README.md: Update several URLs to https://
+
 2023-01-31  Dominick Samperi  <djsamperi@gmail.com>
 
 	* src/RInside.cpp: Switch to run_Rmainloop()

@@ -1,11 +1,11 @@
 ## RInside: Easy embedding of R inside C++ (and C)
 
 [![CI](https://github.com/eddelbuettel/rinside/workflows/ci/badge.svg)](https://github.com/eddelbuettel/rinside/actions?query=workflow%3Aci)
-[![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
-[![CRAN](http://www.r-pkg.org/badges/version/RInside)](https://cran.r-project.org/package=RInside)
+[![License](https://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](https://www.gnu.org/licenses/gpl-2.0.html)
+[![CRAN](https://www.r-pkg.org/badges/version/RInside)](https://cran.r-project.org/package=RInside)
 [![Dependencies](https://tinyverse.netlify.com/badge/RInside)](https://cran.r-project.org/package=RInside)
 [![Debian package](https://img.shields.io/debian/v/r-cran-rinside/sid?color=brightgreen)](https://packages.debian.org/sid/r-cran-rinside)
-[![Downloads](http://cranlogs.r-pkg.org/badges/RInside?color=brightgreen)](https://cran.r-project.org/package=RInside)
+[![Downloads](https://cranlogs.r-pkg.org/badges/RInside?color=brightgreen)](https://cran.r-project.org/package=RInside)
 [![Last Commit](https://img.shields.io/github/last-commit/eddelbuettel/rinside)](https://github.com/eddelbuettel/rinside)
 
 ### About
@@ -16,8 +16,8 @@ C++ applications by relying on [Rcpp](https://www.rcpp.org/).
 ### Examples
 
 Provided with the package itself are nine subdirectories with examples: from more than a dozen basic command-line examples (in directory
-`standard`) to graphical user-interfaces (using both [Qt](https://www.qt.io/) and [Wt](https://www.webtoolkit.eu/wt)), linear algebra with
-[Armadillo](http://arma.sourceforge.net/) and [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page), parallel computing with MPI to a
+`standard`) to graphical user-interfaces (using both [Qt](https://www.qt.io/) and Wt), linear algebra with
+[Armadillo](https://arma.sourceforge.net/) and [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page), parallel computing with MPI to a
 sandboxed server, and (since release 0.2.16) a simple (and more limited) interface for embedding insice C applications.
 
 The simplest example (modulo its header) is [examples/standard/rinside_sample0.cpp](inst/examples/standard/rinside_sample0.cpp)
@@ -50,7 +50,7 @@ contains this C++-based web application doing the same:
 
 ### See Also
 
-The [RInside](http://dirk.eddelbuettel.com/code/rinside.html) web page has
+The [RInside](https://dirk.eddelbuettel.com/code/rinside.html) web page has
 some more details.
 
 ### Authors
