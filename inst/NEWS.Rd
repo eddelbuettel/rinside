@@ -3,6 +3,14 @@
 \newcommand{\ghpr}{\href{https://github.com/eddelbuettel/rinside/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/eddelbuettel/rinside/issues/#1}{##1}}
 
+\section{Changes in RInside version 0.2.18 (2023-02-01)}{
+  \itemize{
+    \item The random number initialization was updated as in R.
+    \item The main REPL is not running via `run_Rmainloop()`.
+    \item Small routine update to package and continuous integration.
+  }
+}
+
 \section{Changes in RInside version 0.2.17 (2022-03-31)}{
   \itemize{
     \item A Windows-only patch for R 4.2.0 kindly provided by Tomas
