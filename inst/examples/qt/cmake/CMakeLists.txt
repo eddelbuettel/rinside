@@ -4,6 +4,7 @@ project(qtdensitydemo)
 find_package(Qt6 REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets SvgWidgets)
 
+set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_MESSAGE_CONTEXT_SHOW ON)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -35,34 +36,20 @@ set(headers ../qtdensity.h)
 
 set(NUM_TRUNC_CHARS 2)
 
-execute_process(COMMAND R CMD config --cppflags
-                OUTPUT_VARIABLE RCPPFLAGS)
+execute_process(COMMAND R CMD config --cppflags OUTPUT_VARIABLE RCPPFLAGS)
 string(SUBSTRING ${RCPPFLAGS} ${NUM_TRUNC_CHARS} -1 RCPPFLAGS)
 include_directories(${RCPPFLAGS})
 
-execute_process(COMMAND R CMD config --ldflags
-                OUTPUT_VARIABLE RLDFLAGS)
+execute_process(COMMAND R CMD config --ldflags OUTPUT_VARIABLE RLDFLAGS)
 string(LENGTH ${RLDFLAGS} RLDFLAGS_LEN)
+string(STRIP ${RLDFLAGS} RLDFLAGS)
 
-if (${RLDFLAGS} MATCHES "[-][L]([^ ;])+")
-    string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RLDFLAGS_L)
-    string(STRIP ${RLDFLAGS_L} RLDFLAGS_L )
-    link_directories(${RLDFLAGS_L})
-endif()
-
-if (${RLDFLAGS} MATCHES "[-][l]([^;])+")
-	#string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RLDFLAGS_l) do not drop the -l part at the start
-	string(STRIP ${CMAKE_MATCH_0} RLDFLAGS_l )
-endif()
-
-execute_process(COMMAND Rscript -e "Rcpp:::CxxFlags()"
-                OUTPUT_VARIABLE RCPPINCL)
+execute_process(COMMAND Rscript -e "Rcpp:::CxxFlags()" OUTPUT_VARIABLE RCPPINCL)
 string(SUBSTRING ${RCPPINCL} ${NUM_TRUNC_CHARS} -1 RCPPINCL)
 string(REPLACE "\"" "" RCPPINCL ${RCPPINCL}) #Rcpp::CxxFlags() adds quotes around the include directory, which is friendly and all but breaks include_directories
 include_directories(${RCPPINCL})
 
-execute_process(COMMAND Rscript -e "Rcpp:::LdFlags()"
-                OUTPUT_VARIABLE RCPPLIBS)
+execute_process(COMMAND Rscript -e "Rcpp:::LdFlags()" OUTPUT_VARIABLE RCPPLIBS)
 if (${RCPPLIBS} MATCHES "[-][L]([^ ;])+")
     string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RCPPLIBS_L)
     link_directories(${RCPPLIBS_L} )
@@ -78,13 +65,19 @@ string(SUBSTRING ${RINSIDEINCL} ${NUM_TRUNC_CHARS} -1 RINSIDEINCL)
 include_directories(${RINSIDEINCL})
 
 execute_process(COMMAND Rscript -e "RInside:::LdFlags()" OUTPUT_VARIABLE RINSIDELIBS)
+string(STRIP ${RINSIDELIBS} RINSIDELIBS )
+string(REPLACE "\"" "" RINSIDELIBS ${RINSIDELIBS})
 
 if (${RINSIDELIBS} MATCHES "[-][L]([^ ;])+")
     string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RINSIDELIBS_L)
     link_directories(${RINSIDELIBS_L})
-elseif (${RINSIDELIBS} MATCHES "[-][l][R]([^;])+")
+endif()
+
+if (${RINSIDELIBS} MATCHES "[-][l][R]([^;])+")
 	string(SUBSTRING ${CMAKE_MATCH_0} ${NUM_TRUNC_CHARS} -1 RINSIDELIBS_l)
-elseif (${RINSIDELIBS} MATCHES ".+\.a$")
+endif()
+
+if (${RINSIDELIBS} MATCHES ".+\.a$")
 	set(RINSIDELIBS_l ${RINSIDELIBS})
 endif()
 
@@ -93,11 +86,6 @@ execute_process(COMMAND R CMD config BLAS_LIBS   OUTPUT_VARIABLE RBLAS)
 execute_process(COMMAND R CMD config LAPACK_LIBS OUTPUT_VARIABLE RLAPACK)
 
 set(CMAKE_CXX_FLAGS "-W -Wall -pedantic -Wextra ${CMAKE_CXX_FLAGS}")
-
-if(APPLE)
-	#The regex above strips the R framework flag from RLDFLAGS and we do need it to compile on macos
-	set(RLDFLAGS_l "-L/opt/R/arm64/lib -F/Library/Frameworks/R.framework/.. -framework R ${RLDFLAGS_l}")
-endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "DEBUG" OR
     CMAKE_BUILD_TYPE STREQUAL "RelWithDebugInfo" )
@@ -119,5 +107,5 @@ target_link_libraries(
 	${LAPACK_LIBS}
 	${RCPPLIBS_l}
 	${RINSIDELIBS_l}
-	${RLDFLAGS_l}
+	${RLDFLAGS}
 )

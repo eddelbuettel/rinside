@@ -9,6 +9,8 @@ cmake -S ../cmake -G "Unix Makefiles"
 make -j
 ```
 
+On Ubuntu you would need at least the following packages installed: libqt6svgwidgets6 qt6-tools-dev-tools qt6-base-dev r-base-dev libqt6svg6-dev
+
 What could be easier on some systems, depending on how Qt was installed, is using Qt Creator.
 This can be done through "Open Project" and loading "CMakeLists.txt".
 
