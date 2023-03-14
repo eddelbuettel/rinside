@@ -1,19 +1,19 @@
 
 This directory provides a simple example of using RInside with the Qt
-toolkit---using a SVG renderer.  Usage is standard Qt usage, do
+toolkit---using a SVG renderer.  Usage is standard Qt usage, through cmake.
 
-    qmake 
+To build from commandline try the following from this directory:
+```
+mkdir build; cd build
+cmake -S ../cmake -G "Unix Makefiles"
+make -j
+```
 
-to generate a Makefile from the qmake source file ending in .pro, followed
-by
+What could be easier on some systems, depending on how Qt was installed, is using Qt Creator.
+This can be done through "Open Project" and loading "CMakeLists.txt".
 
-    make
-
-which should generate the qtdensity binary.  Doing
-
-    make clean
-
-tidies things up.
+If you are on macOs and there are errors on "SUBSTRING" needing 4 arguments try starting QtCreator manually from a terminal.
+If you get similar errors on Windows then perhaps R isn't on the PATH and you might need to add the `bin/x64` folder of R manually.
 
 To generate SVG output, this version depends on the cairoDevice package for R
 which you may need to install.  According to its author Michael Lawrence,

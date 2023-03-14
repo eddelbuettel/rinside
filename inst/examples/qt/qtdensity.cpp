@@ -6,6 +6,7 @@
 // Copyright (C) 2011 - 2013  Dirk Eddelbuettel and Romain Francois
 
 #include "qtdensity.h"
+#include <QRegularExpression>
 
 QtDensity::QtDensity(RInside & R) : m_R(R)
 {
@@ -60,7 +61,7 @@ void QtDensity::setupDisplay(void)  {
     kernelGroup->addButton(radio3, 2);
     kernelGroup->addButton(radio4, 3);
     kernelGroup->addButton(radio5, 4);
-    QObject::connect(kernelGroup, SIGNAL(buttonClicked(int)), this, SLOT(getKernel(int)));
+	QObject::connect(kernelGroup, SIGNAL(idClicked(int)), this, SLOT(getKernel(int)));
 
     m_svg = new QSvgWidget();
     runRandomDataCmd();         // also calls plot()
@@ -138,8 +139,8 @@ void QtDensity::filterFile() {
     
     QTextStream in(&infile);
     QTextStream out(&outfile);
-    QRegExp rx1("<symbol"); 
-    QRegExp rx2("</symbol");    
+	static QRegularExpression rx1("<symbol");
+	static QRegularExpression rx2("</symbol");
     while (!in.atEnd()) {
         QString line = in.readLine();
         line.replace(rx1, "<g"); // so '<symbol' becomes '<g ...'
