@@ -1,3 +1,14 @@
+2023-03-14  Joris Goosen  <joris@jorisgoosen.nl>
+
+	* inst/examples/qt/cmake/CMakeLists.txt: Refine qt6 change
+	* inst/examples/qt/README: Idem
+
+2023-03-13  Joris Goosen  <joris@jorisgoosen.nl>
+
+	* inst/examples/qt/qtdensity.cpp: Update to qt6
+	* inst/examples/qt/cmake/CMakeLists.txt: Idem
+	* inst/examples/qt/README: Idem
+
 2023-02-01  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version, Date): Release 0.2.18
