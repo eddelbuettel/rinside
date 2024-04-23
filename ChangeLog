@@ -1,3 +1,8 @@
+2024-04-23  Dirk Eddelbuettel  <edd@debian.org>
+
+	* .github/workflows/ci.yaml (jobs): Update to actions/checkout@v4,
+	add r-ci-setup actions
+
 2023-09-17  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/sandboxed_server/README.md: Add README noting need to
