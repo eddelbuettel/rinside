@@ -3,7 +3,7 @@
 [![CI](https://github.com/eddelbuettel/rinside/workflows/ci/badge.svg)](https://github.com/eddelbuettel/rinside/actions?query=workflow%3Aci)
 [![License](https://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![CRAN](https://www.r-pkg.org/badges/version/RInside)](https://cran.r-project.org/package=RInside)
-[![Dependencies](https://tinyverse.netlify.com/badge/RInside)](https://cran.r-project.org/package=RInside)
+[![Dependencies](https://tinyverse.netlify.app/badge/RInside)](https://cran.r-project.org/package=RInside)
 [![Debian package](https://img.shields.io/debian/v/r-cran-rinside/sid?color=brightgreen)](https://packages.debian.org/sid/r-cran-rinside)
 [![Downloads](https://cranlogs.r-pkg.org/badges/RInside?color=brightgreen)](https://cran.r-project.org/package=RInside)
 [![Last Commit](https://img.shields.io/github/last-commit/eddelbuettel/rinside)](https://github.com/eddelbuettel/rinside)
