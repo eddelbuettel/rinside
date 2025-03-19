@@ -1,3 +1,9 @@
+2025-03-19  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/sandboxed_server/example_server.cpp: Remove obsolete
+	test for C++11 use in server
+	* inst/examples/standard/rinside_sample17.cpp: Idem, dos2unix'ed
+
 2024-10-28  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Authors@R): Added

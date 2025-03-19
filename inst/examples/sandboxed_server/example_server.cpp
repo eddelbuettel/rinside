@@ -61,9 +61,6 @@ const int TIMEOUT_SECONDS = 600;
 #if !defined(RINSIDE_CALLBACKS)
 #error "RInside was not compiled with RINSIDE_CALLBACKS"
 #endif
-#if !defined(RCPP_USING_CXX11)
-#error "Rcpp didn't detect C++11 support (RCPP_USING_CXX11 is not defined)"
-#endif
 
 #include "datatypes/foo_rcpp_wrapper_definitions.h"
 #include "datatypes/bar_rcpp_wrapper_definitions.h"

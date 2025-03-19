@@ -8,18 +8,6 @@
 
 #include <RcppCommon.h>
 
-#if !defined(RCPP_USING_CXX11)
-int main(int argc, char *argv[]) {
-    std::cout << "This example requires a c++11 compatible compiler. Upgrade your compiler and/or add the -std=c++11 compiler option.\n";
-    exit(0);
-}
-#elif RCPP_VERSION < Rcpp_Version(0,11,3)
-int main(int argc, char *argv[]) {
-    std::cout << "This example requires Rcpp 0.11.3 or later. Upgrade Rcpp and recompile this example.\n";
-    exit(0);
-}
-#else
-
 #include <memory>
 
 /*
@@ -179,4 +167,3 @@ int main(int argc, char *argv[]) {
     std::cout << "    Expected   a=25, b=53" << std::endl;
 }
 
-#endif
