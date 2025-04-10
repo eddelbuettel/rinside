@@ -1,3 +1,7 @@
+2025-04-08  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/tools/RInsideEnvVars.r: Allow double quotes in env.var
+
 2025-03-19  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/examples/sandboxed_server/example_server.cpp: Remove obsolete

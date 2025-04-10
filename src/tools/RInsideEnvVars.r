@@ -14,6 +14,8 @@ cat("    const char *R_VARS[] = {\n")
 for (i in 1:length(IncludeVars)){
     if (names(IncludeVars)[i] %in% ExcludeVars)
         next
-    cat('        "',names(IncludeVars)[i],'","',IncludeVars[i],'",\n',sep='')
+    cat('        "', names(IncludeVars)[i], '", "',
+        gsub('"', r"(\\")", IncludeVars[i], perl=TRUE),
+        '",\n', sep='')
 }
 cat("        NULL\n    };\n")
