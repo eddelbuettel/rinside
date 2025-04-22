@@ -3,6 +3,21 @@
 \newcommand{\ghpr}{\href{https://github.com/eddelbuettel/rinside/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/eddelbuettel/rinside/issues/#1}{##1}}
 
+\section{Changes in RInside version 0.2.19 (2025-04-22)}{
+  \itemize{
+    \item The qt example now supports Qt6 (Joris Goosen in \ghpr{54} closing
+    \ghit{53})
+    \item CMake support was refined for more recent versions (Joris Goosen in
+    \ghpr{55})
+    \item The sandboxed-server example now states more clearly that
+    \code{RINSIDE_CALLBACKS} needs to be defined
+    \item More routine update to package and continuous integration.
+    \item Some now-obsolete checks for C++11 have been removed
+    \item When parsing environment variables, use of double quotes is now
+    supported`p
+  }
+}
+
 \section{Changes in RInside version 0.2.18 (2023-02-01)}{
   \itemize{
     \item The random number initialization was updated as in R.

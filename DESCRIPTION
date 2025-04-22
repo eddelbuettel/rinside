@@ -1,7 +1,7 @@
 Package: RInside
 Title: C++ Classes to Embed R in C++ (and C) Applications
-Version: 0.2.18.1
-Date: 2023-03-16
+Version: 0.2.19
+Date: 2025-04-22
 Authors@R: c(person("Dirk", "Eddelbuettel", role = c("aut", "cre"), email = "edd@debian.org",
                     comment = c(ORCID = "0000-0001-6419-907X")),
              person("Romain", "Francois", role = "aut",

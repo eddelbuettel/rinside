@@ -1,3 +1,7 @@
+2025-04-22  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version, Date): Release 0.2.19
+
 2025-04-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/tools/RInsideEnvVars.r: Allow double quotes in env.var
