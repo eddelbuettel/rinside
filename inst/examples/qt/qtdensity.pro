@@ -12,18 +12,21 @@
 
 ## build an app based on the one headers and two source files
 TEMPLATE = 		app
-HEADERS =		qtdensity.h 
+HEADERS =		qtdensity.h
 SOURCES = 		qtdensity.cpp main.cpp
 
 ## beyond the default configuration, also use SVG graphics
 QT += 			svg
+## these two are said to help qith qt5 / qtcreator under windows (cf #62)
+#QT += widgets
+#QT += svgwidgets
 
-## comment this out if you need a different version of R, 
+## comment this out if you need a different version of R,
 ## and set set R_HOME accordingly as an environment variable
 R_HOME = 		$$system(R RHOME)
 #message("R_HOME is" $$R_HOME)
 
-## include headers and libraries for R 
+## include headers and libraries for R
 RCPPFLAGS = 		$$system($$R_HOME/bin/R CMD config --cppflags)
 RLDFLAGS = 		$$system($$R_HOME/bin/R CMD config --ldflags)
 RBLAS = 		$$system($$R_HOME/bin/R CMD config BLAS_LIBS)

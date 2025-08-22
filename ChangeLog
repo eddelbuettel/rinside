@@ -1,3 +1,8 @@
+2025-08-22  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/examples/qt/qtdensity.pro: Add two commented-out lines which
+	may aid in some settings
+
 2025-04-22  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version, Date): Release 0.2.19

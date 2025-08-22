@@ -14,7 +14,7 @@
     \item More routine update to package and continuous integration.
     \item Some now-obsolete checks for C++11 have been removed
     \item When parsing environment variables, use of double quotes is now
-    supported`p
+    supported
   }
 }
 
