@@ -1,3 +1,7 @@
+2026-01-28  Dirk Eddelbuettel  <edd@debian.org>
+
+	* .github/workflows/ci.yaml: Switch to actions/checkout@v6
+
 2025-09-07  Dirk Eddelbuettel  <edd@debian.org>
 
 	* .github/workflows/ci.yaml: Use r-ci action with embedded bootstrap
